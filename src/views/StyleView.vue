@@ -17,11 +17,12 @@ const router = useRouter()
 const handleStyleChange = (slug) => {
   document.documentElement.classList.forEach((token) => {
     if (token.indexOf('style') === 0) {
+  console.log(token)
       document.documentElement.classList.replace(token, `style-${slug}`)
     }
   })
 
-  router.push('/dashboard')
+  // router.push('/dashboard')
 }
 </script>
 

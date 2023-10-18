@@ -79,6 +79,7 @@ const componentClass = computed(() => {
     'inline-flex',
     'justify-center',
     'items-center',
+    'items-center',
     'whitespace-nowrap',
     'focus:outline-none',
     'transition-colors',

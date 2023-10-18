@@ -10,6 +10,7 @@ import FormControl from '@/components/FormControl.vue'
 import BaseButton from '@/components/BaseButton.vue'
 import BaseButtons from '@/components/BaseButtons.vue'
 import LayoutGuest from '@/layouts/LayoutGuest.vue'
+import axios from 'axios'
 
 const form = reactive({
   login: 'john.doe',
@@ -18,9 +19,22 @@ const form = reactive({
 })
 
 const router = useRouter()
+const apiDomain = import.meta.env.VITE_API_URL;
 
 const submit = () => {
-  router.push('/dashboard')
+  const payload = {};
+  payload.email = form.login;
+  payload.password = form.pass;
+
+  axios.post(`${apiDomain}/api/v1/admin/login`, payload)
+  .then(response => {
+    const accessToken = response.data.data.access_token;
+    localStorage.setItem('access_token', accessToken);
+    router.push('/dashboard')
+  })
+  .catch(error => {
+    console.error('Error:', error);
+  });
 }
 </script>
 

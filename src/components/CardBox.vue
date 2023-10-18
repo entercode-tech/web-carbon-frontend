@@ -4,9 +4,17 @@ import CardBoxComponentBody from '@/components/CardBoxComponentBody.vue'
 import CardBoxComponentFooter from '@/components/CardBoxComponentFooter.vue'
 
 const props = defineProps({
+  zIndex: {
+    type: String,
+    default: 'z-0'
+  },
+  bgOpacity: {
+    type: String,
+    default: 'bg-opacity-30 backdrop-blur-2xl'
+  },
   rounded: {
     type: String,
-    default: 'rounded-2xl'
+    default: 'rounded-xl'
   },
   flex: {
     type: String,
@@ -29,6 +37,8 @@ const componentClass = computed(() => {
   const base = [
     props.rounded,
     props.flex,
+    props.bgOpacity,
+    props.zIndex,
     props.isModal ? 'dark:bg-slate-900' : 'dark:bg-slate-900/70'
   ]
 
