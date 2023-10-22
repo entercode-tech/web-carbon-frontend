@@ -56,6 +56,12 @@ const routes = [
     name: 'error',
     component: () => import('@/views/ErrorView.vue'),
     meta: { requiresAuth: true },
+  },
+  {
+    path: '/carbon',
+    name: 'carbon',
+    component: () => import('@/views/carbon/Carbon.vue'),
+    meta: { requiresAuth: false },
   }
 ];
 
