@@ -9,6 +9,8 @@ import RadioDynamic from '@/components/Form/Radio.vue'
 import CarbonSection from '@/components/Carbon/Carbon.vue'
 import BackgroundImage from '@/assets/img/Background/bg-2.png'
 import Swal from 'sweetalert2';
+import "leaflet/dist/leaflet.css";
+import { LMap, LTileLayer } from "@vue-leaflet/vue-leaflet";
 
 export default {
   data() {
@@ -19,6 +21,7 @@ export default {
       address: '',
       lastName: '',
       email: '',
+      zoom: 10,
       listRadioButton: [
         {
           title: 'One Trips',
@@ -40,6 +43,8 @@ export default {
     NavBar,
     RadioDynamic,
     TextareaDynamic,
+    LMap,
+    LTileLayer,
     InputDynamic,
     CarbonSection
   },
@@ -103,9 +108,24 @@ export default {
                 <div class="grid grid-cols-1 gap-4 mt-4">
                   <InputDynamic label="Email" :value="email" inputId="emailInput" type="email" :required="true"  @value-updated="email = $event" />
                 </div>
-                
+              </div>
+              <div class="left-section border-[1px] border-[#cccccc] rounded-md py-4 px-6 bg-white bg-opacity-50">
+                <h1 class="text-xl font-semibold">
+                  Location
+                </h1>
+
                 <div class="grid grid-cols-1 gap-4 mt-4">
-                  <TextareaDynamic label="Address" :value="address" inputId="addressTextarea" :required="true"  @value-updated="address = $event" />
+                  <InputDynamic label="Location" :value="email" inputId="emailInput" type="email" :required="true"  @value-updated="email = $event" />
+                </div>
+
+                <div class="grid grid-cols-1 gap-4 mt-4 h-[400px] rounded-md overflow-hidden">
+                  <l-map :use-global-leaflet="false" ref="map" :zoom="zoom" :center="[47.41322, -1.219482]">
+                    <l-tile-layer
+                      url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                      :layer-type="base"
+                      name="OpenStreetMap"
+                    ></l-tile-layer>
+                  </l-map>
                 </div>
               </div>
             </div>
