@@ -74,7 +74,7 @@ export default {
   <LayoutGuest>
     <NavBar />
     <img :src="BackgroundImage" class="fixed w-screen h-screen top-0 left-0 w-full h-full object-cover" alt="">
-    <div v-if="step === 1" class="flex justify-center items-center h-screen">
+    <div v-if="step === 1" class="flex justify-center items-center h-screen mt-[200px]">
       <div class="bg-white text-center p-10 z-10 rounded-lg bg-opacity-70 backdrop-blur-2xl w-[80%]">
         <div class="flex items-center">
           <div class="bg-[#163331] p-2 rounded-full mr-4">
@@ -136,7 +136,7 @@ export default {
         </div>
       </div>
     </div>
-    <div v-if="step === 2" class="flex justify-center items-center h-screen">
+    <div v-if="step === 2" class="flex justify-center items-center h-screen mt-[200px]">
       <div class="bg-white text-center p-10 z-10 rounded-lg bg-opacity-70 backdrop-blur-2xl w-[80%]">
         <div class="flex items-center">
           <div class="bg-[#163331] p-2 rounded-full mr-4">
