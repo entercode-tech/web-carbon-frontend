@@ -18,15 +18,7 @@ export default {
       firstName: '',
       address: '',
       lastName: '',
-      phoneNumber: '',
-      photos: '',
       email: '',
-      gender: '',
-       genderOptions: [
-        { value: 'male', label: 'Male' },
-        { value: 'female', label: 'Female' },
-        { value: 'other', label: 'Other' },
-      ],
       listRadioButton: [
         {
           title: 'One Trips',
@@ -57,12 +49,9 @@ export default {
       payload.firstName = this.firstName
       payload.lastName = this.lastName
       payload.address = this.address
-      payload.phoneNumber = this.phoneNumber
-      payload.photos = this.photos
       payload.email = this.email
-      payload.gender = this.gender
 
-      if (!this.firstName || !this.address || !this.lastName || !this.phoneNumber || !this.photos || !this.email || !this.gender) {
+      if (!this.firstName || !this.address || !this.lastName || !this.email) {
         Swal.fire({
           icon: 'error',
           title: 'Validation Failed!',
@@ -99,8 +88,8 @@ export default {
 
         <div class="content mt-10">
           <div class="carbon text-left text-[#2e2e2e]">
-            <div class="grid grid-cols-3 gap-4">
-              <div class="left-section col-span-2 border-[1px] border-[#cccccc] rounded-md py-4 px-6 bg-white bg-opacity-50">
+            <div class="grid grid-cols-1 gap-4">
+              <div class="left-section border-[1px] border-[#cccccc] rounded-md py-4 px-6 bg-white bg-opacity-50">
                 <h1 class="text-xl font-semibold">
                   Biodata Form
                 </h1>
@@ -114,36 +103,15 @@ export default {
                 <div class="grid grid-cols-1 gap-4 mt-4">
                   <InputDynamic label="Email" :value="email" inputId="emailInput" type="email" :required="true"  @value-updated="email = $event" />
                 </div>
-
-                <div class="grid grid-cols-1 gap-4 mt-4">
-                  <InputDynamic label="Phone Number" :value="phoneNumber" inputId="phoneInput" type="number" :required="true"  @value-updated="phoneNumber = $event" />
-                </div>
-
-                <div class="grid grid-cols-1 gap-4 mt-4">
-                  <RadioDynamic label="Gender" inputName="gender" :genderOptions="genderOptions" :value="gender" :required="true" @value-updated="gender = $event" />
-                </div>
                 
                 <div class="grid grid-cols-1 gap-4 mt-4">
                   <TextareaDynamic label="Address" :value="address" inputId="addressTextarea" :required="true"  @value-updated="address = $event" />
                 </div>
               </div>
-
-              <div>
-                <div class="right-section border-[1px] border-[#cccccc] rounded-md py-4 px-6 bg-white bg-opacity-50">
-                  <h1 class="text-xl font-semibold">
-                    Additional Forms
-                  </h1>
-
-                  <div class="grid grid-cols-1 gap-4 mt-4">
-                    <InputDynamic label="Photos" :value="photos" inputId="photosInput" type="file" :required="true"  @value-updated="photos = $event" />
-                  </div>
-
-                </div>
-                <button class="bg-[#476b6b] mt-4 text-white px-8 py-2 rounded-md font-medium hover:bg-[#223d3d] transition duration-300 ease-in-out" @click="onSubmit">
-                  Submit
-                </button>
-              </div>
             </div>
+            <button class="bg-[#476b6b] mt-4 text-white px-8 py-2 rounded-md font-medium hover:bg-[#223d3d] transition duration-300 ease-in-out" @click="onSubmit">
+              Submit
+            </button>
           </div>
         </div>
       </div>
