@@ -1,26 +1,39 @@
 <script>
 import { reactive } from 'vue'
 import { useRouter } from 'vue-router'
+import axios from 'axios'
+
+// SweetAlert2
+import Swal from 'sweetalert2';
+
+// Layout
 import LayoutGuest from '@/layouts/LayoutGuest.vue'
+
+// Components
 import NavBar from '@/components/Navbar/Navbar.vue'
 import InputDynamic from '@/components/Form/Input.vue'
 import TextareaDynamic from '@/components/Form/Textarea.vue'
 import RadioDynamic from '@/components/Form/Radio.vue'
 import CarbonSection from '@/components/Carbon/Carbon.vue'
+import GoogleMaps from '@/components/Maps/GoogleMaps.vue'
+import AddressAutocomplete from '@/components/Maps/AddressAutocomplete.vue'
+
+// Image
 import BackgroundImage from '@/assets/img/Background/bg-2.png'
-import Swal from 'sweetalert2';
-import "leaflet/dist/leaflet.css";
-import { LMap, LTileLayer } from "@vue-leaflet/vue-leaflet";
 
 export default {
   data() {
     return {
+      apiDomain: import.meta.env.VITE_API_URL,
+      mapsKey: import.meta.env.VITE_MAPS_KEY,
       BackgroundImage: BackgroundImage,
       firstName: '',
       address: '',
+      latitude: 40.689247,
+      longitude: -74.044502,
       lastName: '',
       email: '',
-      zoom: 10,
+      showGoogleMaps: false,
       listRadioButton: [
         {
           title: 'One Trips',
@@ -39,22 +52,21 @@ export default {
   },
   components: {
     LayoutGuest,
+    GoogleMaps,
+    AddressAutocomplete,
     NavBar,
     RadioDynamic,
     TextareaDynamic,
-    LMap,
-    LTileLayer,
     InputDynamic,
     CarbonSection
   },
+  created() {
+    setTimeout(() => {
+      this.showGoogleMaps = true;
+    }, 1000);
+  },
   methods: {
     onSubmit() {
-      const payload = {};
-      payload.firstName = this.firstName
-      payload.lastName = this.lastName
-      payload.address = this.address
-      payload.email = this.email
-
       if (!this.firstName || !this.address || !this.lastName || !this.email) {
         Swal.fire({
           icon: 'error',
@@ -62,8 +74,55 @@ export default {
           text: 'All fields must be filled',
         });
       } else {
-        this.step = 2
+        const payload = {};
+        payload.first_name = this.firstName
+        payload.last_name = this.lastName
+        payload.location = this.address
+        payload.email = this.email
+
+        axios.post(`${this.apiDomain}/api/v1/guests`, payload)
+        .then(response => {
+          Swal.fire({
+            icon: 'success',
+            title: 'Success!',
+            text: 'Data has been saved successfully',
+            confirmButtonColor: '#3085d6',
+            confirmButtonText: 'OK',
+          }).then((result) => {
+            if (result.isConfirmed) {
+              localStorage.setItem('dataUser', JSON.stringify(response.data));
+              this.$router.push('/form-user');
+            }
+          });
+        })
+        .catch(error => {
+          let errorMessage = "An error occurred";
+
+          if (error.message) {
+            errorMessage = error.message;
+          }
+
+          Swal.fire({
+            icon: 'error',
+            title: 'Error!',
+            text: errorMessage,
+          });
+        });
       }
+    },
+    onSearchMap(e) {
+      this.showGoogleMaps = false;
+      const latitude = e.geometry.location.lat();
+      const longitude = e.geometry.location.lng();
+      const address = e.formatted_address;
+    
+      this.address = address
+      this.latitude = latitude
+      this.longitude = longitude  
+      
+      setTimeout(() => {
+        this.showGoogleMaps = true;
+      }, 500);
     }
   }
 };
@@ -114,17 +173,16 @@ export default {
                 </h1>
 
                 <div class="grid grid-cols-1 gap-4 mt-4">
-                  <InputDynamic label="Location" :value="email" inputId="emailInput" type="email" :required="true"  @value-updated="email = $event" />
-                </div>
+                  <AddressAutocomplete :mapsKey="mapsKey" @searchMaps="onSearchMap" />
 
-                <div class="grid grid-cols-1 gap-4 mt-4 h-[400px] rounded-md overflow-hidden">
-                  <l-map :use-global-leaflet="false" ref="map" :zoom="zoom" :center="[47.41322, -1.219482]">
-                    <l-tile-layer
-                      url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-                      :layer-type="base"
-                      name="OpenStreetMap"
-                    ></l-tile-layer>
-                  </l-map>
+                  <div class="grid grid-cols-1 gap-4 mt-4 rounded-md overflow-hidden">
+                    <div class="h-[500px]">
+                      <GoogleMaps :mapsKey="mapsKey" v-if="showGoogleMaps" :longitude="longitude" :latitude="latitude"/>
+                      <div v-else class="flex items-center justify-center h-full bg-white bg-opacity-50 rounded-md border-[1px] relative border-[#cccccc]">
+                        <div class="animate-spin w-16 h-16 border-t-4 border-[#476b6b] border-solid rounded-full"></div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
