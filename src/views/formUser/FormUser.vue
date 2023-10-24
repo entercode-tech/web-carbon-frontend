@@ -91,7 +91,7 @@ export default {
           }).then((result) => {
             if (result.isConfirmed) {
               localStorage.setItem('dataUser', JSON.stringify(response.data));
-              this.$router.push('/form-user');
+              this.$router.push('/carbon');
             }
           });
         })
