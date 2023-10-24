@@ -62,6 +62,18 @@ const routes = [
     name: 'carbon',
     component: () => import('@/views/carbon/Carbon.vue'),
     meta: { requiresAuth: false },
+  },
+  {
+    path: '/form-user',
+    name: 'form-user',
+    component: () => import('@/views/formUser/FormUser.vue'),
+    meta: { requiresAuth: false },
+  },
+  {
+    path: '/postcard',
+    name: 'postcard',
+    component: () => import('@/views/postcard/PostCard.vue'),
+    meta: { requiresAuth: false },
   }
 ];
 
