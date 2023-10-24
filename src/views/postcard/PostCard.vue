@@ -47,6 +47,15 @@ export default {
     Camera,
     NavBar,
   },
+  mounted() {
+    const dataUser = localStorage.getItem('dataUser');
+    if (dataUser) {
+      const userData = JSON.parse(dataUser).data;
+
+      this.fullName = userData.first_name + ' ' + userData.last_name;
+      this.address = userData.location;
+    }
+  },
   methods: {
     startDrag(index) {
       event.dataTransfer.setData('text', this.backgroundImages[index]);
