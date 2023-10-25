@@ -1,5 +1,6 @@
 <script>
 import axios from 'axios';
+import { useRouter } from 'vue-router'
 
 // Icon
 import CloudIcon from '@/assets/icon/Cloud.svg'
@@ -21,17 +22,29 @@ export default {
       departureType: ['Going Home', 'One Way', 'Multi City'],
       transportationType: ['Economy', 'Premium'],
       currency: ['USD', 'EUR', 'IDR'],
+      distanceTypeCar: ['Kilometer', 'Miles'],
+      calculateTypeCar: ['Distance', 'Hour'],
       fuelType: ['Diesel', 'Gasoline (Petrol)', 'Biodiesel'],
+      localTransportationType: '',
+      localTripType: '',
+      localTotalMetric: '',
+      localTotalPriceMetric: '',
       manyPeople: 1,
       flightType: [],
       airplaneType: [],
+      vehicleType: [],
       totalFlightComponent: 1,
+      distanceValue: 0,
       totalMetricTons: 0,
       totalPriceMetricTons: 0,
       selectCurrency: 'USD',
+      selectDistanceTypeCar: 'Distance',
+      selectDistanceCar: 'Kilometer',
       selectAirplaneType: null,
+      selectVehicleType: null,
       selectFlightType: null,
       selectDepartureType: null,
+      selectCalculateType: null,
       selectTransportationType: null,
       selectFuelType: '',
       startFrom: '',
@@ -77,6 +90,7 @@ export default {
       longFlight: 0,
       hourDuration: 0,
       minuteDuration: 0,
+      hourDurationCar: 0,
     };
   },
   components: {
@@ -97,11 +111,23 @@ export default {
     onSelectFlightType(option) {
       this.selectFlightType = option;
     },
+    onSelectVehicleType(option) {
+      this.selectVehicleType = option;
+    },
+    onSelectCalculateType(option) {
+      this.selectCalculateType = option;
+    },
     onSelectAirplaneType(option) {
       this.selectAirplaneType = option;
     },
     onSelectFuelType(option) {
       this.selectFuelType = option;
+    },
+    onSelectDistanceType(option) {
+      this.selectDistanceTypeCar = option;
+    },
+    onSelectDistance(option) {
+      this.selectDistanceCar = option;
     },
     onRadioButtonSelected(selectedValue) {
       this.tripsType = selectedValue;
@@ -116,7 +142,11 @@ export default {
     },
     onSubmit() {
       if(this.section === 'flight') {
+        this.localTransportationType = 'Flight';
+
         if(this.tripsType === 'One Trips') {
+          this.localTripType = 'One Trips';
+
           const departureType = this.selectDepartureType === 'One Way' ? 'Oneway' : this.selectDepartureType === 'Going Home' ? 'Round' : 'Multicity';
           const payload = {};
           payload.travelType = 'Flight';
@@ -131,6 +161,8 @@ export default {
 
           this.onFlightCalc(payload)
         }else if(this.tripsType === 'Charter') {
+          this.localTripType = 'Charter';
+
           const departureType = this.selectDepartureType === 'One Way' ? 'Oneway' : this.selectDepartureType === 'Going Home' ? 'Round' : 'Multicity';
           const payload = {};
           payload.travelType = 'Flight';
@@ -142,6 +174,57 @@ export default {
 
           this.onFlightCalc(payload)
         }
+      }else if(this.section === 'car') {
+          this.localTransportationType = 'Car';
+          this.localTripType = '-';
+
+          const payload = {};
+          payload.travelType = 'Vehicle';
+          payload.vehicleTypeId = this.selectVehicleType.id;
+          payload.vehicleTypeName = this.selectVehicleType.name;
+          if(this.selectCalculateType === 'Hour') {
+            payload.calculateUnit = 'jam';
+            payload.time = this.hourDurationCar;
+            payload.distance = 0;
+          }else{
+            payload.distance = this.distanceValue;
+            payload.calculateUnit = this.selectDistanceCar;
+          }
+
+          this.onVehicleCalc(payload)
+      }else {
+        this.localTransportationType = 'Boat';
+
+        if(this.tripsBoatType === 'Cruise') {
+          this.localTripType = 'Cruise';
+
+          const payload = {};
+          payload.travelType = 'Boat';
+          payload.boatType = 'Cruise';
+          payload.days = this.dayBoat;
+          payload.peoples = this.peopleBoat;
+          this.onBoatCalc(payload)
+        }else if(this.tripsBoatType === 'Livea Board') {
+          this.localTripType = 'Livea Board';
+
+          const payload = {};
+          payload.travelType = 'Boat';
+          payload.boatType = 'Liveaboard';
+          payload.days = this.dayBoat;
+          payload.peoples = this.peopleBoat;
+          this.onBoatCalc(payload)
+        }else{
+          this.localTripType = 'Yachts';
+
+          const payload = {};
+          payload.travelType = 'Boat';
+          payload.boatType = 'Yachts';
+          payload.fuelType = this.selectFuelType === 'Gasoline (Petrol)' ? 'Gasoline' : this.selectFuelType ;
+          payload.fuelConsumption = 0;
+          payload.fuelUnit = 'Gallons';
+          this.onBoatCalc(payload)
+        }
+
       }
     },
     async fetchDataAirplane(){
@@ -165,8 +248,25 @@ export default {
       });
 
     },
+    async fetchDataVehicle(){
+      axios.post(`${this.apiDomainCarbon}/api/get-vehicle-types`, {}, {
+        headers: {
+          'Client-Key': this.apiKeyCarbon
+        }
+      })
+      .then(response => {
+        const data = response.data.result.vehicleTypes;
+
+        this.vehicleType = data;
+      })
+      .catch(error => {
+        console.error('Error:', error);
+      });
+
+    },
     selectSection(param) {
       this.section = param
+      if(param === 'car') this.fetchDataVehicle();
     },
     onSelectFlightFrom(e){
       this.flightFrom.push(e.id); 
@@ -201,6 +301,8 @@ export default {
       .then(response => {
         const totalMetricTons = response.data.result.calculate;
         this.totalMetricTons = parseFloat(totalMetricTons.toFixed(2));
+        this.localTotalMetric = parseFloat(totalMetricTons.toFixed(2));
+        this.localTotalPriceMetric = parseFloat((totalMetricTons * 16).toFixed(2));
 
         switch (this.selectCurrency) {
           case 'USD':
@@ -220,6 +322,78 @@ export default {
       .catch(error => {
         console.error('Error:', error);
       });
+    },
+    onVehicleCalc(payload){
+      axios.post(`${this.apiDomainCarbon}/api/user/vehicle-calculator`, payload, {
+        headers: {
+          'Client-Key': this.apiKeyCarbon
+        }
+      })
+      .then(response => {
+        const totalMetricTons = response.data.result.calculate;
+        this.totalMetricTons = parseFloat(totalMetricTons.toFixed(2));
+        this.localTotalMetric = parseFloat(totalMetricTons.toFixed(2));
+        this.localTotalPriceMetric = parseFloat((totalMetricTons * 16).toFixed(2));
+
+        switch (this.selectCurrency) {
+          case 'USD':
+            this.totalPriceMetricTons = parseFloat((totalMetricTons * 16).toFixed(2));
+            break;
+          case 'IDR':
+            this.totalPriceMetricTons = parseFloat((totalMetricTons * 224000).toFixed(2));
+            break;
+          case 'EUR':
+            this.totalPriceMetricTons = parseFloat((totalMetricTons * 15.09).toFixed(2));
+            break;
+          default:
+            this.totalPriceMetricTons = parseFloat((totalMetricTons * 16).toFixed(2));
+        }
+
+      })
+      .catch(error => {
+        console.error('Error:', error);
+      });
+    },
+    onBoatCalc(payload){
+      axios.post(`${this.apiDomainCarbon}/api/user/boat-calculator`, payload, {
+        headers: {
+          'Client-Key': this.apiKeyCarbon
+        }
+      })
+      .then(response => {
+        const totalMetricTons = response.data.result.calculate;
+        this.totalMetricTons = parseFloat(totalMetricTons.toFixed(2));
+        this.localTotalMetric = parseFloat(totalMetricTons.toFixed(2));
+        this.localTotalPriceMetric = parseFloat((totalMetricTons * 16).toFixed(2));
+
+        switch (this.selectCurrency) {
+          case 'USD':
+            this.totalPriceMetricTons = parseFloat((totalMetricTons * 16).toFixed(2));
+            break;
+          case 'IDR':
+            this.totalPriceMetricTons = parseFloat((totalMetricTons * 224000).toFixed(2));
+            break;
+          case 'EUR':
+            this.totalPriceMetricTons = parseFloat((totalMetricTons * 15.09).toFixed(2));
+            break;
+          default:
+            this.totalPriceMetricTons = parseFloat((totalMetricTons * 16).toFixed(2));
+        }
+
+      })
+      .catch(error => {
+        console.error('Error:', error);
+      });
+    },
+    onPostcard(){
+      const data = {}
+      data.transportationType = this.localTransportationType
+      data.tripType = this.localTripType
+      data.totalMetricTons = this.localTotalMetric
+      data.totalPriceMetricTons = this.localTotalPriceMetric
+
+      localStorage.setItem('dataCarbon', JSON.stringify(data));
+      this.$router.push('/postcard');
     }
   },
 };
@@ -417,11 +591,11 @@ export default {
               <div class="flex items-center">
                 <div>
                   <h1 class="text-md font-bold">
-                    Flights Type
+                    Vehicle
                   </h1>
                 </div>
               </div>
-              <Dropdown class="mt-6" :options="flightType" placeholder="Select Option" @selected="onSelectFlightType" />
+              <DropdownV2 class="mt-6" :options="vehicleType" placeholder="Select Option" @selected="onSelectVehicleType" />
             </div>
             <div class="flex items-center justify-between mt-2">
               <div class="flex items-center">
@@ -431,23 +605,38 @@ export default {
                   </h1>
                 </div>
               </div>
-              <Dropdown class="mt-6" :options="flightType" placeholder="Select Option" @selected="onSelectFlightType" />
+              <Dropdown :options="calculateTypeCar" :placeholder="selectDistanceTypeCar" @selected="onSelectDistanceType" />
             </div>
-              <div class="flex items-center justify-between mt-2">
-                <div class="flex items-center">
-                  <div>
-                    <h1 class="text-md font-bold">
-                      Duration
-                    </h1>
-                  </div>
-                </div>
-                <div class="flex">
-                  <div>
-                    <input type="number" :value="hourDuration" class="border-[1px] w-[79.5%] border-[#163331] w-full bg-transparent bg-opacity-50 rounded-md">
-                    <button class="px-2 py-1 bg-[#163331] text-white font-bold rounded-r-md" style="cursor: pointer">Hour</button>
-                  </div>
+            <div v-if="selectDistanceTypeCar === 'Hour'" class="flex items-center justify-between mt-2">
+              <div class="flex items-center">
+                <div>
+                  <h1 class="text-md font-bold">
+                    Duration
+                  </h1>
                 </div>
               </div>
+              <div class="flex justify-end">
+                <div class="flex items-center justify-end w-[50%]">
+                  <input type="number" v-model="hourDurationCar" class="border-[1px]  border-[#163331] w-full bg-transparent bg-opacity-50 rounded-md">
+                  <h1 class="px-2 py-1 bg-[#163331] text-white font-bold rounded-r-md">Hour</h1>
+                </div>
+              </div>
+            </div>
+            <div v-else class="flex items-center justify-between mt-2">
+              <div class="flex items-center">
+                <div>
+                  <h1 class="text-md font-bold">
+                    Distance
+                  </h1>
+                </div>
+              </div>
+              <div class="flex justify-end">
+                <div class="flex items-center justify-end w-[60%]">
+                  <input type="number" v-model="distanceValue" class="border-[1px]  border-[#163331] w-full bg-transparent bg-opacity-50 rounded-md">
+                  <Dropdown :options="distanceTypeCar" placeholder="Kilometer" class="ml-3" @selected="onSelectDistance" />
+                </div>
+              </div>
+            </div>
           </div>
           <div v-if="section === 'boat'">
             <div class="mt-6">
@@ -482,7 +671,7 @@ export default {
                     </h1>
                   </div>
                 </div>
-                <PlusMinus @value-updated="dayBoat = $event" :value="dayBoat" :min="0" :max="100" />
+                <PlusMinus @value-updated="peopleBoat = $event" :value="peopleBoat" :min="0" :max="100" />
               </div>
             </div>
             <div v-if="tripsBoatType === 'Livea Board'">
@@ -513,7 +702,7 @@ export default {
                     </h1>
                   </div>
                 </div>
-                <PlusMinus @value-updated="dayBoat = $event" :value="dayBoat" :min="0" :max="100" />
+                <PlusMinus @value-updated="peopleBoat = $event" :value="peopleBoat" :min="0" :max="100" />
               </div>
             </div>
             <div v-if="tripsBoatType === 'Yacht'">
@@ -563,6 +752,10 @@ export default {
         <div class="flex justify-end mt-4">
           <Dropdown :options="currency" placeholder="USD" @selected="onSelectCurrency" />
         </div>
+
+        <button class="bg-[#476b6b] w-full mt-4 text-white px-8 py-2 rounded-md font-medium hover:bg-[#223d3d] transition duration-300 ease-in-out" @click="onPostcard">
+          Submit
+        </button>
       </div>
     </div>
   </div>
