@@ -1,7 +1,7 @@
 <template>
   <div class="dropdown">
     <button @click="toggleDropdown" class="flex items-center border-[1px] rounded-md border-[#163331] hover:text-white hover:bg-[#163331] px-4 py-2">
-      {{ selectedOption || placeholder }}
+      {{ selectedOption ? selectedOption.name : placeholder }}
       <svg
         xmlns="http://www.w3.org/2000/svg"
         class="w-4 h-4 ml-2"
@@ -18,7 +18,7 @@
       </svg>
     </button>
     <ul v-if="isDropdownOpen" class="bg-white bg-opacity-50 backdrop-blur-2xl rounded-md overflow-hidden w-full z-10"> 
-      <li class="px-4 py-2 border-[#163331] hover:text-white hover:bg-[#163331] px-4 py-2" v-for="option in options" :key="option" @click="selectOption(option)">{{ option }}</li>
+      <li class="px-4 py-2 border-[#163331] hover:text-white hover:bg-[#163331] px-4 py-2" v-for="option in options" :key="option" @click="selectOption(option)">{{ option.name }}</li>
     </ul>
   </div>
 </template>

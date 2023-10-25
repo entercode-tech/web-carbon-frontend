@@ -1,23 +1,44 @@
 <script>
+import axios from 'axios';
+
+// Icon
 import CloudIcon from '@/assets/icon/Cloud.svg'
+
+// Components
 import RadioButtonGroup from '@/components/RadioButton/RadioButtonGroup.vue';
 import Dropdown from '@/components/Form/Dropdown.vue';
+import DropdownV2 from '@/components/Form/DropdownV2.vue';
+import InputAutoComplete from '@/components/Form/InputAutoComplete.vue';
 import InputDynamic from '@/components/Form/Input.vue'
 import PlusMinus from '@/components/Form/PlusMinus.vue'
 
 export default {
   data() {
     return {
+      apiKeyCarbon: import.meta.env.VITE_API_KEY_CARBON,
+      apiDomainCarbon: import.meta.env.VITE_API_URL_CARBON,
       CloudIcon: CloudIcon,
       departureType: ['Going Home', 'One Way', 'Multi City'],
       transportationType: ['Economy', 'Premium'],
+      currency: ['USD', 'EUR', 'IDR'],
       fuelType: ['Diesel', 'Gasoline (Petrol)', 'Biodiesel'],
+      manyPeople: 1,
       flightType: [],
+      airplaneType: [],
+      totalFlightComponent: 1,
+      totalMetricTons: 0,
+      totalPriceMetricTons: 0,
+      selectCurrency: 'USD',
+      selectAirplaneType: null,
       selectFlightType: null,
       selectDepartureType: null,
       selectTransportationType: null,
       selectFuelType: '',
       startFrom: '',
+      flightFrom: [],
+      flightFromIata: [],
+      flightTo: [],
+      flightToIata: [],
       section: 'flight',
       listRadioButton: [
         {
@@ -62,6 +83,8 @@ export default {
     RadioButtonGroup,
     Dropdown,
     PlusMinus,
+    DropdownV2,
+    InputAutoComplete,
     InputDynamic
   },
   methods: {
@@ -74,20 +97,129 @@ export default {
     onSelectFlightType(option) {
       this.selectFlightType = option;
     },
+    onSelectAirplaneType(option) {
+      this.selectAirplaneType = option;
+    },
     onSelectFuelType(option) {
       this.selectFuelType = option;
     },
     onRadioButtonSelected(selectedValue) {
       this.tripsType = selectedValue;
+
+      if(selectedValue === 'Charter') this.fetchDataAirplane();
     },
     onRadioButtonSelectedBoat(selectedValue) {
       this.tripsBoatType = selectedValue;
     },
+    onAddAnotherFlight(){
+      this.totalFlightComponent = this.totalFlightComponent+1;
+    },
     onSubmit() {
-      console.log(this.shortFlight)
+      if(this.section === 'flight') {
+        if(this.tripsType === 'One Trips') {
+          const departureType = this.selectDepartureType === 'One Way' ? 'Oneway' : this.selectDepartureType === 'Going Home' ? 'Round' : 'Multicity';
+          const payload = {};
+          payload.travelType = 'Flight';
+          payload.tripType = 'Single';
+          payload.singleTripType = departureType;
+          payload.passengerCount = this.manyPeople;
+          payload.flightType = this.selectTransportationType;
+          payload.locationFrom = this.flightFrom
+          payload.locationFromIata = this.flightFromIata;
+          payload.locationTo = this.flightTo;
+          payload.locationToIata = this.flightToIata;
+
+          this.onFlightCalc(payload)
+        }else if(this.tripsType === 'Charter') {
+          const departureType = this.selectDepartureType === 'One Way' ? 'Oneway' : this.selectDepartureType === 'Going Home' ? 'Round' : 'Multicity';
+          const payload = {};
+          payload.travelType = 'Flight';
+          payload.tripType = 'Charter';
+          payload.aircraftTypeId = this.selectAirplaneType.id;
+          payload.aircraftTypeName = this.selectAirplaneType.name;
+          payload.hours = this.hourDuration;
+          payload.minutes = this.minuteDuration;
+
+          this.onFlightCalc(payload)
+        }
+      }
+    },
+    async fetchDataAirplane(){
+      axios.post(`${this.apiDomainCarbon}/api/get-charter-planes-list`, {}, {
+        headers: {
+          'Client-Key': this.apiKeyCarbon
+        }
+      })
+      .then(response => {
+        const data = response.data.result.charterPlanes;
+        const mappedData = data.reduce((result, region) => {
+          const regionName = Object.keys(region)[0];
+          const airportsInRegion = region[regionName];
+          return result.concat(airportsInRegion);
+        }, []);
+
+        this.airplaneType = mappedData;
+      })
+      .catch(error => {
+        console.error('Error:', error);
+      });
+
     },
     selectSection(param) {
       this.section = param
+    },
+    onSelectFlightFrom(e){
+      this.flightFrom.push(e.id); 
+      this.flightFromIata.push(e.iataCode); 
+    },
+    onSelectFlightTo(e){
+      this.flightTo.push(e.id); 
+      this.flightToIata.push(e.iataCode); 
+    },
+    onSelectCurrency(e){
+      this.selectCurrency = e
+      switch (e) {
+        case 'USD':
+          this.totalPriceMetricTons = parseFloat((this.totalMetricTons * 16).toFixed(2));
+          break;
+        case 'IDR':
+          this.totalPriceMetricTons = parseFloat((this.totalMetricTons * 224000).toFixed(2));
+          break;
+        case 'EUR':
+          this.totalPriceMetricTons = parseFloat((this.totalMetricTons * 15.09).toFixed(2));
+          break;
+        default:
+          this.totalPriceMetricTons = parseFloat((this.totalMetricTons * 16).toFixed(2));
+      }
+    },
+    onFlightCalc(payload){
+      axios.post(`${this.apiDomainCarbon}/api/user/flight-calculator`, payload, {
+        headers: {
+          'Client-Key': this.apiKeyCarbon
+        }
+      })
+      .then(response => {
+        const totalMetricTons = response.data.result.calculate;
+        this.totalMetricTons = parseFloat(totalMetricTons.toFixed(2));
+
+        switch (this.selectCurrency) {
+          case 'USD':
+            this.totalPriceMetricTons = parseFloat((totalMetricTons * 16).toFixed(2));
+            break;
+          case 'IDR':
+            this.totalPriceMetricTons = parseFloat((totalMetricTons * 224000).toFixed(2));
+            break;
+          case 'EUR':
+            this.totalPriceMetricTons = parseFloat((totalMetricTons * 15.09).toFixed(2));
+            break;
+          default:
+            this.totalPriceMetricTons = parseFloat((totalMetricTons * 16).toFixed(2));
+        }
+
+      })
+      .catch(error => {
+        console.error('Error:', error);
+      });
     }
   },
 };
@@ -144,26 +276,30 @@ export default {
                     <path fill-rule="evenodd" d="M5.216 14A2.238 2.238 0 0 1 5 13c0-1.355.68-2.75 1.936-3.72A6.325 6.325 0 0 0 5 9c-4 0-5 3-5 4s1 1 1 1h4.216z"/>
                     <path d="M4.5 8a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5z"/>
                   </svg>
-                  <input type="number" class="bg-transparent w-full border-none outline-none focus:outline-none">
+                  <input type="number" v-model="manyPeople" class="bg-transparent w-full border-none outline-none focus:outline-none">
                 </div>
 
                 <Dropdown class="mr-4" :options="transportationType" placeholder="Select Option" @selected="onSelectTransportationType" />
 
               </div>
 
-              <div class="mt-6 flex items-center">
-                <input type="text" v-model="startFrom" class="border-[1px] border-[#163331] w-full bg-transparent bg-opacity-50 rounded-md">
+              <div v-for="(item, index) in totalFlightComponent" :key="index" class="mt-6 flex items-center">
+                <InputAutoComplete class="w-full" placeholder="Select Option" @selected="onSelectFlightFrom" />
                 
                 <svg width="40" height="40" class="mx-4" viewBox="0 -9 32 32" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns">
                     <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage">
                         <g id="Icon-Set" sketch:type="MSLayerGroup" transform="translate(-256.000000, -1200.000000)" fill="#163331">
-                            <path d="M287.718,1206.22 L281.795,1200.28 C281.404,1199.89 280.768,1199.89 280.376,1200.28 C279.984,1200.68 279.984,1201.31 280.376,1201.71 L284.635,1205.98 L259.365,1205.98 L263.624,1201.71 C264.016,1201.31 264.016,1200.68 263.624,1200.28 C263.232,1199.89 262.597,1199.89 262.205,1200.28 L256.282,1206.22 C256.073,1206.43 255.983,1206.71 255.998,1206.98 C255.983,1207.26 256.073,1207.54 256.282,1207.75 L262.205,1213.69 C262.597,1214.08 263.232,1214.08 263.624,1213.69 C264.016,1213.29 264.016,1212.66 263.624,1212.26 L259.365,1207.99 L284.635,1207.99 L280.376,1212.26 C279.984,1212.66 279.984,1213.29 280.376,1213.69 C280.768,1214.08 281.404,1214.08 281.795,1213.69 L287.718,1207.75 C287.927,1207.54 288.017,1207.26 288.002,1206.98 C288.017,1206.71 287.927,1206.43 287.718,1206.22" id="arrow-left-right" sketch:type="MSShapeGroup">
-                  </path>
+                            <path d="M287.718,1206.22 L281.795,1200.28 C281.404,1199.89 280.768,1199.89 280.376,1200.28 C279.984,1200.68 279.984,1201.31 280.376,1201.71 L284.635,1205.98 L259.365,1205.98 L263.624,1201.71 C264.016,1201.31 264.016,1200.68 263.624,1200.28 C263.232,1199.89 262.597,1199.89 262.205,1200.28 L256.282,1206.22 C256.073,1206.43 255.983,1206.71 255.998,1206.98 C255.983,1207.26 256.073,1207.54 256.282,1207.75 L262.205,1213.69 C262.597,1214.08 263.232,1214.08 263.624,1213.69 C264.016,1213.29 264.016,1212.66 263.624,1212.26 L259.365,1207.99 L284.635,1207.99 L280.376,1212.26 C279.984,1212.66 279.984,1213.29 280.376,1213.69 C280.768,1214.08 281.404,1214.08 281.795,1213.69 L287.718,1207.75 C287.927,1207.54 288.017,1207.26 288.002,1206.98 C288.017,1206.71 287.927,1206.43 287.718,1206.22" id="arrow-left-right" sketch:type="MSShapeGroup"></path>
                         </g>
                     </g>
                 </svg>
 
-                <input type="text" v-model="startFrom" class="border-[1px] border-[#163331] w-full bg-transparent bg-opacity-50 rounded-md">
+                <InputAutoComplete class="w-full" placeholder="Select Option" @selected="onSelectFlightTo" />
+              </div>
+              <div v-if="selectDepartureType === 'Multi City'">
+                <button class="bg-[#476b6b] w-full mt-4 text-white px-8 py-2 rounded-md font-medium hover:bg-[#223d3d] transition duration-300 ease-in-out" @click="onAddAnotherFlight">
+                  Add another flight
+                </button>
               </div>
             </div>
             <div v-if="tripsType === 'Multiple Trips'">
@@ -248,7 +384,7 @@ export default {
                     </h1>
                   </div>
                 </div>
-                <Dropdown class="mt-6" :options="flightType" placeholder="Select Option" @selected="onSelectFlightType" />
+                <DropdownV2 class="mt-6" :options="airplaneType" placeholder="Select Option" @selected="onSelectAirplaneType" />
               </div>
               <div class="flex items-center justify-between mt-2">
                 <div class="flex items-center">
@@ -263,14 +399,14 @@ export default {
                     </h1>
                   </div>
                 </div>
-                <div class="flex">
-                  <div>
-                    <input type="number" :value="hourDuration" class="border-[1px] w-[70%] border-[#163331] w-full bg-transparent bg-opacity-50 rounded-md">
-                    <button class="px-2 py-1 bg-[#163331] text-white font-bold rounded-r-md" style="cursor: pointer">Hour</button>
+                <div class="flex justify-end">
+                  <div class="flex items-center justify-end w-[30%]">
+                    <input type="number" v-model="hourDuration" class="border-[1px]  border-[#163331] w-full bg-transparent bg-opacity-50 rounded-md">
+                    <h1 class="px-2 py-1 bg-[#163331] text-white font-bold rounded-r-md">Hour</h1>
                   </div>
-                  <div>
-                    <input type="number" :value="minuteDuration" class="border-[1px] w-[70%] border-[#163331] w-full bg-transparent bg-opacity-50 rounded-md">
-                    <button class="px-2 py-1 bg-[#163331] text-white font-bold rounded-r-md" style="cursor: pointer">Minute</button>
+                  <div class="flex items-center justify-end w-[30%] ml-2">
+                    <input type="number" v-model="minuteDuration" class="border-[1px] border-[#163331] w-full bg-transparent bg-opacity-50 rounded-md">
+                    <h1 class="px-2 py-1 bg-[#163331] text-white font-bold rounded-r-md">Minute</h1>
                   </div>
                 </div>
               </div>
@@ -405,6 +541,28 @@ export default {
         </h1>
 
         <img :src="CloudIcon" class="mx-auto mt-10">
+
+        <div class="flex justify-between">
+          <p class="text-md font-nromal mt-4">
+            Total Metric Tons
+          </p>
+          <p class="text-md font-nromal mt-4">
+            {{ totalMetricTons }}
+          </p>
+        </div>
+
+        <div class="flex justify-between">
+          <p class="text-md font-bold ">
+            Price
+          </p>
+          <p class="text-md font-bold">
+            {{selectCurrency === 'USD' ? '$' : selectCurrency === 'IDR' ? 'Rp.' : '€'}} {{ totalPriceMetricTons }}
+          </p>
+        </div>
+
+        <div class="flex justify-end mt-4">
+          <Dropdown :options="currency" placeholder="USD" @selected="onSelectCurrency" />
+        </div>
       </div>
     </div>
   </div>

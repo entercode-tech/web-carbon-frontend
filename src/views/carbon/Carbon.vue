@@ -1,15 +1,20 @@
 <script>
 import { reactive } from 'vue'
 import { useRouter } from 'vue-router'
+import Swal from 'sweetalert2'
+
+// Layout
 import LayoutGuest from '@/layouts/LayoutGuest.vue'
+
+// Image
+import BackgroundImage from '@/assets/img/Background/bg-2.png'
+
+// Components
 import NavBar from '@/components/Navbar/Navbar.vue'
 import InputDynamic from '@/components/Form/Input.vue'
 import TextareaDynamic from '@/components/Form/Textarea.vue'
 import RadioDynamic from '@/components/Form/Radio.vue'
 import CarbonSection from '@/components/Carbon/Carbon.vue'
-import BackgroundImage from '@/assets/img/Background/bg-2.png'
-import Swal from 'sweetalert2'
-import "leaflet/dist/leaflet.css"
 
 export default {
   data() {
@@ -43,7 +48,7 @@ export default {
     redirectToFormUser() {
       const dataUser = localStorage.getItem('dataUser');
       if (!dataUser) {
-        this.$router.push('/form-user');
+        // this.$router.push('/form-user');
       }
     },
   },
@@ -58,7 +63,7 @@ export default {
   <LayoutGuest>
     <NavBar />
     <img :src="BackgroundImage" class="fixed w-screen h-screen top-0 left-0 w-full h-full object-cover" alt="">
-    <div class="flex justify-center items-center h-screen mt-[200px]">
+    <div class="flex justify-center mt-[200px]">
       <div class="bg-white text-center p-10 z-10 rounded-lg bg-opacity-70 backdrop-blur-2xl w-[80%]">
         <div class="flex items-center">
           <div class="bg-[#163331] p-2 rounded-full mr-4">
