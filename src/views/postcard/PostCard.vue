@@ -80,7 +80,7 @@ export default {
 
       this.fullName = userData.first_name + ' ' + userData.last_name;
       this.address = userData.location;
-      this.uniqId = userData.uniq_id;
+      this.uniqId = userData.id;
       this.transportationType = carbonData.transportationType;
       this.tripType = carbonData.tripType;
       this.totalMetricTons = carbonData.totalMetricTons;
@@ -131,7 +131,18 @@ export default {
             },
           })
           .then(response => {
-            console.log(response);
+            Swal.fire({
+              icon: 'success',
+              title: 'Success!',
+              text: 'Data has been saved successfully',
+              confirmButtonColor: '#3085d6',
+              confirmButtonText: 'OK',
+            }).then((result) => {
+              if (result.isConfirmed) {
+                localStorage.setItem('dataUser', JSON.stringify(response.data));
+                this.$router.push('/carbon');
+              }
+            });
           })
           .catch(error => {
             let errorMessage = "An error occurred";
@@ -254,7 +265,13 @@ export default {
                 </div>
               </div>
               <div class="col-span-2 rounded-md overflow-hidden">
-                <h1 class="text-2xl font-bold text-[#2e2e2e]">Photo Post Card</h1>
+                <div class="flex justify-between">
+                  <h1 class="text-2xl font-bold text-[#2e2e2e]">Photo Post Card</h1>
+
+                  <button v-if="allPhotos.length" class="bg-[#476b6b] mt-4 text-white px-8 py-2 rounded-md font-medium hover:bg-[#223d3d] transition duration-300 ease-in-out" @click="step = 2">
+                    Next Step
+                  </button>
+                </div>
                 <div class="grid grid-cols-4 gap-4 mt-4">
                     <div v-for="(photo, index) in allPhotos" :key="index" class="relative">
                       <div @click="deletePhoto(index)" class="absolute top-0 right-0 w-[30px] h-[30px] text-center flex items-center justify-center rounded-md cursor-pointer bg-[#cd7272] text-[#891111]">

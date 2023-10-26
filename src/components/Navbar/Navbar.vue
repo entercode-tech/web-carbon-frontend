@@ -15,17 +15,17 @@
     <!-- Menu -->
     <ul class="flex space-x-6">
       <li>
-        <router-link to="/carbon" class="text-white font-medium text-xl">
+        <router-link to="/" class="text-white font-medium text-xl">
           Home
         </router-link>
       </li>
       <li>
-        <router-link to="/carbon" class="text-white font-medium text-xl">
+        <router-link to="/" class="text-white font-medium text-xl">
           About
         </router-link>
       </li>
       <li>
-        <router-link to="/postcard" class="text-white font-medium text-xl">
+        <router-link to="/all-postcard" class="text-white font-medium text-xl">
           Post Card
         </router-link>
       </li>

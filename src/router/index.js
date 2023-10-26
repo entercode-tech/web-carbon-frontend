@@ -74,6 +74,18 @@ const routes = [
     name: 'postcard',
     component: () => import('@/views/postcard/PostCard.vue'),
     meta: { requiresAuth: false },
+  },
+  {
+    path: '/all-postcard',
+    name: 'allPostcard',
+    component: () => import('@/views/postcard/CarouselPostCard.vue'),
+    meta: { requiresAuth: false },
+  },
+  {
+    path: '/admin/list-user',
+    name: 'listUser',
+    component: () => import('@/views/admin/listUser/ListUser.vue'),
+    meta: { requiresAuth: true },
   }
 ];
 

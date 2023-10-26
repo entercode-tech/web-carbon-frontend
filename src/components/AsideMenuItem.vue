@@ -57,13 +57,13 @@ const menuClick = (event) => {
       <BaseIcon
         v-if="item.icon"
         :path="item.icon"
-        class="flex-none"
+        class="flex-none text-[#CCCCCC] hover:text-black"
         :class="[vSlot && vSlot.isExactActive ? asideMenuItemActiveStyle : '']"
         w="w-16"
         :size="18"
       />
       <span
-        class="grow text-ellipsis line-clamp-1"
+        class="grow text-ellipsis line-clamp-1 text-[#CCCCCC] hover:text-black"
         :class="[
           { 'pr-12': !hasDropdown },
           vSlot && vSlot.isExactActive ? asideMenuItemActiveStyle : ''

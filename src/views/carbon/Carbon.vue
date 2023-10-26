@@ -48,7 +48,7 @@ export default {
     redirectToFormUser() {
       const dataUser = localStorage.getItem('dataUser');
       if (!dataUser) {
-        // this.$router.push('/form-user');
+        this.$router.push('/form-user');
       }
     },
   },
