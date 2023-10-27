@@ -4,6 +4,7 @@ import { reactive, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import LayoutGuest from '@/layouts/LayoutGuest.vue'
 import NavBar from '@/components/Navbar/Navbar.vue'
+import ModalPopup from '@/components/Modal/Modal.vue'
 import Camera from "simple-vue-camera";
 import * as htmlToImage from 'html-to-image';
 import { toPng, toJpeg, toBlob, toPixelData, toSvg } from 'html-to-image';
@@ -43,7 +44,77 @@ export default {
       FramePostcard: FramePostcard,
       sharePostcard: null,
       step: 1,
+      isSave: false,
+      modalShow: false,
       allPhotos: [],
+      allIncludeFile: [
+        {
+          "id": 1,
+          "uniq_id": "1697978515000",
+          "name": "test included files",
+          "image_path": "http://localhost:8000/storage/images/included_files/1697978515.jpg",
+          "created_at": "2023-10-22T12:41:55.000000Z",
+          "updated_at": "2023-10-22T12:41:55.000000Z"
+        },{
+          "id": 1,
+          "uniq_id": "1697978515000",
+          "name": "test included files",
+          "image_path": "http://localhost:8000/storage/images/included_files/1697978515.jpg",
+          "created_at": "2023-10-22T12:41:55.000000Z",
+          "updated_at": "2023-10-22T12:41:55.000000Z"
+        },{
+          "id": 1,
+          "uniq_id": "1697978515000",
+          "name": "test included files",
+          "image_path": "http://localhost:8000/storage/images/included_files/1697978515.jpg",
+          "created_at": "2023-10-22T12:41:55.000000Z",
+          "updated_at": "2023-10-22T12:41:55.000000Z"
+        },
+        {
+          "id": 1,
+          "uniq_id": "1697978515000",
+          "name": "test included files",
+          "image_path": "http://localhost:8000/storage/images/included_files/1697978515.jpg",
+          "created_at": "2023-10-22T12:41:55.000000Z",
+          "updated_at": "2023-10-22T12:41:55.000000Z"
+        },{
+          "id": 1,
+          "uniq_id": "1697978515000",
+          "name": "test included files",
+          "image_path": "http://localhost:8000/storage/images/included_files/1697978515.jpg",
+          "created_at": "2023-10-22T12:41:55.000000Z",
+          "updated_at": "2023-10-22T12:41:55.000000Z"
+        },{
+          "id": 1,
+          "uniq_id": "1697978515000",
+          "name": "test included files",
+          "image_path": "http://localhost:8000/storage/images/included_files/1697978515.jpg",
+          "created_at": "2023-10-22T12:41:55.000000Z",
+          "updated_at": "2023-10-22T12:41:55.000000Z"
+        },
+        {
+          "id": 1,
+          "uniq_id": "1697978515000",
+          "name": "test included files",
+          "image_path": "http://localhost:8000/storage/images/included_files/1697978515.jpg",
+          "created_at": "2023-10-22T12:41:55.000000Z",
+          "updated_at": "2023-10-22T12:41:55.000000Z"
+        },{
+          "id": 1,
+          "uniq_id": "1697978515000",
+          "name": "test included files",
+          "image_path": "http://localhost:8000/storage/images/included_files/1697978515.jpg",
+          "created_at": "2023-10-22T12:41:55.000000Z",
+          "updated_at": "2023-10-22T12:41:55.000000Z"
+        },{
+          "id": 1,
+          "uniq_id": "1697978515000",
+          "name": "test included files",
+          "image_path": "http://localhost:8000/storage/images/included_files/1697978515.jpg",
+          "created_at": "2023-10-22T12:41:55.000000Z",
+          "updated_at": "2023-10-22T12:41:55.000000Z"
+        }
+      ],
       profilePhoto: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRO0oQFYvdeYbxXLZ2quUF56tCS-EofeHprWeiBQ0VgWw&s',
       uniqId: '',
       fullName: '-',
@@ -60,6 +131,7 @@ export default {
     NavBar,
     toPng, 
     toJpeg, 
+    ModalPopup,
     toBlob, 
     toPixelData, 
     toSvg
@@ -111,52 +183,53 @@ export default {
       const imageUrl = event.dataTransfer.getData('text');
       this.profilePhoto = imageUrl;
     },
-    onShare() {
+    onSave() {
       const self = this; 
 
       htmlToImage.toJpeg(document.getElementById('postcard_download'), { quality: 0.95 })
-        .then(function (dataUrl) {
-          const filename = "image.jpg";
-          const file = self.convertJpg(dataUrl, filename);
-          console.log(file)
+      .then(function (dataUrl) {
+        const filename = "image.jpg";
+        const file = self.convertJpg(dataUrl, filename);
 
-          const payload = new FormData();
-          payload.append('guest_id', self.uniqId);
-          payload.append('metric_tons', self.totalMetricTons);
-          payload.append('file_carbon', file);
+        const payload = new FormData();
+        payload.append('guest_id', self.uniqId);
+        payload.append('metric_tons', self.totalMetricTons);
+        payload.append('file_carbon', file);
 
-          axios.post(`${self.apiDomain}/api/v1/postcards`, payload, {
-            headers: {
-              'Content-Type': 'multipart/form-data',
-            },
-          })
-          .then(response => {
-            Swal.fire({
-              icon: 'success',
-              title: 'Success!',
-              text: 'Data has been saved successfully',
-              confirmButtonColor: '#3085d6',
-              confirmButtonText: 'OK',
-            }).then((result) => {
-              if (result.isConfirmed) {
-                localStorage.setItem('dataUser', JSON.stringify(response.data));
-                this.$router.push('/carbon');
-              }
-            });
-          })
-          .catch(error => {
-            let errorMessage = "An error occurred";
-            if (error.message) {
-              errorMessage = error.message;
+        axios.post(`${self.apiDomain}/api/v1/postcards`, payload, {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        })
+        .then(response => {
+          Swal.fire({
+            icon: 'success',
+            title: 'Success!',
+            text: 'Data has been saved successfully',
+            confirmButtonColor: '#3085d6',
+            confirmButtonText: 'OK',
+          }).then((result) => {
+            if (result.isConfirmed) {
+             self.isSave = true
             }
+          });
+        })
+        .catch(error => {
+          let errorMessage = "An error occurred";
+          if (error.message) {
+            errorMessage = error.message;
+          }
 
-            Swal.fire({
-              icon: 'error',
-              title: 'Error!',
-              text: errorMessage,
-            });
+          Swal.fire({
+            icon: 'error',
+            title: 'Error!',
+            text: errorMessage,
           });
         });
+      });
+    },
+    onShare() {
+      this.modalShow = !this.modalShow; 
     },
     convertJpg(dataURL, filename) {
       const arr = dataURL.split(',');
@@ -372,12 +445,37 @@ export default {
                 </div>
               </div>
             </div>
+            <!-- <button v-if="!isSave" class="bg-[#476b6b] mt-4 text-white px-8 py-2 rounded-md font-medium hover:bg-[#223d3d] transition duration-300 ease-in-out" @click="onSave">
+              Save
+            </button> -->
             <button class="bg-[#476b6b] mt-4 text-white px-8 py-2 rounded-md font-medium hover:bg-[#223d3d] transition duration-300 ease-in-out" @click="onShare">
+            <!-- <button v-else class="bg-[#476b6b] mt-4 text-white px-8 py-2 rounded-md font-medium hover:bg-[#223d3d] transition duration-300 ease-in-out" @click="onShare"> -->
               Share
             </button>
           </div>
         </div>
       </div>
+      <ModalPopup :show="modalShow">
+        <div class="p-4">
+          <h2 class="text-xl font-bold">Select the additional files you want to select</h2>
+          <p>This is optional, if you don't have any files to add, then just continue.</p>
+
+          <div class="grid grid-cols-3 gap-4 mt-10">
+            <div v-for="file in allIncludeFile" :key="file.id" class="flex justify-center items-center">
+              <div class="bg-transparent border-[1px] border-gray-300 rounded-md w-40 h-40 relative">
+                <img :src="'https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/PDF_file_icon.svg/1667px-PDF_file_icon.svg.png'" class="mx-auto h-20 mt-4 object-cover" alt="">
+                <h2 class="text-sm mt-4 text-center font-normal">{{ file.name }}</h2>
+
+                <input type="checkbox" name="" class="absolute top-0 left-0 border-[#ccccc] rounded-sm" id="">
+              </div>  
+            </div>
+          </div>
+          <div class="flex mt-8 justify-end">
+            <button @click="onShare" class="bg-red-500 text-white px-4 py-2 mr-3 rounded">Close</button>
+            <button @click="onShare" class="bg-[#476b6b] text-white px-4 py-2 rounded">Send Email</button>
+          </div>
+        </div>
+      </ModalPopup>
     </div>
   </LayoutGuest>
 
