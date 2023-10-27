@@ -18,9 +18,12 @@
     >
       <swiper-slide  v-for="(item, index) in dataPostcard" :key="index">
         <img :src="item.file_carbon_path" alt="Carousel Image" />
+
+        <button class="bg-[#476b6b] mt-4 mx-auto text-white px-8 py-2 rounded-md font-medium hover:bg-[#223d3d] transition duration-300 ease-in-out" @click="onDonation(item)">
+          Donation
+        </button>
       </swiper-slide>
     </swiper>
-    <button @click="ss">{{dataPostcard.length}}</button>
   </div>
 </template>
 
@@ -45,8 +48,8 @@
       };
     },
     methods: {
-      ss(){
-        console.log(this.dataPostcard)
+      onDonation(item){
+        this.$emit('onSelectPostcard', item);
       }
     }
   };

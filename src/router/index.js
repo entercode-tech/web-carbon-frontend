@@ -78,7 +78,7 @@ const routes = [
   {
     path: '/all-postcard',
     name: 'allPostcard',
-    component: () => import('@/views/postcard/CarouselPostCard.vue'),
+    component: () => import('@/views/donation/Donation.vue'),
     meta: { requiresAuth: false },
   },
   {
@@ -86,7 +86,13 @@ const routes = [
     name: 'listUser',
     component: () => import('@/views/admin/listUser/ListUser.vue'),
     meta: { requiresAuth: true },
-  }
+  },
+  {
+    path: '/donation',
+    name: 'donation',
+    component: () => import('@/views/donation/Donation.vue'),
+    meta: { requiresAuth: false },
+  },
 ];
 
 const router = createRouter({
