@@ -24,4 +24,9 @@ export default [
     label: 'List User',
     icon: mdiTable
   },
+  {
+    to: '/admin/included-file',
+    label: 'Included File',
+    icon: mdiPalette
+  },
 ]

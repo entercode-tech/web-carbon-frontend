@@ -99,6 +99,12 @@ const routes = [
     component: () => import('@/views/donation/Donation.vue'),
     meta: { requiresAuth: false },
   },
+  {
+    path: '/admin/included-file',
+    name: 'includedFile',
+    component: () => import('@/views/admin/includedFile/IncludedFile.vue'),
+    meta: { requiresAuth: true },
+  },
 ];
 
 const router = createRouter({
