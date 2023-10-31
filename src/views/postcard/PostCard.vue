@@ -379,6 +379,105 @@ export default {
 
         <div class="content mt-10">
           <div class="carbon text-left text-[#2e2e2e]">
+            <div class="grid grid-cols-3 gap-4">
+
+              <div v-if="step === 2" class="col-span-1">
+                <h1 class="text-2xl font-bold text-[#2e2e2e]">Photo Assets</h1>
+                <div class="grid grid-cols-2 gap-4 border-[1px] mt-4 border-[#cccccc] bg-white bg-opacity-50">
+                  <div v-for="(photo, index) in allPhotos" :key="index" class="relative">
+                    <img
+                      :src="photo"
+                      :alt="`Photo ${index}`"
+                      draggable="true" 
+                      @dragstart="startDragProfile(index)" 
+                    />
+                  </div>
+                </div>
+              </div>
+              <div v-if="step === 3" class="col-span-1 rounded-md overflow-hidden">
+                <h1 class="text-2xl font-bold text-[#2e2e2e]">Background Post Card</h1>
+                <div class="grid grid-cols-2 gap-4 border-[1px] mt-4 border-[#cccccc] bg-white bg-opacity-50">
+                  <img v-for="(backgroundImage, index) in backgroundImages" 
+                    :key="index" 
+                    :src="backgroundImage" 
+                    class="object-cover w-full rounded-md cursor-pointer" 
+                    draggable="true" 
+                    @dragstart="startDrag(index)" 
+                  />
+                </div>
+              </div>
+
+              <div id="postcard_download" class="col-span-2 border-[1px] h-[500px] border-[#cccccc] rounded-md overflow-hidden bg-white bg-opacity-50 relative"
+                @dragover="allowDrop"
+                @drop="handleDrop">
+                
+                <div class="flex absolute top-4 left-4 z-10">
+                  <img :src="LogoKLHK" alt="Logo" class="h-10 rounded-md mr-2" />
+                  <img :src="LogoIndonesia" alt="Logo" class="h-10 rounded-md mr-2" />
+                  <img :src="LogoCop28" alt="Logo" class="h-10 rounded-md mr-2" />
+                </div>
+
+                <img class="absolute top-[22%] left-[8.3%] rounded-full h-[268px] w-[268px]" :src="profilePhoto" alt="Captured Photo" />
+                <img :src="FramePostcard" class="absolute left-0 top-0 h-full" />
+                <img :src="BackgroundPrimary" class="h-[500px] object-cover w-full" />
+
+
+                <div class="bg-white absolute top-20 right-6 w-[50%] p-4 bg-opacity-60 rounded-md">
+                  <h1 class="text-md font-bold text-[#2e2e2e]">My Carbon Footprint</h1>
+                  <h1 class="text-md font-normal text-[#2e2e2e]">{{fullName}}, {{address}}</h1>
+
+                  <h1 class="text-md font-bold mt-4 text-[#2e2e2e]">{{transportationType}} Footprint</h1>
+                  <div class="flex justify-between">
+                    <h1 class="text-md font-normal text-[#2e2e2e]">{{transportationType}}: {{tripType}}</h1>
+                    <h1 class="text-md font-normal text-[#2e2e2e]">{{totalMetricTons}} MT</h1>
+                  </div>
+
+                  <hr class="text-[#000] border-[1] border-[#000] my-4">
+
+                  <div class="flex justify-between mt-4">
+                    <h1 class="text-md font-normal text-[#2e2e2e]">Total Metric Tons</h1>
+                    <h1 class="text-md font-normal text-[#2e2e2e]">{{totalMetricTons}} MT</h1>
+                  </div>
+                  <div class="flex justify-between">
+                    <h1 class="text-md font-bold text-[#2e2e2e]">Cost to Offset</h1>
+                    <h1 class="text-md font-bold text-[#2e2e2e]">$ {{totalCost}}</h1>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <button v-if="step === 2" class="bg-[#476b6b] mt-4 text-white px-8 py-2 rounded-md font-medium hover:bg-[#223d3d] transition duration-300 ease-in-out" @click="step = 3">
+              Next Step
+            </button>
+            <div v-if="step === 3">
+              <button v-if="!isSave" class="bg-[#476b6b] mt-4 text-white px-8 py-2 rounded-md font-medium hover:bg-[#223d3d] transition duration-300 ease-in-out" @click="onSave">
+                Save
+              </button>
+              <button v-else class="bg-[#476b6b] mt-4 text-white px-8 py-2 rounded-md font-medium hover:bg-[#223d3d] transition duration-300 ease-in-out" @click="onShare">
+                Share
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- <div v-else class="bg-white text-center p-10 z-10 rounded-lg bg-opacity-70 backdrop-blur-2xl w-[80%]">
+        <div class="flex items-center">
+          <div class="bg-[#163331] p-2 rounded-full mr-4">
+            <svg width="30" height="30" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M4 7C4 5.11438 4 4.17157 4.58579 3.58579C5.17157 3 6.11438 3 8 3H16C17.8856 3 18.8284 3 19.4142 3.58579C20 4.17157 20 5.11438 20 7V15C20 17.8284 20 19.2426 19.1213 20.1213C18.2426 21 16.8284 21 14 21H10C7.17157 21 5.75736 21 4.87868 20.1213C4 19.2426 4 17.8284 4 15V7Z" stroke="#FFF" stroke-width="2"/>
+              <path d="M15 18L15 21M9 18L9 21" stroke="#FFF" stroke-width="2" stroke-linecap="round"/>
+              <path d="M9 8L15 8" stroke="#FFF" stroke-width="2" stroke-linecap="round"/>
+              <path d="M9 12L15 12" stroke="#FFF" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <div class="header text-left">
+            <h1 class="text-2xl font-bold text-[#2e2e2e]">Post Card</h1>
+            <p class="text-sm text-[#2e2e2e] mt-1">Print and email your postcard.</p>
+          </div>
+        </div>
+
+        <div class="content mt-10">
+          <div class="carbon text-left text-[#2e2e2e]">
             <div class="grid grid-cols-4 gap-4">
               <div id="postcard_download" class="col-span-2 border-[1px] h-[400px] border-[#cccccc] rounded-md overflow-hidden bg-white bg-opacity-50 relative"
                 @dragover="allowDrop"
@@ -453,7 +552,7 @@ export default {
             </button>
           </div>
         </div>
-      </div>
+      </div> -->
       <ModalPopup :show="modalShow">
         <div class="p-4">
           <h2 class="text-xl font-bold">Select the additional files you want to select</h2>

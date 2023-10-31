@@ -132,7 +132,7 @@ export default {
   <LayoutGuest>
     <NavBar />
     <img :src="BackgroundImage" class="fixed w-screen h-screen top-0 left-0 w-full h-full object-cover" alt="">
-    <div class="flex justify-center items-center h-screen mt-[200px]">
+    <div class="flex justify-center mb-4 mt-[25%] md:mt-[7%]">
       <div class="bg-white text-center p-10 z-10 rounded-lg bg-opacity-70 backdrop-blur-2xl w-[80%]">
         <div class="flex items-center">
           <div class="bg-[#163331] p-2 rounded-full mr-4">
@@ -144,8 +144,8 @@ export default {
             </svg>
           </div>
           <div class="header text-left">
-            <h1 class="text-2xl font-bold text-[#2e2e2e]">Fill Out the Form First</h1>
-            <p class="text-sm text-[#2e2e2e] mt-1">Fill in your details to continue the Carbon calculation process.</p>
+            <h1 class="text-md md:text-2xl font-bold text-[#2e2e2e]">Fill Out the Form First</h1>
+            <p class="text-xs md:text-sm text-[#2e2e2e] mt-1">Fill in your details to continue the Carbon calculation process.</p>
           </div>
         </div>
 
@@ -157,7 +157,7 @@ export default {
                   Biodata Form
                 </h1>
 
-                <div class="grid grid-cols-2 gap-4 mt-4">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
                   <InputDynamic label="First Name" :value="firstName" inputId="namaDepanInput" type="text" :required="true" @value-updated="firstName = $event" />
 
                   <InputDynamic label="Last Name" :value="lastName" inputId="namaBelakangInput" type="text" :required="true"  @value-updated="lastName = $event" />

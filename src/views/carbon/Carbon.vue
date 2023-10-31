@@ -63,15 +63,15 @@ export default {
   <LayoutGuest>
     <NavBar />
     <img :src="BackgroundImage" class="fixed w-screen h-screen top-0 left-0 w-full h-full object-cover" alt="">
-    <div class="flex justify-center mt-[200px]">
+    <div class="flex justify-center mb-4 mt-[25%] md:mt-[7%]">
       <div class="bg-white text-center p-10 z-10 rounded-lg bg-opacity-70 backdrop-blur-2xl w-[80%]">
         <div class="flex items-center">
           <div class="bg-[#163331] p-2 rounded-full mr-4">
             <img src="https://sustainabletravel.org/wp-content/plugins/sti_client/public/assets/images/calculator.svg" alt="">
           </div>
           <div class="header text-left">
-            <h1 class="text-2xl font-bold text-[#2e2e2e]">Calculate Your Travel Carbon Footprint</h1>
-            <p class="text-sm text-[#2e2e2e] mt-1">Use our carbon footprint calculator to calculate your travel emissions and purchase carbon offsets. </p>
+            <h1 class="text-md md:text-2xl font-bold text-[#2e2e2e]">Calculate Your Travel Carbon Footprint</h1>
+            <p class="text-xs md:text-sm text-[#2e2e2e] mt-1">Use our carbon footprint calculator to calculate your travel emissions and purchase carbon offsets. </p>
           </div>
         </div>
 
