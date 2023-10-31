@@ -46,6 +46,7 @@ export default {
       selectDepartureType: null,
       selectCalculateType: null,
       selectTransportationType: null,
+      isDoneLoad: false,
       selectFuelType: '',
       startFrom: '',
       flightFrom: [],
@@ -317,6 +318,7 @@ export default {
           default:
             this.totalPriceMetricTons = parseFloat((totalMetricTons * 16).toFixed(2));
         }
+        this.isDoneLoad = true
 
       })
       .catch(error => {
@@ -348,6 +350,7 @@ export default {
           default:
             this.totalPriceMetricTons = parseFloat((totalMetricTons * 16).toFixed(2));
         }
+        this.isDoneLoad = true
 
       })
       .catch(error => {
@@ -379,7 +382,7 @@ export default {
           default:
             this.totalPriceMetricTons = parseFloat((totalMetricTons * 16).toFixed(2));
         }
-
+        this.isDoneLoad = true
       })
       .catch(error => {
         console.error('Error:', error);
@@ -753,7 +756,7 @@ export default {
           <Dropdown :options="currency" placeholder="USD" @selected="onSelectCurrency" />
         </div>
 
-        <button class="bg-[#476b6b] w-full mt-4 text-white px-8 py-2 rounded-md font-medium hover:bg-[#223d3d] transition duration-300 ease-in-out" @click="onPostcard">
+        <button v-if="isDoneLoad" class="bg-[#476b6b] w-full mt-4 text-white px-8 py-2 rounded-md font-medium hover:bg-[#223d3d] transition duration-300 ease-in-out" @click="onPostcard">
           Submit
         </button>
       </div>

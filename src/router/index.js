@@ -12,7 +12,7 @@ const routes = [
   {
     path: '/',
     name: 'home',
-    component: () => import('@/views/HomepageView.vue'),
+    component: () => import('@/views/LandingPageView.vue'),
     meta: { requiresAuth: false },
   },
   {
@@ -60,6 +60,12 @@ const routes = [
   {
     path: '/carbon',
     name: 'carbon',
+    component: () => import('@/views/HomepageView.vue'),
+    meta: { requiresAuth: false },
+  },
+  {
+    path: '/carbon-calc',
+    name: 'carbon-calc',
     component: () => import('@/views/carbon/Carbon.vue'),
     meta: { requiresAuth: false },
   },
