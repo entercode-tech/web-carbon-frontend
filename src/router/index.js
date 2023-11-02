@@ -18,7 +18,7 @@ const routes = [
   {
     path: '/dashboard',
     name: 'dashboard',
-    component: Home,
+    component: () => import('@/views/admin/dashboard/Dashboard.vue'),
     meta: { requiresAuth: true },
   },
   {
@@ -82,9 +82,15 @@ const routes = [
     meta: { requiresAuth: false },
   },
   {
+    path: '/share-postcard/:code',
+    name: 'sharePostcard',
+    component: () => import('@/views/postcard/SharePostcard.vue'),
+    meta: { requiresAuth: false },
+  },
+  {
     path: '/all-postcard',
     name: 'allPostcard',
-    component: () => import('@/views/donation/Donation.vue'),
+    component: () => import('@/views/postcard/CarouselPostCard.vue'),
     meta: { requiresAuth: false },
   },
   {
@@ -103,6 +109,24 @@ const routes = [
     path: '/admin/included-file',
     name: 'includedFile',
     component: () => import('@/views/admin/includedFile/IncludedFile.vue'),
+    meta: { requiresAuth: true },
+  },
+  {
+    path: '/admin/template-postcard',
+    name: 'templatePostcard',
+    component: () => import('@/views/admin/templatePostcard/TemplatePostcard.vue'),
+    meta: { requiresAuth: true },
+  },
+  {
+    path: '/admin/list-donation',
+    name: 'listDonation',
+    component: () => import('@/views/admin/listDonation/ListDonation.vue'),
+    meta: { requiresAuth: true },
+  },
+  {
+    path: '/admin/list-transaction',
+    name: 'listTransaction',
+    component: () => import('@/views/admin/listTransaction/ListTransaction.vue'),
     meta: { requiresAuth: true },
   },
 ];

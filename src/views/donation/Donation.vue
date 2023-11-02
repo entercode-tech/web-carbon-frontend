@@ -23,6 +23,7 @@ export default {
       guestId: '',
       firstName: '',
       lastName: '',
+      code: '',
       email: '',
       phoneNumber: '',
       postcardId: '',
@@ -41,7 +42,7 @@ export default {
     redirectToFormUser() {
       const dataUser = localStorage.getItem('dataUser');
       if (!dataUser) {
-        // this.$router.push('/form-user');
+        this.$router.push('/form-user');
       }else{
         const userData = JSON.parse(dataUser).data;
 
@@ -56,7 +57,7 @@ export default {
     onPayment() {
       const payload = {}
       payload.guest_id = this.guestId
-      payload.postcard_id = this.postcardId
+      payload.postcard_id = this.dataPostcard[0].id
       payload.currency = 'IDR'
 
       axios.post(`${this.apiDomain}/api/v1/donations`, payload)
@@ -87,17 +88,17 @@ export default {
           });
         });
     },
-    onSelectPostcard(postcard) {
-      this.postcardId = postcard.id
-      this.onPayment();
+    onSearch(e){
+      if(e){
+        axios.get(`${this.apiDomain}/api/v1/postcards?code=${e}`)
+        .then(response => {
+          console.log(response)
+          this.dataPostcard = response.data.data;
+        })
+      }else{
+        this.dataPostcard = []
+      }
     }
-
-  },
-  mounted() {
-    axios.get(`${this.apiDomain}/api/v1/postcards`)
-    .then(response => {
-      this.dataPostcard = response.data.data;
-    })
   },
   created() {
     this.redirectToFormUser();
@@ -110,25 +111,31 @@ export default {
   <LayoutGuest>
     <NavBar />
     <img :src="BackgroundImage" class="fixed w-screen h-screen top-0 left-0 w-full h-full object-cover" alt="">
-    <div class="flex justify-center mt-[200px]">
+    <div class="flex justify-center mb-4 mt-[25%] md:mt-[7%]">
       <div class="bg-white text-left p-10 z-10 rounded-lg bg-opacity-70 backdrop-blur-2xl w-[80%]">
-        <div class="flex items-center">
-          <div class="header text-left">
-            <h1 class="text-2xl font-bold text-[#2e2e2e]">Hello, {{ this.firstName + ' ' + this.lastName }}</h1>
-            <p class="text-sm text-[#2e2e2e] mt-1">Thank you for helping us by donating, whatever your donation is, it means a lot to us.</p>
+        <div class="grid grid-cols-1 md:grid-cols-5 gap-4">
+          <div class="col-span-1 md:col-span-3">
+            <div class="flex items-center">
+              <div class="header text-left">
+                <h1 class="text-2xl font-bold text-[#2e2e2e]">Hello, {{ this.firstName + ' ' + this.lastName }}</h1>
+                <p class="text-sm text-[#2e2e2e] mt-1">Thank you for helping us by donating, whatever your donation is, it means a lot to us.</p>
+              </div>
+            </div>
+
+            <div class="mt-4">
+              <InputDynamic label="Postcard Code" :value="code" inputId="codeInput" type="text" :required="true"  @value-updated="onSearch($event)" />
+            </div>
+
+            <button class="bg-[#476b6b] mt-4 text-white px-8 py-2 rounded-md font-medium hover:bg-[#223d3d] transition duration-300 ease-in-out" @click="onPayment">
+              Donation
+            </button>
+          </div>
+          <div class="col-span-1 md:col-span-2">
+            <div v-for="(item, index) in dataPostcard" :key="index">
+              <img class="rounded-lg" :src="item.file_carbon_path" alt="Carousel Image" />
+            </div>
           </div>
         </div>
-
-        <div>
-          <Carousel :dataPostcard="dataPostcard" @onSelectPostcard="onSelectPostcard"/>
-        </div>
-
-        <!-- <div v-else class="content mt-10">
-          <InputDynamic label="Amount" :value="amount" inputId="amountInput" type="text" :required="true" @value-updated="amount = $event" />
-          <button class="bg-[#476b6b] mt-4 text-white px-8 py-2 rounded-md font-medium hover:bg-[#223d3d] transition duration-300 ease-in-out" @click="onPayment">
-            Pay
-          </button>
-        </div> -->
       </div>
     </div>
   </LayoutGuest>

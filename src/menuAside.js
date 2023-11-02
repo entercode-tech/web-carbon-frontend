@@ -27,6 +27,21 @@ export default [
   {
     to: '/admin/included-file',
     label: 'Included File',
+    icon: mdiResponsive
+  },
+  {
+    to: '/admin/template-postcard',
+    label: 'Template Postcard',
     icon: mdiPalette
+  },
+  {
+    to: '/admin/list-donation',
+    label: 'List Donation',
+    icon: mdiViewList
+  },
+  {
+    to: '/admin/list-transaction',
+    label: 'List Transaction',
+    icon: mdiViewList
   },
 ]

@@ -37,10 +37,10 @@ export default {
       try {
         const formData = new FormData();
         formData.append('name', this.title);
-        formData.append('file', this.file);
+        formData.append('image', this.file);
 
         const token = localStorage.getItem('access_token');
-        const response = await axios.post(`${this.apiDomain}/api/v1/included-files`, formData, {
+        const response = await axios.post(`${this.apiDomain}/api/v1/postcard-templates`, formData, {
           headers: {
             Authorization: `Bearer ${token}`
           }
@@ -70,7 +70,7 @@ export default {
     async fetchFileData() {
       try {
         const token = localStorage.getItem('access_token');
-        const response = await axios.get(`${this.apiDomain}/api/v1/included-files`, {
+        const response = await axios.get(`${this.apiDomain}/api/v1/postcard-templates`, {
           headers: {
             Authorization: `Bearer ${token}`
           }
@@ -89,10 +89,10 @@ export default {
       try {
         const formData = new FormData();
         formData.append('name', this.titleEdit);
-        if(this.fileEdit) formData.append('file', this.fileEdit);
+        if(this.fileEdit) formData.append('image', this.fileEdit);
 
         const token = localStorage.getItem('access_token');
-        const response = await axios.post(`${this.apiDomain}/api/v1/included-files/${this.setFile.id}?_method=PUT`, formData, {
+        const response = await axios.post(`${this.apiDomain}/api/v1/postcard-templates/${this.setFile.id}?_method=PUT`, formData, {
           headers: {
             Authorization: `Bearer ${token}`
           }
@@ -133,7 +133,7 @@ export default {
         if (result.isConfirmed) {
           const token = localStorage.getItem('access_token');
           try {
-            const response = await axios.delete(`${this.apiDomain}/api/v1/included-files/${item.id}`, {
+            const response = await axios.delete(`${this.apiDomain}/api/v1/postcard-templates/${item.id}`, {
               headers: {
                 Authorization: `Bearer ${token}`
               }
