@@ -11,7 +11,6 @@ import './css/main.css'
 const pinia = createPinia()
 
 // Create Vue app
-createApp(App).use(router).use(pinia).mount('#app')
 
 // Init main store
 const mainStore = useMainStore(pinia)
@@ -20,18 +19,30 @@ const mainStore = useMainStore(pinia)
 mainStore.fetchSampleClients()
 mainStore.fetchSampleHistory()
 
-// Dark mode
-// Uncomment, if you'd like to restore persisted darkMode setting, or use `prefers-color-scheme: dark`. Make sure to uncomment localStorage block in src/stores/darkMode.js
-// import { useDarkModeStore } from './stores/darkMode'
+const clearLocalStorage = () => {
+  localStorage.removeItem('dataUser');
+  localStorage.removeItem('access_token');
+};
 
-// const darkModeStore = useDarkModeStore(pinia)
+const startTimer = () => {
+  let timer;
+  const inactivityTime = 2 * 60 * 1000;
 
-// if (
-//   (!localStorage['darkMode'] && window.matchMedia('(prefers-color-scheme: dark)').matches) ||
-//   localStorage['darkMode'] === '1'
-// ) {
-//   darkModeStore.set(true)
-// }
+  const resetTimer = () => {
+    clearTimeout(timer);
+    timer = setTimeout(() => {
+      clearLocalStorage();
+    }, inactivityTime);
+  };
+
+  window.onload = resetTimer;
+  window.onmousemove = resetTimer;
+  window.onkeypress = resetTimer;
+};
+
+createApp(App).use(router).use(pinia).mount('#app') .$nextTick(() => {
+    startTimer();
+  });
 
 // Default title tag
 const defaultDocumentTitle = 'Carbon'

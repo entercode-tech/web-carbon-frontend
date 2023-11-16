@@ -207,9 +207,6 @@ export default {
         <div class="content mt-10 text-left">
           <div class="grid grid-cols-1 gap-4 mt-4">
             <InputDynamic label="Email" :value="email" inputId="emailInput" type="email" :required="true"  @value-updated="email = $event" />
-            <button class="bg-[#476b6b] text-white px-8 py-2 rounded-md font-medium hover:bg-[#223d3d] transition duration-300 ease-in-out" @click="onSend">
-              Send
-            </button>
           </div>
           <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-10">
             <div>
@@ -228,6 +225,9 @@ export default {
               </div>
             </div>
           </div>
+          <button class="bg-[#476b6b] text-white px-8 py-2 rounded-md font-medium hover:bg-[#223d3d] transition duration-300 ease-in-out" @click="onSend">
+            Send
+          </button>
         </div>
       </div>
     </div>

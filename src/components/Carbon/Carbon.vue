@@ -23,7 +23,7 @@ export default {
       transportationType: ['Economy', 'Premium'],
       currency: ['USD', 'EUR', 'IDR'],
       distanceTypeCar: ['Kilometer', 'Miles'],
-      calculateTypeCar: ['Distance', 'Hour'],
+      calculateTypeCar: ['Distance'],
       fuelType: ['Diesel', 'Gasoline (Petrol)', 'Biodiesel'],
       localTransportationType: '',
       allMetricCalc: [],
@@ -61,10 +61,10 @@ export default {
           title: 'One Trips',
           value: 'One Trips',
         },
-        {
-          title: 'Multiple Trips',
-          value: 'Multiple Trips',
-        },
+        // {
+        //   title: 'Multiple Trips',
+        //   value: 'Multiple Trips',
+        // },
         {
           title: 'Charter',
           value: 'Charter',
@@ -816,7 +816,7 @@ export default {
         </div>
 
         <button class="bg-[#476b6b] mt-4 text-white px-8 py-2 rounded-md font-medium hover:bg-[#223d3d] transition duration-300 ease-in-out" @click="onSubmit">
-          Calculation
+          Calculate
         </button>
       </div>
       <div class="right-section border-[1px] border-[#cccccc] rounded-md py-4 px-6 bg-white bg-opacity-50">
