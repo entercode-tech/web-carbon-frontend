@@ -114,8 +114,8 @@ export default {
       <div class="bg-white text-left p-10 z-10 rounded-lg bg-opacity-70 backdrop-blur-2xl w-[80%]">
         <div class="flex items-center">
           <div class="header text-left">
-            <h1 class="text-2xl font-bold text-[#2e2e2e]">Hello, {{ this.firstName + ' ' + this.lastName }}</h1>
-            <p class="text-sm text-[#2e2e2e] mt-1">Thank you for helping us by donating, whatever your donation is, it means a lot to us.</p>
+            <h1 class="text-2xl font-bold text-[#2e2e2e]">{{ $t('allPostCard.title') }} {{ this.firstName + ' ' + this.lastName }}</h1>
+            <p class="text-sm text-[#2e2e2e] mt-1">{{ $t('allPostCard.description') }}</p>
           </div>
         </div>
 

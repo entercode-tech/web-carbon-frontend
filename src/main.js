@@ -4,6 +4,7 @@ import { createPinia } from 'pinia'
 import App from './App.vue'
 import router from './router'
 import { useMainStore } from '@/stores/main.js'
+import i18n from './components/Lang/i18n';
 
 import './css/main.css'
 
@@ -40,7 +41,7 @@ const startTimer = () => {
   window.onkeypress = resetTimer;
 };
 
-createApp(App).use(router).use(pinia).mount('#app') .$nextTick(() => {
+createApp(App).use(router).use(pinia).use(i18n).mount('#app') .$nextTick(() => {
     startTimer();
   });
 

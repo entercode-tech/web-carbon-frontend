@@ -7,37 +7,38 @@
     </div>
 
     <!-- Desktop Menu -->
-    <ul class="hidden md:flex space-x-6">
-      <li>
-        <router-link to="/" class="text-white font-medium text-xl">
-          Home
-        </router-link>
-      </li>
-      <li>
-        <router-link to="/about" class="text-white font-medium text-xl">
-          About
-        </router-link>
-      </li>
-      <li>
-        <router-link to="/all-postcard" class="text-white font-medium text-xl">
-          Post Card
-        </router-link>
-      </li>
-      <li>
-        <router-link to="/carbon" class="text-white font-medium text-xl">
-          Carbon
-        </router-link>
-      </li>
-    </ul>
-    <ul class="flex space-x-4 hidden md:block">
-      <li>
-        <router-link to="/donation" class="text-white">
-          <button class="bg-[#476b6b] px-8 py-2 rounded-md font-medium hover:bg-[#223d3d] transition duration-300 ease-in-out">
-            Donation
-          </button>
-        </router-link>
-      </li>
-    </ul>
+   <ul class="hidden md:flex space-x-6">
+    <li>
+      <router-link to="/" class="text-white font-medium text-xl">
+        {{ $t('navbar.0') }}
+      </router-link>
+    </li>
+    <li>
+      <router-link to="/about" class="text-white font-medium text-xl">
+        {{ $t('navbar.1') }}
+      </router-link>
+    </li>
+    <li>
+      <router-link to="/all-postcard" class="text-white font-medium text-xl">
+        {{ $t('navbar.2') }}
+      </router-link>
+    </li>
+    <li>
+      <router-link to="/carbon" class="text-white font-medium text-xl">
+        {{ $t('navbar.3') }}
+      </router-link>
+    </li>
+  </ul>
+  <ul class="flex space-x-4 hidden md:block">
+    <li>
+      <router-link to="/donation" class="text-white">
+        <button class="bg-[#476b6b] px-8 py-2 rounded-md font-medium hover:bg-[#223d3d] transition duration-300 ease-in-out">
+          {{ $t('navbar.4') }}
+        </button>
+      </router-link>
+    </li>
+  </ul>
+
 
     <!-- Mobile Menu (Hamburger Menu) -->
     <div class="md:hidden relative">
@@ -58,32 +59,33 @@
       >
         <li>
           <router-link to="/" class="text-white font-medium text-lg">
-            Home
+            {{ $t('navbar.0') }}
           </router-link>
         </li>
         <li>
           <router-link to="/about" class="text-white font-medium text-lg">
-            About
+            {{ $t('navbar.1') }}
           </router-link>
         </li>
         <li>
           <router-link to="/all-postcard" class="text-white font-medium text-lg">
-            Post Card
+            {{ $t('navbar.2') }}
           </router-link>
         </li>
         <li>
           <router-link to="/carbon" class="text-white font-medium text-lg">
-            Carbon
+            {{ $t('navbar.3') }}
           </router-link>
         </li>
         <li>
           <router-link to="/donation" class="text-white">
             <button class="bg-[#476b6b] w-full px-8 py-2 rounded-md font-medium hover:bg-[#223d3d] transition duration-300 ease-in-out">
-              Donation
+              {{ $t('navbar.4') }}
             </button>
           </router-link>
         </li>
       </ul>
+
     </div>
   </nav>
 </template>

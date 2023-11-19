@@ -144,8 +144,8 @@ export default {
             </svg>
           </div>
           <div class="header text-left">
-            <h1 class="text-md md:text-2xl font-bold text-[#2e2e2e]">Fill Out the Form First</h1>
-            <p class="text-xs md:text-sm text-[#2e2e2e] mt-1">Fill in your details to continue the Carbon calculation process.</p>
+            <h1 class="text-md md:text-2xl font-bold text-[#2e2e2e]">{{ $t('formUser.formTitle') }}</h1>
+            <p class="text-xs md:text-sm text-[#2e2e2e] mt-1">{{ $t('formUser.formSubtitle') }}</p>
           </div>
         </div>
 
@@ -154,22 +154,21 @@ export default {
             <div class="grid grid-cols-1 gap-4">
               <div class="left-section border-[1px] border-[#cccccc] rounded-md py-4 px-6 bg-white bg-opacity-50">
                 <h1 class="text-xl font-semibold">
-                  Biodata Form
+                  {{ $t('formUser.biodataSection') }}
                 </h1>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
-                  <InputDynamic label="First Name" :value="firstName" inputId="namaDepanInput" type="text" :required="true" @value-updated="firstName = $event" />
 
-                  <InputDynamic label="Last Name" :value="lastName" inputId="namaBelakangInput" type="text" :required="true"  @value-updated="lastName = $event" />
+                  <InputDynamic :label="$t('formUser.firstNameLabel')" :value="firstName" inputId="namaDepanInput" type="text" :required="true" @value-updated="firstName = $event" />
+                  <InputDynamic :label="$t('formUser.lastNameLabel')" :value="lastName" inputId="namaBelakangInput" type="text" :required="true"  @value-updated="lastName = $event" />
                 </div>
-
                 <div class="grid grid-cols-1 gap-4 mt-4">
-                  <InputDynamic label="Email" :value="email" inputId="emailInput" type="email" :required="true"  @value-updated="email = $event" />
+                  <InputDynamic :label="$t('formUser.emailLabel')" :value="email" inputId="emailInput" type="email" :required="true"  @value-updated="email = $event" />
                 </div>
               </div>
               <div class="left-section border-[1px] border-[#cccccc] rounded-md py-4 px-6 bg-white bg-opacity-50">
                 <h1 class="text-xl font-semibold">
-                  Location
+                  {{ $t('formUser.locationSection') }}
                 </h1>
 
                 <div class="grid grid-cols-1 gap-4 mt-4">
@@ -187,7 +186,7 @@ export default {
               </div>
             </div>
             <button class="bg-[#476b6b] mt-4 text-white px-8 py-2 rounded-md font-medium hover:bg-[#223d3d] transition duration-300 ease-in-out" @click="onSubmit">
-              Submit
+              {{ $t('formUser.submitButton') }}
             </button>
           </div>
         </div>

@@ -33,9 +33,9 @@
 
       <div class="flex items-center pl-[10%] h-screen w-full absolute z-10">
         <div class="w-[40%]">
-          <h1 class="text-6xl text-white font-extrabold">Tackling Pollution Solutions for a Clean Future</h1>
-          <p class="text-md text-white font-normal mt-4">In an increasingly environmentally conscious era, pursuing solutions to tackle pollution is an important step towards a clean and sustainable future.</p>
-          <Button class="mt-6" label="Carbon" @trigger="onCarbon" />
+          <h1 class="text-6xl text-white font-extrabold">{{ $t('landingPage.title') }}</h1>
+          <p class="text-md text-white font-normal mt-4">{{ $t('landingPage.description') }}</p>
+          <Button class="mt-6" :label="$t('landingPage.button')" @trigger="onCarbon" />
         </div>
       </div>
     </div>

@@ -1,7 +1,7 @@
 <template>
   <div>
     <label class="mb-2">
-      Location
+      {{ $t('formUser.locationSection') }}
       <span class="text-red-500">*</span>
     </label>
     <GoogleAddressAutocomplete 
