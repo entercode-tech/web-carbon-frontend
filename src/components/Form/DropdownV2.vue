@@ -23,17 +23,15 @@
   </div>
 </template>
 
-
 <script>
 export default {
   props: {
     options: Array,
-    placeholder: String,
   },
   data() {
     return {
       isDropdownOpen: false,
-      selectedOption: null,
+      selectedOption: this.options.length > 0 ? this.options[0] : null,
     };
   },
   methods: {

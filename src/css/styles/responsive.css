@@ -1,0 +1,10 @@
+@media (max-width: 567px) {
+  .resp-box {
+    padding: 20px 15px !important;
+    width: 94% !important;
+  }
+
+  .resp-text-title {
+    font-size: 38px;
+  }
+}

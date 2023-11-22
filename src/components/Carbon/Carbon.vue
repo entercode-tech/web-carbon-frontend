@@ -538,7 +538,7 @@ export default {
             
             <div v-if="tripsType === 'One Trips'">
               <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6">
-                <Dropdown :options="departureType" placeholder="Select Option" @selected="onSelectDepartureType" />
+                <Dropdown :options="departureType" @selected="onSelectDepartureType" />
 
                 <div class="flex items-center border-[1px] border-[#163331] rounded-md pl-4">
                   <svg width="20" height="20" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" fill="#163331" class="bi bi-people-fill">
@@ -549,11 +549,11 @@ export default {
                   <input type="number" v-model="manyPeople" class="bg-transparent w-full border-none outline-none focus:outline-none">
                 </div>
 
-                <Dropdown class="mr-4" :options="transportationType" placeholder="Select Option" @selected="onSelectTransportationType" />
+                <Dropdown class="mr-4" :options="transportationType" @selected="onSelectTransportationType" />
               </div>
 
               <div v-for="(item, index) in totalFlightComponent" :key="index" class="mt-6 flex items-center">
-                <InputAutoComplete class="w-full" placeholder="Select Option" @selected="onSelectFlightFrom" />
+                <InputAutoComplete class="w-full" @selected="onSelectFlightFrom" />
                 
                 <svg width="40" height="40" class="mx-4" viewBox="0 -9 32 32" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns">
                     <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage">
@@ -563,7 +563,7 @@ export default {
                     </g>
                 </svg>
 
-                <InputAutoComplete class="w-full" placeholder="Select Option" @selected="onSelectFlightTo" />
+                <InputAutoComplete class="w-full" @selected="onSelectFlightTo" />
               </div>
               <div v-if="selectDepartureType === 'Multi City'">
                 <button class="bg-[#476b6b] w-full mt-4 text-white px-8 py-2 rounded-md font-medium hover:bg-[#223d3d] transition duration-300 ease-in-out" @click="onAddAnotherFlight">
@@ -576,7 +576,7 @@ export default {
                 How many round-trip flights do you want to be compensated for?
               </h1>
               
-              <Dropdown class="mt-6" :options="transportationType" placeholder="Select Option" @selected="onSelectTransportationType" />
+              <Dropdown class="mt-6" :options="transportationType" @selected="onSelectTransportationType" />
 
               <div class="flex items-center justify-between mt-6">
                 <div class="flex items-center">
@@ -653,7 +653,7 @@ export default {
                     </h1>
                   </div>
                 </div>
-                <DropdownV2 class="mt-6" :options="airplaneType" placeholder="Select Option" @selected="onSelectAirplaneType" />
+                <DropdownV2 class="mt-6" :options="airplaneType" @selected="onSelectAirplaneType" />
               </div>
               <div class="flex items-center justify-between mt-2">
                 <div class="flex items-center">
@@ -690,7 +690,7 @@ export default {
                   </h1>
                 </div>
               </div>
-              <DropdownV2 class="mt-6" :options="vehicleType" placeholder="Select Option" @selected="onSelectVehicleType" />
+              <DropdownV2 class="mt-6" :options="vehicleType" @selected="onSelectVehicleType" />
             </div>
             <div class="flex items-center justify-between mt-2">
               <div class="flex items-center">
@@ -809,7 +809,7 @@ export default {
                     </h1>
                   </div>
                 </div>
-                <Dropdown class="mt-6" :options="fuelType" placeholder="Select Option" @selected="onSelectFuelType" />
+                <Dropdown class="mt-6" :options="fuelType" @selected="onSelectFuelType" />
               </div>
             </div>
           </div>
