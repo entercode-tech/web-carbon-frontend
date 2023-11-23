@@ -4,7 +4,68 @@
     width: 94% !important;
   }
 
+  .resp-box2 {
+    top: 40px;
+    right: 15px;
+    padding: 5px 10px;
+  }
+
   .resp-text-title {
     font-size: 38px;
+  }
+
+  .resp-text-title2 {
+    font-size: 14px;
+  }
+
+  .resp-text-title3 {
+    font-size: 8px;
+  }
+
+  .resp-col {
+    grid-column: span 3 / span 3;
+  }
+
+  .resp-flex {
+    flex-direction: column;
+  }
+
+  .resp-h {
+    height: 200px;
+  }
+
+  .resp-logo {
+    top: 7px;
+    left: 15px;
+  }
+
+  .resp-right {
+    top: 7px;
+    right: 15px;
+  }
+
+  .resp-img-logo {
+    height: 17px;
+  }
+
+  .resp-capture {
+    width: 100px;
+    height: 100px;
+    top: 24.5%;
+    left: 10.5%;
+  }
+
+  .resp-svg {
+    width: 50%;
+    height: 50px;
+    margin-top: -10px;
+  }
+
+  .resp-my {
+    margin: 0;
+  }
+
+  .resp-text-md {
+    font-size: 8px;
   }
 }
