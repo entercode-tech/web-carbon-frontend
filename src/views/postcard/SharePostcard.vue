@@ -43,77 +43,78 @@ export default {
       sharePostcard: null,
       email: '',
       dataPostcard: [],
+      uniq: '',
       selectFile: [],
       isSave: false,
       modalShow: false,
       allIncludeFile: [
 
-        {
-          "id": 1,
-          "uniq_id": "1697978515000",
-          "name": "test included files",
-          "image_path": "http://localhost:8000/storage/images/included_files/1697978515.jpg",
-          "created_at": "2023-10-22T12:41:55.000000Z",
-          "updated_at": "2023-10-22T12:41:55.000000Z"
-        },{
-          "id": 2,
-          "uniq_id": "1697978515000",
-          "name": "test included files",
-          "image_path": "http://localhost:8000/storage/images/included_files/1697978515.jpg",
-          "created_at": "2023-10-22T12:41:55.000000Z",
-          "updated_at": "2023-10-22T12:41:55.000000Z"
-        },{
-          "id": 3,
-          "uniq_id": "1697978515000",
-          "name": "test included files",
-          "image_path": "http://localhost:8000/storage/images/included_files/1697978515.jpg",
-          "created_at": "2023-10-22T12:41:55.000000Z",
-          "updated_at": "2023-10-22T12:41:55.000000Z"
-        },
-        {
-          "id": 4,
-          "uniq_id": "1697978515000",
-          "name": "test included files",
-          "image_path": "http://localhost:8000/storage/images/included_files/1697978515.jpg",
-          "created_at": "2023-10-22T12:41:55.000000Z",
-          "updated_at": "2023-10-22T12:41:55.000000Z"
-        },{
-          "id": 5,
-          "uniq_id": "1697978515000",
-          "name": "test included files",
-          "image_path": "http://localhost:8000/storage/images/included_files/1697978515.jpg",
-          "created_at": "2023-10-22T12:41:55.000000Z",
-          "updated_at": "2023-10-22T12:41:55.000000Z"
-        },{
-          "id": 6,
-          "uniq_id": "1697978515000",
-          "name": "test included files",
-          "image_path": "http://localhost:8000/storage/images/included_files/1697978515.jpg",
-          "created_at": "2023-10-22T12:41:55.000000Z",
-          "updated_at": "2023-10-22T12:41:55.000000Z"
-        },
-        {
-          "id": 7,
-          "uniq_id": "1697978515000",
-          "name": "test included files",
-          "image_path": "http://localhost:8000/storage/images/included_files/1697978515.jpg",
-          "created_at": "2023-10-22T12:41:55.000000Z",
-          "updated_at": "2023-10-22T12:41:55.000000Z"
-        },{
-          "id": 8,
-          "uniq_id": "1697978515000",
-          "name": "test included files",
-          "image_path": "http://localhost:8000/storage/images/included_files/1697978515.jpg",
-          "created_at": "2023-10-22T12:41:55.000000Z",
-          "updated_at": "2023-10-22T12:41:55.000000Z"
-        },{
-          "id": 9,
-          "uniq_id": "1697978515000",
-          "name": "test included files",
-          "image_path": "http://localhost:8000/storage/images/included_files/1697978515.jpg",
-          "created_at": "2023-10-22T12:41:55.000000Z",
-          "updated_at": "2023-10-22T12:41:55.000000Z"
-        }
+        // {
+        //   "id": 1,
+        //   "uniq_id": "1697978515000",
+        //   "name": "test included files",
+        //   "image_path": "http://localhost:8000/storage/images/included_files/1697978515.jpg",
+        //   "created_at": "2023-10-22T12:41:55.000000Z",
+        //   "updated_at": "2023-10-22T12:41:55.000000Z"
+        // },{
+        //   "id": 2,
+        //   "uniq_id": "1697978515000",
+        //   "name": "test included files",
+        //   "image_path": "http://localhost:8000/storage/images/included_files/1697978515.jpg",
+        //   "created_at": "2023-10-22T12:41:55.000000Z",
+        //   "updated_at": "2023-10-22T12:41:55.000000Z"
+        // },{
+        //   "id": 3,
+        //   "uniq_id": "1697978515000",
+        //   "name": "test included files",
+        //   "image_path": "http://localhost:8000/storage/images/included_files/1697978515.jpg",
+        //   "created_at": "2023-10-22T12:41:55.000000Z",
+        //   "updated_at": "2023-10-22T12:41:55.000000Z"
+        // },
+        // {
+        //   "id": 4,
+        //   "uniq_id": "1697978515000",
+        //   "name": "test included files",
+        //   "image_path": "http://localhost:8000/storage/images/included_files/1697978515.jpg",
+        //   "created_at": "2023-10-22T12:41:55.000000Z",
+        //   "updated_at": "2023-10-22T12:41:55.000000Z"
+        // },{
+        //   "id": 5,
+        //   "uniq_id": "1697978515000",
+        //   "name": "test included files",
+        //   "image_path": "http://localhost:8000/storage/images/included_files/1697978515.jpg",
+        //   "created_at": "2023-10-22T12:41:55.000000Z",
+        //   "updated_at": "2023-10-22T12:41:55.000000Z"
+        // },{
+        //   "id": 6,
+        //   "uniq_id": "1697978515000",
+        //   "name": "test included files",
+        //   "image_path": "http://localhost:8000/storage/images/included_files/1697978515.jpg",
+        //   "created_at": "2023-10-22T12:41:55.000000Z",
+        //   "updated_at": "2023-10-22T12:41:55.000000Z"
+        // },
+        // {
+        //   "id": 7,
+        //   "uniq_id": "1697978515000",
+        //   "name": "test included files",
+        //   "image_path": "http://localhost:8000/storage/images/included_files/1697978515.jpg",
+        //   "created_at": "2023-10-22T12:41:55.000000Z",
+        //   "updated_at": "2023-10-22T12:41:55.000000Z"
+        // },{
+        //   "id": 8,
+        //   "uniq_id": "1697978515000",
+        //   "name": "test included files",
+        //   "image_path": "http://localhost:8000/storage/images/included_files/1697978515.jpg",
+        //   "created_at": "2023-10-22T12:41:55.000000Z",
+        //   "updated_at": "2023-10-22T12:41:55.000000Z"
+        // },{
+        //   "id": 9,
+        //   "uniq_id": "1697978515000",
+        //   "name": "test included files",
+        //   "image_path": "http://localhost:8000/storage/images/included_files/1697978515.jpg",
+        //   "created_at": "2023-10-22T12:41:55.000000Z",
+        //   "updated_at": "2023-10-22T12:41:55.000000Z"
+        // }
       
       ],
     };
@@ -125,27 +126,43 @@ export default {
   },
   mounted() {
     const code = this.$route.params.code;
+  
+    axios.get(`${this.apiDomain}/api/v1/included-files`)
+      .then(res => {
+        this.allIncludeFile = res.data.data
+      })
 
     axios.get(`${this.apiDomain}/api/v1/postcards?code=${code}`)
-    .then(response => {
-      this.dataPostcard = response.data.data[0]
-    })
-    .catch(error => {
-      let errorMessage = "An error occurred";
-      if (error.message) {
-        errorMessage = error.message;
-      }
+      .then(response => {
+        console.log(response.data.data);
+        if (response.data.data.length > 0) {
+          this.dataPostcard = response.data.data[0];
+          this.uniq = response.data.data[0].uniq;
+        } else {
+          // Tampilkan pesan jika postcard tidak ditemukan
+          Swal.fire({
+            icon: 'error',
+            title: 'Error!',
+            text: 'Postcard not found',
+          });
+        }
+      })
+      .catch(error => {
+        let errorMessage = "An error occurred";
+        if (error.message) {
+          errorMessage = error.message;
+        }
 
-      Swal.fire({
-        icon: 'error',
-        title: 'Error!',
-        text: errorMessage,
+        Swal.fire({
+          icon: 'error',
+          title: 'Error!',
+          text: errorMessage,
+        });
       });
-    });
   },
   methods: {
     async onSend() {
-      const uniq_id = '1698910315000';
+      const uniq_id = '-9972216';
 
       const payload = {};
       payload.included_files = this.selectFile
