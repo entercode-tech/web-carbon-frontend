@@ -19,7 +19,7 @@ export default {
       apiKeyCarbon: import.meta.env.VITE_API_KEY_CARBON,
       apiDomainCarbon: import.meta.env.VITE_API_URL_CARBON,
       CloudIcon: CloudIcon,
-      departureType: ['Going Home', 'One Way', 'Multi City'],
+      departureType: ['Round Trip', 'One Way', 'Multi-City'],
       transportationType: ['Economy', 'Premium'],
       currency: ['USD', 'EUR', 'IDR'],
       distanceTypeCar: ['Kilometer', 'Miles'],
@@ -84,7 +84,7 @@ export default {
           value: 'Yacht',
         },
       ],
-      tripsType: '',
+      tripsType: 'One Trips',
       tripsBoatType: '',
       dayBoat: 0,
       peopleBoat: 0,
@@ -144,6 +144,8 @@ export default {
       this.totalFlightComponent = this.totalFlightComponent+1;
     },
     onSubmit() {
+      let load = document.querySelector('.in-load')
+      load.innerHTML += '<i class="ml-2 fa-solid fa-circle-notch load"></i>'
       this.isDoneCalc = false
       if(this.section === 'flight') {
         this.localTransportationType = 'Flight';
@@ -230,7 +232,7 @@ export default {
         }
 
       }
-      
+      load.innerHTML = 'Calculate'
       this.isDoneCalc = true
     },
     async fetchDataAirplane(){
@@ -462,6 +464,8 @@ export default {
       });
     },
     onPostcard(){
+      let load = document.querySelector('.in-load2')
+      load.innerHTML += '<i class="ml-2 fa-solid fa-circle-notch load"></i>'
       const data = {}
       data.transportationType = this.localTransportationType
       data.tripType = this.localTripType
@@ -538,7 +542,7 @@ export default {
             
             <div v-if="tripsType === 'One Trips'">
               <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6">
-                <Dropdown :options="departureType" @selected="onSelectDepartureType" />
+                <Dropdown :options="departureType" @selected="onSelectDepartureType" defaultValue="Round Trip" />
 
                 <div class="flex items-center border-[1px] border-[#163331] rounded-md pl-4">
                   <svg width="20" height="20" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" fill="#163331" class="bi bi-people-fill">
@@ -549,7 +553,7 @@ export default {
                   <input type="number" v-model="manyPeople" class="bg-transparent w-full border-none outline-none focus:outline-none">
                 </div>
 
-                <Dropdown class="mr-4" :options="transportationType" @selected="onSelectTransportationType" />
+                <Dropdown class="mr-4" :options="transportationType" @selected="onSelectTransportationType" defaultValue="Economy" />
               </div>
 
               <div v-for="(item, index) in totalFlightComponent" :key="index" class="mt-6 flex items-center">
@@ -815,7 +819,7 @@ export default {
           </div>
         </div>
 
-        <button class="bg-[#476b6b] mt-4 text-white px-8 py-2 rounded-md font-medium hover:bg-[#223d3d] transition duration-300 ease-in-out" @click="onSubmit">
+        <button class="in-load bg-[#476b6b] mt-4 text-white px-8 py-2 rounded-md font-medium hover:bg-[#223d3d] transition duration-300 ease-in-out" @click="onSubmit">
           Calculate
         </button>
       </div>
@@ -900,7 +904,7 @@ export default {
           <Dropdown :options="currency" placeholder="USD" @selected="onSelectCurrency" />
         </div>
 
-        <button v-if="isDoneLoad" class="bg-[#476b6b] w-full mt-4 text-white px-8 py-2 rounded-md font-medium hover:bg-[#223d3d] transition duration-300 ease-in-out" @click="onPostcard">
+        <button v-if="isDoneLoad" class="in-load2 bg-[#476b6b] w-full mt-4 text-white px-8 py-2 rounded-md font-medium hover:bg-[#223d3d] transition duration-300 ease-in-out" @click="onPostcard">
           Submit
         </button>
       </div>

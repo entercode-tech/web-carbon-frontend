@@ -27,11 +27,12 @@
 export default {
   props: {
     options: Array,
+    defaultValue: String, // Tambahkan properti defaultValue
   },
   data() {
     return {
       isDropdownOpen: false,
-      selectedOption: this.options.length > 0 ? this.options[0] : null,
+      selectedOption: this.defaultValue || (this.options.length > 0 ? this.options[0] : null),
     };
   },
   methods: {

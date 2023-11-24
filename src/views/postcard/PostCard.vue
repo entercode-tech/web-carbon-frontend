@@ -124,6 +124,8 @@ export default {
     },
     onSave() {
       const self = this; 
+      let load = document.querySelector('.in-load')
+      load.innerHTML += '<i class="ml-2 fa-solid fa-circle-notch load"></i>'
 
       htmlToImage.toJpeg(document.getElementById('postcard_download'), { quality: 0.95 })
       .then(function (dataUrl) {
@@ -155,6 +157,7 @@ export default {
           });
         })
         .catch(error => {
+          load.innerHTML = 'Save'
           let errorMessage = "An error occurred";
           if (error.message) {
             errorMessage = error.message;
@@ -439,7 +442,7 @@ export default {
               Next Step
             </button>
             <div v-if="step === 3">
-              <button v-if="!isSave" class="bg-[#476b6b] mt-4 text-white px-8 py-2 rounded-md font-medium hover:bg-[#223d3d] transition duration-300 ease-in-out" @click="onSave">
+              <button v-if="!isSave" class="in-load bg-[#476b6b] mt-4 text-white px-8 py-2 rounded-md font-medium hover:bg-[#223d3d] transition duration-300 ease-in-out" @click="onSave">
                 Save
               </button>
               <button v-else class="bg-[#476b6b] mt-4 text-white px-8 py-2 rounded-md font-medium hover:bg-[#223d3d] transition duration-300 ease-in-out" @click="onShare">

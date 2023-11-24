@@ -67,6 +67,8 @@ export default {
   },
   methods: {
     onSubmit() {
+      let load = document.querySelector('.in-load')
+      load.innerHTML += '<i class="ml-2 fa-solid fa-circle-notch load"></i>'
       if (!this.firstName || !this.address || !this.lastName || !this.email) {
         Swal.fire({
           icon: 'error',
@@ -101,6 +103,7 @@ export default {
           if (error.message) {
             errorMessage = error.message;
           }
+          load.innerHTML = 'Submit'
 
           Swal.fire({
             icon: 'error',
@@ -185,7 +188,7 @@ export default {
                 </div>
               </div>
             </div>
-            <button class="bg-[#476b6b] mt-4 text-white px-8 py-2 rounded-md font-medium hover:bg-[#223d3d] transition duration-300 ease-in-out" @click="onSubmit">
+            <button class="in-load bg-[#476b6b] mt-4 text-white px-8 py-2 rounded-md font-medium hover:bg-[#223d3d] transition duration-300 ease-in-out" @click="onSubmit">
               {{ $t('formUser.submitButton') }}
             </button>
           </div>

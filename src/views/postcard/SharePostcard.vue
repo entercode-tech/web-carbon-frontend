@@ -162,7 +162,9 @@ export default {
   },
   methods: {
     async onSend() {
-      const uniq_id = '-9972216';
+      const uniq_id = uniq;
+      let load = document.querySelector('.in-load')
+      load.innerHTML += '<i class="ml-2 fa-solid fa-circle-notch load"></i>'
 
       const payload = {};
       payload.included_files = this.selectFile
@@ -182,6 +184,7 @@ export default {
           });
         })
         .catch(error => {
+          load.innerHTML += 'Send'
           let errorMessage = "An error occurred";
           if (error.message) {
             errorMessage = error.message;
