@@ -13,7 +13,8 @@ export default {
   },
   data() {
     return {
-      selectedOption: ''
+      // Set nilai default ke nilai dari radio pertama
+      selectedOption: this.listRadioButton.length > 0 ? this.listRadioButton[0].value : ''
     };
   },
   methods: {
