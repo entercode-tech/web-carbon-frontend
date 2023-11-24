@@ -137,7 +137,7 @@ export default {
         console.log(response.data.data);
         if (response.data.data.length > 0) {
           this.dataPostcard = response.data.data[0];
-          this.uniq = response.data.data[0].uniq;
+          this.uniq = response.data.data[0].uniq_id;
         } else {
           // Tampilkan pesan jika postcard tidak ditemukan
           Swal.fire({
@@ -162,7 +162,7 @@ export default {
   },
   methods: {
     async onSend() {
-      const uniq_id = uniq;
+      const uniq_id = this.uniq;
       let load = document.querySelector('.in-load')
       load.innerHTML += '<i class="ml-2 fa-solid fa-circle-notch load"></i>'
 
@@ -184,7 +184,7 @@ export default {
           });
         })
         .catch(error => {
-          load.innerHTML += 'Send'
+          load.innerHTML = 'Send'
           let errorMessage = "An error occurred";
           if (error.message) {
             errorMessage = error.message;
@@ -245,7 +245,7 @@ export default {
               </div>
             </div>
           </div>
-          <button class="bg-[#476b6b] text-white px-8 mt-4 py-2 rounded-md font-medium hover:bg-[#223d3d] transition duration-300 ease-in-out" @click="onSend">
+          <button class="in-load bg-[#476b6b] text-white px-8 mt-4 py-2 rounded-md font-medium hover:bg-[#223d3d] transition duration-300 ease-in-out" @click="onSend">
             Send
           </button>
         </div>
