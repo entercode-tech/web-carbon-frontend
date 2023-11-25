@@ -22,21 +22,8 @@ export default [
         to: '/profile'
       },
       {
-        icon: mdiCogOutline,
-        label: 'Settings'
-      },
-      {
-        icon: mdiEmail,
-        label: 'Messages'
-      },
-      {
         isDivider: true
       },
-      {
-        icon: mdiLogout,
-        label: 'Log Out',
-        isLogout: true
-      }
     ]
   },
   {

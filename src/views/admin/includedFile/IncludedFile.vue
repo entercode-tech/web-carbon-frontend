@@ -206,7 +206,7 @@ export default {
             <tr v-for="(item, index) in fileList" :key="index">
               <td>{{ index + 1 }}</td>
               <td>
-                <a class="bg-[#476b6b] text-white px-4 py-2 rounded-md" :href="item.image_path" target="download">Download</a>
+                <a :href="item.file_path" style="crusor: pointer" class="bg-[#476b6b] text-white px-4 py-2 rounded-md" target="_blank">Lihat</a>
               </td>
               <td>{{ item.name }}</td>
               <td>

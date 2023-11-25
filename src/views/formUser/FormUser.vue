@@ -162,11 +162,11 @@ export default {
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
 
-                  <InputDynamic :label="$t('formUser.firstNameLabel')" :value="firstName" inputId="namaDepanInput" type="text" :required="true" @value-updated="firstName = $event" />
-                  <InputDynamic :label="$t('formUser.lastNameLabel')" :value="lastName" inputId="namaBelakangInput" type="text" :required="true"  @value-updated="lastName = $event" />
+                  <InputDynamic placeholder="First Name?" :label="$t('formUser.firstNameLabel')" :value="firstName" inputId="namaDepanInput" type="text" :required="true" @value-updated="firstName = $event" />
+                  <InputDynamic placeholder="Last Name" :label="$t('formUser.lastNameLabel')" :value="lastName" inputId="namaBelakangInput" type="text" :required="true"  @value-updated="lastName = $event" />
                 </div>
                 <div class="grid grid-cols-1 gap-4 mt-4">
-                  <InputDynamic :label="$t('formUser.emailLabel')" :value="email" inputId="emailInput" type="email" :required="true"  @value-updated="email = $event" />
+                  <InputDynamic placeholder="Your Email?" :label="$t('formUser.emailLabel')" :value="email" inputId="emailInput" type="email" :required="true"  @value-updated="email = $event" />
                 </div>
               </div>
               <div class="left-section border-[1px] border-[#cccccc] rounded-md py-4 px-6 bg-white bg-opacity-50">

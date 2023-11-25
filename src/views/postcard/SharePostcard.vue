@@ -165,11 +165,9 @@ export default {
       const uniq_id = this.uniq;
       let load = document.querySelector('.in-load')
       load.innerHTML += '<i class="ml-2 fa-solid fa-circle-notch load"></i>'
-
       const payload = {};
       payload.included_files = this.selectFile
-
-      axios.post(`${this.apiDomain}/api/v1/postcards/${uniq_id}/send-email`)
+      axios.post(`${this.apiDomain}/api/v1/postcards/${uniq_id}/send-email`, payload)
         .then(response => {
           Swal.fire({
             icon: 'success',
@@ -226,12 +224,12 @@ export default {
 
         <div class="content mt-10 text-left">
           <div class="grid grid-cols-1 gap-4 mt-4">
-            <InputDynamic label="Email" :value="email" inputId="emailInput" type="email" :required="true"  @value-updated="email = $event" />
+            <InputDynamic placeholder="Email ?" label="Email" :value="email" inputId="emailInput" type="email" :required="true"  @value-updated="email = $event" />
           </div>
           <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-10">
-            <div>
+            <!-- <div>
               <img :src="dataPostcard.file_carbon_path" class="rounded-lg" alt="">
-            </div>
+            </div> -->
             <div>
               <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <div v-for="file in allIncludeFile" :key="file.id">

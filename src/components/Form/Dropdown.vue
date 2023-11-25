@@ -32,7 +32,7 @@ export default {
   data() {
     return {
       isDropdownOpen: false,
-      selectedOption: this.defaultValue || (this.options.length > 0 ? this.options[0] : null),
+      selectedOption: (this.options.length > 0 ? this.options[0] : null),
     };
   },
   methods: {

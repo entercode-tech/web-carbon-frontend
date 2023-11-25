@@ -2,7 +2,8 @@
   <div class="dropdown">
     <input
       type="text"
-      :value="value"
+      :value="value" 
+      :placeholder="placeholder"
       @input="updateValue"
       class="border-[1px] border-[#163331] w-full bg-transparent bg-opacity-50 rounded-md"
     />

@@ -4,7 +4,7 @@
       {{ label }}
       <span class="text-red-500" v-if="required">*</span>
     </label>
-    <input :id="inputId" :type="type" :value="value" @input="updateValue" :required="required" class="border-[1px] mt-2 border-[#cccccc] w-full bg-white bg-opacity-50 rounded-md">
+    <input :id="inputId" :type="type" :placeholder="placeholder" :value="value" @input="updateValue" :required="required" class="border-[1px] mt-2 border-[#cccccc] w-full bg-white bg-opacity-50 rounded-md">
   </div>
 </template>
 
@@ -15,6 +15,7 @@ export default {
     value: String,
     inputId: String,
     type: String,
+    placeholder: String,
     required: Boolean,
   },
   methods: {

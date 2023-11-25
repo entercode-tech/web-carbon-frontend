@@ -9,18 +9,8 @@
     <!-- Desktop Menu -->
    <ul class="hidden md:flex space-x-6">
     <li>
-      <router-link to="/" class="text-white font-medium text-xl">
-        {{ $t('navbar.0') }}
-      </router-link>
-    </li>
-    <li>
-      <router-link to="/about" class="text-white font-medium text-xl">
-        {{ $t('navbar.1') }}
-      </router-link>
-    </li>
-    <li>
       <router-link to="/all-postcard" class="text-white font-medium text-xl">
-        {{ $t('navbar.2') }}
+        Crousel
       </router-link>
     </li>
     <li>
@@ -29,7 +19,7 @@
       </router-link>
     </li>
   </ul>
-  <ul class="flex space-x-4 hidden md:block">
+  <!-- <ul class="flex space-x-4 hidden md:block">
     <li>
       <router-link to="/donation" class="text-white">
         <button class="bg-[#476b6b] px-8 py-2 rounded-md font-medium hover:bg-[#223d3d] transition duration-300 ease-in-out">
@@ -37,7 +27,7 @@
         </button>
       </router-link>
     </li>
-  </ul>
+  </ul> -->
 
 
     <!-- Mobile Menu (Hamburger Menu) -->
@@ -58,18 +48,8 @@
         class="bg-black bg-opacity-80 fixed top-0 right-0 h-screen w-64 z-50 flex flex-col space-y-4 p-10"
       >
         <li>
-          <router-link to="/" class="text-white font-medium text-lg">
-            {{ $t('navbar.0') }}
-          </router-link>
-        </li>
-        <li>
-          <router-link to="/about" class="text-white font-medium text-lg">
-            {{ $t('navbar.1') }}
-          </router-link>
-        </li>
-        <li>
           <router-link to="/all-postcard" class="text-white font-medium text-lg">
-            {{ $t('navbar.2') }}
+            Crousel
           </router-link>
         </li>
         <li>
@@ -77,13 +57,13 @@
             {{ $t('navbar.3') }}
           </router-link>
         </li>
-        <li>
+        <!-- <li>
           <router-link to="/donation" class="text-white">
             <button class="bg-[#476b6b] w-full px-8 py-2 rounded-md font-medium hover:bg-[#223d3d] transition duration-300 ease-in-out">
               {{ $t('navbar.4') }}
             </button>
           </router-link>
-        </li>
+        </li> -->
       </ul>
 
     </div>

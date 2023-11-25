@@ -378,7 +378,7 @@ export default {
                 </div>
 
                 <img class="resp-capture absolute top-[22%] left-[8.3%] rounded-full h-[268px] w-[268px]" :src="profilePhoto" alt="Captured Photo" />
-                <img :src="FramePostcard" class="absolute left-0 top-0 h-full" />
+                <img :src="FramePostcard" class="absolute left-0 top-0 resp-w"  />
                 <img :src="BackgroundPrimary" class="resp-h h-[500px] object-cover w-full" />
 
                 <div class="resp-right absolute top-4 right-6 text-right">
@@ -420,20 +420,19 @@ export default {
                     <h1 class="text-md font-bold mt-4 text-[#2e2e2e]">{{category.category}}</h1>
                     <div class="flex justify-between" v-for="(logData, logIndex) in category.data" :key="logIndex">
                       <h1 class="text-sm font-normal text-[#2e2e2e]">{{logData.title}}</h1>
-                      <h1 class="text-sm font-normal text-[#2e2e2e]">{{logData.metric}} MT</h1>
                     </div>
                   </div>
 
                   <hr class="resp-my text-[#000] border-[1] border-[#000] my-4">
 
-                  <div class="flex justify-between mt-4">
+                  <!-- <div class="flex justify-between mt-4">
                     <h1 class="resp-text-md text-md font-normal text-[#2e2e2e]">Total Metric Tons</h1>
                     <h1 class="resp-text-md text-md font-normal text-[#2e2e2e]">{{totalMetricTons}} MT</h1>
-                  </div>
-                  <div class="flex justify-between">
+                  </div> -->
+                  <!-- <div class="flex justify-between">
                     <h1 class="resp-text-md text-md font-bold text-[#2e2e2e]">Cost to Offset</h1>
                     <h1 class="resp-text-md text-md font-bold text-[#2e2e2e]">$ {{totalCost}}</h1>
-                  </div>
+                  </div> -->
                 </div>
               </div>
             </div>

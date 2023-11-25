@@ -1,7 +1,7 @@
 <template>
   <div class="dropdown">
     <button @click="toggleDropdown" class="flex items-center border-[1px] rounded-md border-[#163331] hover:text-white hover:bg-[#163331] px-4 py-2">
-      {{ selectedOption ? selectedOption.name : placeholder }}
+      {{ selectedOption ? selectedOption.name : zero }}
       <svg
         xmlns="http://www.w3.org/2000/svg"
         class="w-4 h-4 ml-2"
@@ -27,6 +27,7 @@
 export default {
   props: {
     options: Array,
+    zero: String,
   },
   data() {
     return {

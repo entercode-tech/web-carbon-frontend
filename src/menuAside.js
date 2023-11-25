@@ -34,14 +34,14 @@ export default [
     label: 'Template Postcard',
     icon: mdiPalette
   },
-  {
-    to: '/admin/list-donation',
-    label: 'List Donation',
-    icon: mdiViewList
-  },
-  {
-    to: '/admin/list-transaction',
-    label: 'List Transaction',
-    icon: mdiViewList
-  },
+  // {
+  //   to: '/admin/list-donation',
+  //   label: 'List Donation',
+  //   icon: mdiViewList
+  // },
+  // {
+  //   to: '/admin/list-transaction',
+  //   label: 'List Transaction',
+  //   icon: mdiViewList
+  // },
 ]

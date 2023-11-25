@@ -44,9 +44,9 @@ export default {
       selectAirplaneType: null,
       selectVehicleType: null,
       selectFlightType: null,
-      selectDepartureType: null,
+      selectDepartureType: 'Round Trip',
       selectCalculateType: null,
-      selectTransportationType: null,
+      selectTransportationType: 'Economy',
       isDoneLoad: false,
       isDoneCalc: false,
       selectFuelType: '',
@@ -85,7 +85,7 @@ export default {
         },
       ],
       tripsType: 'One Trips',
-      tripsBoatType: '',
+      tripsBoatType: 'Cruise',
       dayBoat: 0,
       peopleBoat: 0,
       shortFlight: 0,
@@ -150,7 +150,20 @@ export default {
       if(this.section === 'flight') {
         this.localTransportationType = 'Flight';
 
-        if(this.tripsType === 'One Trips') {
+        if(this.tripsType === 'Charter') {
+          this.localTripType = 'Charter';
+
+          const departureType = this.selectDepartureType === 'One Way' ? 'Oneway' : this.selectDepartureType === 'Going Home' ? 'Round' : 'Multicity';
+          const payload = {};
+          payload.travelType = 'Flight';
+          payload.tripType = 'Charter';
+          payload.aircraftTypeId = this.selectAirplaneType.id;
+          payload.aircraftTypeName = this.selectAirplaneType.name;
+          payload.hours = this.hourDuration;
+          payload.minutes = this.minuteDuration;
+
+          this.onFlightCalc(payload)
+        }else {
           this.localTripType = 'One Trips';
 
           const departureType = this.selectDepartureType === 'One Way' ? 'Oneway' : this.selectDepartureType === 'Going Home' ? 'Round' : 'Multicity';
@@ -164,19 +177,6 @@ export default {
           payload.locationFromIata = this.flightFromIata;
           payload.locationTo = this.flightTo;
           payload.locationToIata = this.flightToIata;
-
-          this.onFlightCalc(payload)
-        }else if(this.tripsType === 'Charter') {
-          this.localTripType = 'Charter';
-
-          const departureType = this.selectDepartureType === 'One Way' ? 'Oneway' : this.selectDepartureType === 'Going Home' ? 'Round' : 'Multicity';
-          const payload = {};
-          payload.travelType = 'Flight';
-          payload.tripType = 'Charter';
-          payload.aircraftTypeId = this.selectAirplaneType.id;
-          payload.aircraftTypeName = this.selectAirplaneType.name;
-          payload.hours = this.hourDuration;
-          payload.minutes = this.minuteDuration;
 
           this.onFlightCalc(payload)
         }
@@ -550,14 +550,14 @@ export default {
                     <path fill-rule="evenodd" d="M5.216 14A2.238 2.238 0 0 1 5 13c0-1.355.68-2.75 1.936-3.72A6.325 6.325 0 0 0 5 9c-4 0-5 3-5 4s1 1 1 1h4.216z"/>
                     <path d="M4.5 8a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5z"/>
                   </svg>
-                  <input type="number" v-model="manyPeople" class="bg-transparent w-full border-none outline-none focus:outline-none">
+                  <input placeholder="Many People?" type="number" v-model="manyPeople" class="bg-transparent w-full border-none outline-none focus:outline-none">
                 </div>
 
                 <Dropdown class="mr-4" :options="transportationType" @selected="onSelectTransportationType" defaultValue="Economy" />
               </div>
 
               <div v-for="(item, index) in totalFlightComponent" :key="index" class="mt-6 flex items-center">
-                <InputAutoComplete class="w-full" @selected="onSelectFlightFrom" />
+                <InputAutoComplete placeholder="Where From?" class="w-full" @selected="onSelectFlightFrom" />
                 
                 <svg width="40" height="40" class="mx-4" viewBox="0 -9 32 32" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns">
                     <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage">
@@ -567,7 +567,7 @@ export default {
                     </g>
                 </svg>
 
-                <InputAutoComplete class="w-full" @selected="onSelectFlightTo" />
+                <InputAutoComplete placeholder="Where To?" class="w-full" @selected="onSelectFlightTo" />
               </div>
               <div v-if="selectDepartureType === 'Multi City'">
                 <button class="bg-[#476b6b] w-full mt-4 text-white px-8 py-2 rounded-md font-medium hover:bg-[#223d3d] transition duration-300 ease-in-out" @click="onAddAnotherFlight">
@@ -694,7 +694,7 @@ export default {
                   </h1>
                 </div>
               </div>
-              <DropdownV2 class="mt-6" :options="vehicleType" @selected="onSelectVehicleType" />
+              <DropdownV2 class="mt-6" :options="vehicleType" @selected="onSelectVehicleType" zero="Standar Car" />
             </div>
             <div class="flex items-center justify-between mt-2">
               <div class="flex items-center">
@@ -716,7 +716,7 @@ export default {
               </div>
               <div class="flex justify-end">
                 <div class="flex items-center justify-end w-[50%]">
-                  <input type="number" v-model="hourDurationCar" class="border-[1px]  border-[#163331] w-full bg-transparent bg-opacity-50 rounded-md">
+                  <input placeholder="Hour Duration Car?" type="number" v-model="hourDurationCar" class="border-[1px]  border-[#163331] w-full bg-transparent bg-opacity-50 rounded-md">
                   <h1 class="px-2 py-1 bg-[#163331] text-white font-bold rounded-r-md">Hour</h1>
                 </div>
               </div>
@@ -731,7 +731,7 @@ export default {
               </div>
               <div class="flex justify-end">
                 <div class="flex items-center justify-end w-[60%]">
-                  <input type="number" v-model="distanceValue" class="border-[1px]  border-[#163331] w-full bg-transparent bg-opacity-50 rounded-md">
+                  <input placeholder="Distance?" type="number" v-model="distanceValue" class="border-[1px]  border-[#163331] w-full bg-transparent bg-opacity-50 rounded-md">
                   <Dropdown :options="distanceTypeCar" placeholder="Kilometer" class="ml-3" @selected="onSelectDistance" />
                 </div>
               </div>
