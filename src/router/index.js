@@ -1,4 +1,4 @@
-import { createRouter, createWebHashHistory } from 'vue-router'
+import { createRouter, createWebHashHistory, createWebHistory } from 'vue-router'
 // import { createRouter, createWebHistory } from 'vue-router';
 import Style from '@/views/StyleView.vue'
 import Home from '@/views/HomeView.vue'
@@ -132,21 +132,21 @@ const routes = [
   },
 ];
 
-const router = createRouter({
-  history: createWebHashHistory(),
-  routes,
-  scrollBehavior(to, from, savedPosition) {
-    return savedPosition || { top: 0 };
-  },
-});
-
 // const router = createRouter({
-//   history: createWebHistory(),
+//   history: createWebHashHistory(),
 //   routes,
 //   scrollBehavior(to, from, savedPosition) {
 //     return savedPosition || { top: 0 };
 //   },
 // });
+
+const router = createRouter({
+  history: createWebHistory(),
+  routes,
+  scrollBehavior(to, from, savedPosition) {
+    return savedPosition || { top: 0 };
+  },
+});
 
 
 router.beforeEach((to, from, next) => {
