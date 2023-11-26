@@ -5,6 +5,7 @@
       <span class="text-red-500">*</span>
     </label>
     <GoogleAddressAutocomplete 
+      placeholder="Where Your Location?"
       :apiKey="mapsKey"
       v-model="address"
       @callback="callbackFunction"    

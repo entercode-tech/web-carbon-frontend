@@ -43,77 +43,78 @@ export default {
       sharePostcard: null,
       email: '',
       dataPostcard: [],
+      uniq: '',
       selectFile: [],
       isSave: false,
       modalShow: false,
       allIncludeFile: [
 
-        {
-          "id": 1,
-          "uniq_id": "1697978515000",
-          "name": "test included files",
-          "image_path": "http://localhost:8000/storage/images/included_files/1697978515.jpg",
-          "created_at": "2023-10-22T12:41:55.000000Z",
-          "updated_at": "2023-10-22T12:41:55.000000Z"
-        },{
-          "id": 2,
-          "uniq_id": "1697978515000",
-          "name": "test included files",
-          "image_path": "http://localhost:8000/storage/images/included_files/1697978515.jpg",
-          "created_at": "2023-10-22T12:41:55.000000Z",
-          "updated_at": "2023-10-22T12:41:55.000000Z"
-        },{
-          "id": 3,
-          "uniq_id": "1697978515000",
-          "name": "test included files",
-          "image_path": "http://localhost:8000/storage/images/included_files/1697978515.jpg",
-          "created_at": "2023-10-22T12:41:55.000000Z",
-          "updated_at": "2023-10-22T12:41:55.000000Z"
-        },
-        {
-          "id": 4,
-          "uniq_id": "1697978515000",
-          "name": "test included files",
-          "image_path": "http://localhost:8000/storage/images/included_files/1697978515.jpg",
-          "created_at": "2023-10-22T12:41:55.000000Z",
-          "updated_at": "2023-10-22T12:41:55.000000Z"
-        },{
-          "id": 5,
-          "uniq_id": "1697978515000",
-          "name": "test included files",
-          "image_path": "http://localhost:8000/storage/images/included_files/1697978515.jpg",
-          "created_at": "2023-10-22T12:41:55.000000Z",
-          "updated_at": "2023-10-22T12:41:55.000000Z"
-        },{
-          "id": 6,
-          "uniq_id": "1697978515000",
-          "name": "test included files",
-          "image_path": "http://localhost:8000/storage/images/included_files/1697978515.jpg",
-          "created_at": "2023-10-22T12:41:55.000000Z",
-          "updated_at": "2023-10-22T12:41:55.000000Z"
-        },
-        {
-          "id": 7,
-          "uniq_id": "1697978515000",
-          "name": "test included files",
-          "image_path": "http://localhost:8000/storage/images/included_files/1697978515.jpg",
-          "created_at": "2023-10-22T12:41:55.000000Z",
-          "updated_at": "2023-10-22T12:41:55.000000Z"
-        },{
-          "id": 8,
-          "uniq_id": "1697978515000",
-          "name": "test included files",
-          "image_path": "http://localhost:8000/storage/images/included_files/1697978515.jpg",
-          "created_at": "2023-10-22T12:41:55.000000Z",
-          "updated_at": "2023-10-22T12:41:55.000000Z"
-        },{
-          "id": 9,
-          "uniq_id": "1697978515000",
-          "name": "test included files",
-          "image_path": "http://localhost:8000/storage/images/included_files/1697978515.jpg",
-          "created_at": "2023-10-22T12:41:55.000000Z",
-          "updated_at": "2023-10-22T12:41:55.000000Z"
-        }
+        // {
+        //   "id": 1,
+        //   "uniq_id": "1697978515000",
+        //   "name": "test included files",
+        //   "image_path": "http://localhost:8000/storage/images/included_files/1697978515.jpg",
+        //   "created_at": "2023-10-22T12:41:55.000000Z",
+        //   "updated_at": "2023-10-22T12:41:55.000000Z"
+        // },{
+        //   "id": 2,
+        //   "uniq_id": "1697978515000",
+        //   "name": "test included files",
+        //   "image_path": "http://localhost:8000/storage/images/included_files/1697978515.jpg",
+        //   "created_at": "2023-10-22T12:41:55.000000Z",
+        //   "updated_at": "2023-10-22T12:41:55.000000Z"
+        // },{
+        //   "id": 3,
+        //   "uniq_id": "1697978515000",
+        //   "name": "test included files",
+        //   "image_path": "http://localhost:8000/storage/images/included_files/1697978515.jpg",
+        //   "created_at": "2023-10-22T12:41:55.000000Z",
+        //   "updated_at": "2023-10-22T12:41:55.000000Z"
+        // },
+        // {
+        //   "id": 4,
+        //   "uniq_id": "1697978515000",
+        //   "name": "test included files",
+        //   "image_path": "http://localhost:8000/storage/images/included_files/1697978515.jpg",
+        //   "created_at": "2023-10-22T12:41:55.000000Z",
+        //   "updated_at": "2023-10-22T12:41:55.000000Z"
+        // },{
+        //   "id": 5,
+        //   "uniq_id": "1697978515000",
+        //   "name": "test included files",
+        //   "image_path": "http://localhost:8000/storage/images/included_files/1697978515.jpg",
+        //   "created_at": "2023-10-22T12:41:55.000000Z",
+        //   "updated_at": "2023-10-22T12:41:55.000000Z"
+        // },{
+        //   "id": 6,
+        //   "uniq_id": "1697978515000",
+        //   "name": "test included files",
+        //   "image_path": "http://localhost:8000/storage/images/included_files/1697978515.jpg",
+        //   "created_at": "2023-10-22T12:41:55.000000Z",
+        //   "updated_at": "2023-10-22T12:41:55.000000Z"
+        // },
+        // {
+        //   "id": 7,
+        //   "uniq_id": "1697978515000",
+        //   "name": "test included files",
+        //   "image_path": "http://localhost:8000/storage/images/included_files/1697978515.jpg",
+        //   "created_at": "2023-10-22T12:41:55.000000Z",
+        //   "updated_at": "2023-10-22T12:41:55.000000Z"
+        // },{
+        //   "id": 8,
+        //   "uniq_id": "1697978515000",
+        //   "name": "test included files",
+        //   "image_path": "http://localhost:8000/storage/images/included_files/1697978515.jpg",
+        //   "created_at": "2023-10-22T12:41:55.000000Z",
+        //   "updated_at": "2023-10-22T12:41:55.000000Z"
+        // },{
+        //   "id": 9,
+        //   "uniq_id": "1697978515000",
+        //   "name": "test included files",
+        //   "image_path": "http://localhost:8000/storage/images/included_files/1697978515.jpg",
+        //   "created_at": "2023-10-22T12:41:55.000000Z",
+        //   "updated_at": "2023-10-22T12:41:55.000000Z"
+        // }
       
       ],
     };
@@ -125,32 +126,48 @@ export default {
   },
   mounted() {
     const code = this.$route.params.code;
+  
+    axios.get(`${this.apiDomain}/api/v1/included-files`)
+      .then(res => {
+        this.allIncludeFile = res.data.data
+      })
 
     axios.get(`${this.apiDomain}/api/v1/postcards?code=${code}`)
-    .then(response => {
-      this.dataPostcard = response.data.data[0]
-    })
-    .catch(error => {
-      let errorMessage = "An error occurred";
-      if (error.message) {
-        errorMessage = error.message;
-      }
+      .then(response => {
+        console.log(response.data.data);
+        if (response.data.data.length > 0) {
+          this.dataPostcard = response.data.data[0];
+          this.uniq = response.data.data[0].uniq_id;
+        } else {
+          // Tampilkan pesan jika postcard tidak ditemukan
+          Swal.fire({
+            icon: 'error',
+            title: 'Error!',
+            text: 'Postcard not found',
+          });
+        }
+      })
+      .catch(error => {
+        let errorMessage = "An error occurred";
+        if (error.message) {
+          errorMessage = error.message;
+        }
 
-      Swal.fire({
-        icon: 'error',
-        title: 'Error!',
-        text: errorMessage,
+        Swal.fire({
+          icon: 'error',
+          title: 'Error!',
+          text: errorMessage,
+        });
       });
-    });
   },
   methods: {
     async onSend() {
-      const uniq_id = '1698910315000';
-
+      const uniq_id = this.uniq;
+      let load = document.querySelector('.in-load')
+      load.innerHTML += '<i class="ml-2 fa-solid fa-circle-notch load"></i>'
       const payload = {};
       payload.included_files = this.selectFile
-
-      axios.post(`${this.apiDomain}/api/v1/postcards/${uniq_id}/send-email`)
+      axios.post(`${this.apiDomain}/api/v1/postcards/${uniq_id}/send-email`, payload)
         .then(response => {
           Swal.fire({
             icon: 'success',
@@ -165,6 +182,7 @@ export default {
           });
         })
         .catch(error => {
+          load.innerHTML = 'Send'
           let errorMessage = "An error occurred";
           if (error.message) {
             errorMessage = error.message;
@@ -188,7 +206,7 @@ export default {
     <NavBar />
     <img :src="BackgroundImage" class="fixed w-screen h-screen top-0 left-0 w-full h-full object-cover" alt="">
     <div class="flex justify-center mb-4 mt-[25%] md:mt-[7%]">
-      <div class="bg-white text-center p-10 z-10 rounded-lg bg-opacity-70 backdrop-blur-2xl w-[80%]">
+      <div class="resp-box bg-white text-center p-10 z-10 rounded-lg bg-opacity-70 backdrop-blur-2xl w-[80%]">
         <div class="flex items-center">
           <div class="bg-[#163331] p-2 rounded-full mr-4">
             <svg width="30" height="30" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -206,12 +224,12 @@ export default {
 
         <div class="content mt-10 text-left">
           <div class="grid grid-cols-1 gap-4 mt-4">
-            <InputDynamic label="Email" :value="email" inputId="emailInput" type="email" :required="true"  @value-updated="email = $event" />
+            <InputDynamic placeholder="Email ?" label="Email" :value="email" inputId="emailInput" type="email" :required="true"  @value-updated="email = $event" />
           </div>
           <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-10">
-            <div>
+            <!-- <div>
               <img :src="dataPostcard.file_carbon_path" class="rounded-lg" alt="">
-            </div>
+            </div> -->
             <div>
               <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <div v-for="file in allIncludeFile" :key="file.id">
@@ -225,7 +243,7 @@ export default {
               </div>
             </div>
           </div>
-          <button class="bg-[#476b6b] text-white px-8 py-2 rounded-md font-medium hover:bg-[#223d3d] transition duration-300 ease-in-out" @click="onSend">
+          <button class="in-load bg-[#476b6b] text-white px-8 mt-4 py-2 rounded-md font-medium hover:bg-[#223d3d] transition duration-300 ease-in-out" @click="onSend">
             Send
           </button>
         </div>

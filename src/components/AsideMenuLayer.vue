@@ -53,9 +53,9 @@ const asideLgCloseClick = (event) => {
         <AsideMenuList :menu="menu" @menu-click="menuClick" />
       </div>
 
-      <ul>
+      <!-- <ul>
         <AsideMenuItem :item="logoutItem" @menu-click="menuClick" />
-      </ul>
+      </ul> -->
     </div>
   </aside>
 </template>

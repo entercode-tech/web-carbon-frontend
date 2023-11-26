@@ -32,8 +32,8 @@
       <img :src="BackgroundHeader" class="w-full h-screen absolute top-0 object-cover" alt="Background Header">
 
       <div class="flex items-center pl-[10%] h-screen w-full absolute z-10">
-        <div class="w-[40%]">
-          <h1 class="text-6xl text-white font-extrabold">{{ $t('landingPage.title') }}</h1>
+        <div class="resp-box w-[40%]">
+          <h1 class="resp-text-title text-6xl text-white font-extrabold">{{ $t('landingPage.title') }}</h1>
           <p class="text-md text-white font-normal mt-4">{{ $t('landingPage.description') }}</p>
           <Button class="mt-6" :label="$t('landingPage.button')" @trigger="onCarbon" />
         </div>

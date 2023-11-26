@@ -64,7 +64,7 @@ export default {
     <NavBar />
     <img :src="BackgroundImage" class="fixed w-screen h-screen top-0 left-0 w-full h-full object-cover" alt="">
     <div class="flex justify-center mb-4 mt-[25%] md:mt-[7%]">
-      <div class="bg-white text-center p-10 z-10 rounded-lg bg-opacity-70 backdrop-blur-2xl w-[80%]">
+      <div class="resp-box bg-white text-center p-10 z-10 rounded-lg bg-opacity-70 backdrop-blur-2xl w-[80%]">
         <div class="flex items-center">
           <div class="bg-[#163331] p-2 rounded-full mr-4">
             <img src="https://sustainabletravel.org/wp-content/plugins/sti_client/public/assets/images/calculator.svg" alt="">

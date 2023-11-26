@@ -7,6 +7,7 @@ import { useMainStore } from '@/stores/main.js'
 import i18n from './components/Lang/i18n';
 
 import './css/main.css'
+import './css/styles/responsive.css'
 
 // Init Pinia
 const pinia = createPinia()

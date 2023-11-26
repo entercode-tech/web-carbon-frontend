@@ -1,0 +1,21 @@
+- carbon-calc harus di klik
+- drag bg card & responsive
+
+all input -> placeholder
+
+
+low priority :
+- c lang
+- url #
+
+alternatif :
+- map bendera sesuai countary
+
+fix backend : 
+- if : path -> lihat pdf
+- temp : path -> tampil gambar
+- path -> file share 
+- path -> crousel
+
+wait :
+	 url axios temp

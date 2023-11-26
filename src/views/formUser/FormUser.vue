@@ -67,6 +67,8 @@ export default {
   },
   methods: {
     onSubmit() {
+      let load = document.querySelector('.in-load')
+      load.innerHTML += '<i class="ml-2 fa-solid fa-circle-notch load"></i>'
       if (!this.firstName || !this.address || !this.lastName || !this.email) {
         Swal.fire({
           icon: 'error',
@@ -91,7 +93,7 @@ export default {
           }).then((result) => {
             if (result.isConfirmed) {
               localStorage.setItem('dataUser', JSON.stringify(response.data));
-              this.$router.push('/carbon');
+              this.$router.push('/carbon-calc');
             }
           });
         })
@@ -101,6 +103,7 @@ export default {
           if (error.message) {
             errorMessage = error.message;
           }
+          load.innerHTML = 'Submit'
 
           Swal.fire({
             icon: 'error',
@@ -133,7 +136,7 @@ export default {
     <NavBar />
     <img :src="BackgroundImage" class="fixed w-screen h-screen top-0 left-0 w-full h-full object-cover" alt="">
     <div class="flex justify-center mb-4 mt-[25%] md:mt-[7%]">
-      <div class="bg-white text-center p-10 z-10 rounded-lg bg-opacity-70 backdrop-blur-2xl w-[80%]">
+      <div class="resp-box bg-white text-center p-10 z-10 rounded-lg bg-opacity-70 backdrop-blur-2xl w-[80%]">
         <div class="flex items-center">
           <div class="bg-[#163331] p-2 rounded-full mr-4">
             <svg width="30" height="30" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -159,11 +162,11 @@ export default {
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
 
-                  <InputDynamic :label="$t('formUser.firstNameLabel')" :value="firstName" inputId="namaDepanInput" type="text" :required="true" @value-updated="firstName = $event" />
-                  <InputDynamic :label="$t('formUser.lastNameLabel')" :value="lastName" inputId="namaBelakangInput" type="text" :required="true"  @value-updated="lastName = $event" />
+                  <InputDynamic placeholder="First Name?" :label="$t('formUser.firstNameLabel')" :value="firstName" inputId="namaDepanInput" type="text" :required="true" @value-updated="firstName = $event" />
+                  <InputDynamic placeholder="Last Name" :label="$t('formUser.lastNameLabel')" :value="lastName" inputId="namaBelakangInput" type="text" :required="true"  @value-updated="lastName = $event" />
                 </div>
                 <div class="grid grid-cols-1 gap-4 mt-4">
-                  <InputDynamic :label="$t('formUser.emailLabel')" :value="email" inputId="emailInput" type="email" :required="true"  @value-updated="email = $event" />
+                  <InputDynamic placeholder="Your Email?" :label="$t('formUser.emailLabel')" :value="email" inputId="emailInput" type="email" :required="true"  @value-updated="email = $event" />
                 </div>
               </div>
               <div class="left-section border-[1px] border-[#cccccc] rounded-md py-4 px-6 bg-white bg-opacity-50">
@@ -185,7 +188,7 @@ export default {
                 </div>
               </div>
             </div>
-            <button class="bg-[#476b6b] mt-4 text-white px-8 py-2 rounded-md font-medium hover:bg-[#223d3d] transition duration-300 ease-in-out" @click="onSubmit">
+            <button class="in-load bg-[#476b6b] mt-4 text-white px-8 py-2 rounded-md font-medium hover:bg-[#223d3d] transition duration-300 ease-in-out" @click="onSubmit">
               {{ $t('formUser.submitButton') }}
             </button>
           </div>
