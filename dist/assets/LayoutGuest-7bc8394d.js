@@ -1,1 +1,0 @@
-import{_ as t,o as s,f as a,H as o}from"./index-2ebcd10d.js";const r={},c={class:"bg-gray-50 dark:bg-slate-800 dark:text-slate-100"};function n(e,_){return s(),a("div",c,[o(e.$slots,"default")])}const d=t(r,[["render",n]]);export{d as L};
