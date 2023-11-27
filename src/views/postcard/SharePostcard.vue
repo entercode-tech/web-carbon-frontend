@@ -227,9 +227,9 @@ export default {
             <InputDynamic placeholder="Email ?" label="Email" :value="email" inputId="emailInput" type="email" :required="true"  @value-updated="email = $event" />
           </div>
           <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-10">
-            <!-- <div>
+            <div>
               <img :src="dataPostcard.file_carbon_path" class="rounded-lg" alt="">
-            </div> -->
+            </div>
             <div>
               <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <div v-for="file in allIncludeFile" :key="file.id">

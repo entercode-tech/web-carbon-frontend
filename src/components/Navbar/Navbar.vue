@@ -53,7 +53,7 @@
           </router-link>
         </li>
         <li>
-          <router-link to="/carbon" class="text-white font-medium text-lg">
+          <router-link to="/" class="text-white font-medium text-lg">
             {{ $t('navbar.3') }}
           </router-link>
         </li>

@@ -75,7 +75,7 @@ export default {
     const dataCarbon = localStorage.getItem('dataCarbon');
     const dataAllCarbon = localStorage.getItem('dataAllCarbon');
     const dataPhoto = localStorage.getItem('dataPhoto');
-
+    console.log(dataUser);
     if(dataPhoto){
       this.step = 2;
       this.allPhotos = JSON.parse(dataPhoto);
@@ -93,6 +93,8 @@ export default {
       this.totalMetricTons = carbonData.totalMetricTons;
       this.totalCost = carbonData.totalPriceMetricTons;
     }
+
+    // console.log(dataAllCarbon);
 
     if(dataAllCarbon) {
       this.allMetric = JSON.parse(dataAllCarbon)
@@ -124,6 +126,7 @@ export default {
     },
     onSave() {
       const self = this; 
+      console.log(self);
       let load = document.querySelector('.in-load')
       load.innerHTML += '<i class="ml-2 fa-solid fa-circle-notch load"></i>'
 
@@ -367,7 +370,7 @@ export default {
                 </div>
               </div>
 
-              <div id="postcard_download" class="resp-col resp-h col-span-2 border-[1px] h-[500px] border-[#cccccc] rounded-md overflow-hidden bg-white bg-opacity-50 relative"
+              <div id="postcard_download" class="resp-col resp-h col-span-2 resp-full border-[1px] w-[80%] h-[20.5vw] border-[#cccccc] rounded-md overflow-hidden bg-white bg-opacity-50 relative"
                 @dragover="allowDrop"
                 @drop="handleDrop">
                 
@@ -378,7 +381,7 @@ export default {
                 </div>
 
                 <img class="resp-capture absolute top-[22%] left-[8.3%] rounded-full h-[268px] w-[268px]" :src="profilePhoto" alt="Captured Photo" />
-                <img :src="FramePostcard" class="absolute left-0 top-0 resp-w"  />
+                <img :src="FramePostcard" class="absolute left-0 top-0 resp-frame"  />
                 <img :src="BackgroundPrimary" class="resp-h h-[500px] object-cover w-full" />
 
                 <div class="resp-right absolute top-4 right-6 text-right">
@@ -417,10 +420,10 @@ export default {
                   </div>
 
                   <div v-for="(category, categoryIndex) in allMetric" :key="categoryIndex">
-                    <h1 class="text-md font-bold mt-4 text-[#2e2e2e]">{{category.category}}</h1>
-                    <div class="flex justify-between" v-for="(logData, logIndex) in category.data" :key="logIndex">
+                    <b class="text-md font-bold mt-4 text-[#2e2e2e]">{{category.data[categoryIndex].title}}</b>
+                    <!-- <div class="flex justify-between" v-for="(logData, logIndex) in category.data" :key="logIndex">
                       <h1 class="text-sm font-normal text-[#2e2e2e]">{{logData.title}}</h1>
-                    </div>
+                    </div> -->
                   </div>
 
                   <hr class="resp-my text-[#000] border-[1] border-[#000] my-4">
