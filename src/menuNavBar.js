@@ -13,19 +13,19 @@ import {
 } from '@mdi/js'
 
 export default [
-  {
-    isCurrentUser: true,
-    menu: [
-      {
-        icon: mdiAccount,
-        label: 'My Profile',
-        to: '/profile'
-      },
-      {
-        isDivider: true
-      },
-    ]
-  },
+  // {
+  //   isCurrentUser: true,
+  //   menu: [
+  //     {
+  //       icon: mdiAccount,
+  //       label: 'My Profile',
+  //       to: '/profile'
+  //     },
+  //     {
+  //       isDivider: true
+  //     },
+  //   ]
+  // },
   {
     icon: mdiThemeLightDark,
     label: 'Light/Dark',

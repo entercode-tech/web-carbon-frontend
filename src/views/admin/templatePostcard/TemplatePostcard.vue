@@ -35,6 +35,8 @@ export default {
   methods: {
     async onSubmit() {
       try {
+        let load = document.querySelector('.in-load')
+        load.innerHTML += '<i class="ml-2 fa-solid fa-circle-notch load"></i>'
         const formData = new FormData();
         formData.append('name', this.title);
         formData.append('image', this.file);
@@ -48,6 +50,7 @@ export default {
 
         if (response.status === 200) {
           await this.fetchFileData()
+          load.innerHTML = 'Submit'
           Swal.fire({
             icon: 'success',
             title: 'Success!',
@@ -61,6 +64,7 @@ export default {
             }
           });
         } else {
+          load.innerHTML = 'Submit'
           console.error('Failed to upload the file');
         }
       } catch (error) {
@@ -185,10 +189,10 @@ export default {
 
       <div class="border-[1px] border-[#cccccc] rounded-md p-4 mt-6">
         <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <InputDynamic :value="title" inputId="namaBelakangInput" type="text" @value-updated="title = $event" />
+          <InputDynamic placeholder="Masukan Nama Template" :value="title" inputId="namaBelakangInput" type="text" @value-updated="title = $event" />
           <input type="file" name="file" id="file" class="border-[1px] mt-2 border-[#cccccc] w-full bg-white bg-opacity-50 rounded-md" @change="onFileChange">
 
-          <button class="bg-[#476b6b] text-white px-8 mt-2 rounded-md font-medium hover:bg-[#223d3d] transition duration-300 ease-in-out" @click="onSubmit">
+          <button class="in-load bg-[#476b6b] text-white px-8 mt-2 rounded-md font-medium hover:bg-[#223d3d] transition duration-300 ease-in-out" @click="onSubmit">
             Submit
           </button>
         </div>
@@ -206,7 +210,7 @@ export default {
             <tr v-for="(item, index) in fileList" :key="index">
               <td>{{ index + 1 }}</td>
               <td>
-                <img :src="item.image_path" width="100px">
+                <img :src="item.image_path" style="height: 45px;">
               </td>
               <td>{{ item.name }}</td>
               <td>

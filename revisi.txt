@@ -1,9 +1,3 @@
-- carbon-calc harus di klik
-- drag bg card & responsive
-
-all input -> placeholder
-
-
 low priority :
 - c lang
 - url #
@@ -19,3 +13,5 @@ fix backend :
 
 wait :
 	 url axios temp
+
+	 Web_Carbon_99
