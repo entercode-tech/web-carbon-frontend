@@ -1,17 +1,6 @@
-low priority :
-- c lang
-- url #
-
-alternatif :
-- map bendera sesuai countary
-
-fix backend : 
-- if : path -> lihat pdf
-- temp : path -> tampil gambar
-- path -> file share 
-- path -> crousel
-
-wait :
-	 url axios temp
-
-	 Web_Carbon_99
+intro tap 
+logo ke home
+load replace
+- crousel ikut 
+- 16:9
+- card ikut drive

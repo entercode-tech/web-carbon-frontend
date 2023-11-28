@@ -68,8 +68,9 @@ export default {
   methods: {
     onSubmit() {
       let load = document.querySelector('.in-load')
-      load.innerHTML += '<i class="ml-2 fa-solid fa-circle-notch load"></i>'
+      load.innerHTML = 'Submit <i class="ml-2 fa-solid fa-circle-notch load"></i>'
       if (!this.firstName || !this.address || !this.lastName || !this.email) {
+        load.innerHTML = 'Submit'
         Swal.fire({
           icon: 'error',
           title: 'Validation Failed!',

@@ -1,10 +1,10 @@
 <template>
   <div class="mt-10">
-    <Carousel :items-to-show="2" :wrap-around="true">
+    <Carousel :items-to-show="1" :wrap-around="true">
       <Slide v-for="(item, index) in dataPostcard" :key="index">
         <div class="carousel__item px-4">
           <div>
-            <h1 class="font-bold text-lg mb-2">Code: {{ item.code }}</h1>
+            <!-- <h1 class="font-bold text-lg mb-2 bg-white">Code: {{ item }}</h1> -->
             <img class="rounded-lg" :src="item.file_carbon_path" alt="Carousel Image" />
           </div>
         </div>

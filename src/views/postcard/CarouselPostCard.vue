@@ -111,13 +111,13 @@ export default {
     <NavBar />
     <img :src="BackgroundImage" class="fixed w-screen h-screen top-0 left-0 w-full h-full object-cover" alt="">
     <div class="flex justify-center mb-4 mt-[25%] md:mt-[7%]">
-      <div class="bg-white text-left p-10 z-10 rounded-lg bg-opacity-70 backdrop-blur-2xl w-[80%]">
-        <div class="flex items-center">
+      <div class="text-left p-10 z-10 rounded-lg w-[80%]">
+        <!-- <div class="flex items-center">
           <div class="header text-left">
             <h1 class="text-2xl font-bold text-[#2e2e2e]">{{ $t('allPostCard.title') }} {{ this.firstName + ' ' + this.lastName }}</h1>
             <p class="text-sm text-[#2e2e2e] mt-1">{{ $t('allPostCard.description') }}</p>
           </div>
-        </div>
+        </div> -->
 
         <div>
           <Carousel :dataPostcard="dataPostcard" @onSelectPostcard="onSelectPostcard"/>

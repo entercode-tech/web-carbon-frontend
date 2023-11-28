@@ -101,6 +101,15 @@ export default {
     }
   },
   methods: {
+    getCategoryTitle(title) {
+      // Memisahkan string menjadi array kata-kata
+      const words = title.split(/\s+/);
+
+      // Mengambil kata pertama dari array
+      const firstWord = words[0];
+
+      return firstWord;
+    },
     startDrag(index) {
       event.dataTransfer.setData('text', this.backgroundImages[index]);
     },
@@ -128,7 +137,7 @@ export default {
       const self = this; 
       console.log(self);
       let load = document.querySelector('.in-load')
-      load.innerHTML += '<i class="ml-2 fa-solid fa-circle-notch load"></i>'
+      load.innerHTML = 'Save <i class="ml-2 fa-solid fa-circle-notch load"></i>'
 
       htmlToImage.toJpeg(document.getElementById('postcard_download'), { quality: 0.95 })
       .then(function (dataUrl) {
@@ -370,7 +379,7 @@ export default {
                 </div>
               </div>
 
-              <div id="postcard_download" class="resp-col resp-h col-span-2 resp-full border-[1px] w-[80%] h-[20.5vw] border-[#cccccc] rounded-md overflow-hidden bg-white bg-opacity-50 relative"
+              <div id="postcard_download" class="resp-col resp-h col-span-2 resp-full border-[1px] aspect-w-16 aspect-h-9 border-[#cccccc] rounded-md overflow-hidden bg-white bg-opacity-50 relative"
                 @dragover="allowDrop"
                 @drop="handleDrop">
                 
@@ -385,11 +394,11 @@ export default {
                 <img :src="BackgroundPrimary" class="resp-h h-[500px] object-cover w-full" />
 
                 <div class="resp-right absolute top-4 right-6 text-right">
-                  <h1 class="resp-text-title2 text-4xl font-bold text-[#2e2e2e]">My Carbon Footprint</h1>
-                  <h1 class="text-md font-normal text-[#2e2e2e]">{{fullName}}, {{address}}</h1>
+                  <h1 class="resp-text-title2 text-5xl font-bold text-[green]">My Carbon Footprint</h1>
+                  <h1 class="text-2xl font-normal text-[green]">{{fullName}}, {{address}}</h1>
                 </div>
 
-                <div class="resp-box2 bg-white absolute top-20 right-6 w-[50%] p-4 bg-opacity-80 rounded-md">
+                <div class="resp-box2 bg-white absolute top-[25%] right-6 w-[50%] p-4 bg-opacity-80 rounded-md">
                   <h1 class="resp-text-title3 text-lg font-bold text-[#2e2e2e]">Your Carbon Footprint</h1>
 
                   <div class="relative">
@@ -420,7 +429,7 @@ export default {
                   </div>
 
                   <div v-for="(category, categoryIndex) in allMetric" :key="categoryIndex">
-                    <b class="text-md font-bold mt-4 text-[#2e2e2e]">{{category.data[categoryIndex].title}}</b>
+                    <b class="text-md font-bold mt-4 text-[#2e2e2e]">{{ getCategoryTitle(category.data[0].category) }}</b>
                     <!-- <div class="flex justify-between" v-for="(logData, logIndex) in category.data" :key="logIndex">
                       <h1 class="text-sm font-normal text-[#2e2e2e]">{{logData.title}}</h1>
                     </div> -->
@@ -428,14 +437,14 @@ export default {
 
                   <hr class="resp-my text-[#000] border-[1] border-[#000] my-4">
 
-                  <!-- <div class="flex justify-between mt-4">
+                  <div class="flex justify-between mt-4">
                     <h1 class="resp-text-md text-md font-normal text-[#2e2e2e]">Total Metric Tons</h1>
                     <h1 class="resp-text-md text-md font-normal text-[#2e2e2e]">{{totalMetricTons}} MT</h1>
-                  </div> -->
-                  <!-- <div class="flex justify-between">
+                  </div>
+                  <div class="flex justify-between">
                     <h1 class="resp-text-md text-md font-bold text-[#2e2e2e]">Cost to Offset</h1>
                     <h1 class="resp-text-md text-md font-bold text-[#2e2e2e]">$ {{totalCost}}</h1>
-                  </div> -->
+                  </div>
                 </div>
               </div>
             </div>
