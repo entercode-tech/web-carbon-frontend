@@ -21,6 +21,7 @@ export default {
       BackgroundImage: BackgroundImage,
       apiDomain: import.meta.env.VITE_API_URL,
       guestId: '',
+      guest: '',
       firstName: '',
       lastName: '',
       email: '',
@@ -94,8 +95,14 @@ export default {
 
   },
   mounted() {
+    axios.get(`${this.apiDomain}/api/v1/guests`)
+    .then(res => {
+      this.guest = res.data.data;
+    })
+
     axios.get(`${this.apiDomain}/api/v1/postcards`)
     .then(response => {
+      // console.log(response.data.data);
       this.dataPostcard = response.data.data;
     })
   },
@@ -110,6 +117,7 @@ export default {
   <LayoutGuest>
     <NavBar />
     <img :src="BackgroundImage" class="fixed w-screen h-screen top-0 left-0 w-full h-full object-cover" alt="">
+    <div class="mod-bg"></div>
     <div class="flex justify-center mb-4 mt-[25%] md:mt-[7%]">
       <div class="text-left p-10 z-10 rounded-lg w-[80%]">
         <!-- <div class="flex items-center">
@@ -120,7 +128,7 @@ export default {
         </div> -->
 
         <div>
-          <Carousel :dataPostcard="dataPostcard" @onSelectPostcard="onSelectPostcard"/>
+          <Carousel :guest="guest" :dataPostcard="dataPostcard" @onSelectPostcard="onSelectPostcard"/>
         </div>
       </div>
     </div>

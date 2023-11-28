@@ -71,6 +71,7 @@ export default {
       load.innerHTML = 'Submit <i class="ml-2 fa-solid fa-circle-notch load"></i>'
       if (!this.firstName || !this.address || !this.lastName || !this.email) {
         load.innerHTML = 'Submit'
+        load.disable = true
         Swal.fire({
           icon: 'error',
           title: 'Validation Failed!',
@@ -105,6 +106,7 @@ export default {
             errorMessage = error.message;
           }
           load.innerHTML = 'Submit'
+          load.disable = false
 
           Swal.fire({
             icon: 'error',

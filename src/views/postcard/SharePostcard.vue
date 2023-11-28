@@ -164,6 +164,7 @@ export default {
     async onSend() {
       const uniq_id = this.uniq;
       let load = document.querySelector('.in-load')
+      load.disable = true
       load.innerHTML = 'Send <i class="ml-2 fa-solid fa-circle-notch load"></i>'
       const payload = {};
       payload.included_files = this.selectFile
@@ -183,6 +184,7 @@ export default {
         })
         .catch(error => {
           load.innerHTML = 'Send'
+          load.disable = false
           let errorMessage = "An error occurred";
           if (error.message) {
             errorMessage = error.message;

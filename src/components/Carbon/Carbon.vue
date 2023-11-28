@@ -466,6 +466,7 @@ export default {
     onPostcard(){
       let load = document.querySelector('.in-load2')
       load.innerHTML = 'Submit <i class="ml-2 fa-solid fa-circle-notch load"></i>'
+      load.disable = true
       const data = {}
       data.transportationType = this.localTransportationType
       data.tripType = this.localTripType
