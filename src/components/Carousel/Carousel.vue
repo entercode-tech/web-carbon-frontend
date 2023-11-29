@@ -10,7 +10,7 @@
                 <h1 class="text-[yellow] text-4xl font-bold">{{ data.first_name }} {{ data.last_name }}</h1>
                 <div class="flex">
                   <div>
-                    <h3 class="text-[yellow] text-2xl font-normal">{{ data.location }}</h3>
+                    <h3 class="text-[yellow] text-2xl font-normal">{{ getWordAfterComma(data.location) }}</h3>
                     <h3 class="text-[yellow] text-2xl font-normal">{{ item.metric_tons }}</h3>
                   </div>
                   <div>
@@ -49,6 +49,17 @@ export default defineComponent({
       cloud,
       apiDomain: import.meta.env.VITE_API_URL,
     };
+  },
+  methods: {
+    getWordAfterComma(text) {
+  // Mencocokkan kata setelah koma menggunakan regex
+  const match = text.match(/,\s*([^,]+)\s*$/);
+
+  // Mengambil kata yang cocok (jika ada)
+  const wordAfterComma = match ? match[1] : null;
+
+  return wordAfterComma;
+},
   },
   components: {
     Carousel,
