@@ -416,7 +416,7 @@ export default {
                 </div>
               </div>
 
-              <div id="postcard_download" class="col-span-2 border-[1px] border-[#cccccc] rounded-md overflow-hidden bg-white bg-opacity-50 relative" @dragover="allowDrop" @drop="handleDrop">
+              <div id="postcard_download" class="resp-col resp-h col-span-2 resp-full border-[1px] aspect-w-16 aspect-h-9 border-[#cccccc] rounded-md overflow-hidden bg-white bg-opacity-50 relative" @dragover="allowDrop" @drop="handleDrop">
                 
                 <div class="resp-logo flex absolute top-4 left-4 z-10">
                   <img :src="LogoKLHK" alt="Logo" class="resp-img-logo h-10 rounded-md mr-2" />
