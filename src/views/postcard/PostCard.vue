@@ -77,6 +77,12 @@ export default {
           name: item.name
         })
       })
+      // this.backgroundImages.push(
+      //   BackgroundTiger,
+      //   BackgroundElephant,
+      //   BackgroundBird,
+      //   BackgroundKomodo
+      // )
       this.BackgroundPrimary = res.data.data[0].image_path
       this.nameTemp = res.data.data[0].name
       console.log(res.data.data)
@@ -417,18 +423,16 @@ export default {
                 </div>
               </div>
 
-              <div id="postcard_download" class="lg:w-[100%] lg:h-[500px] col-span-2 border-[1px] border-[#cccccc] rounded-md overflow-hidden bg-white bg-opacity-50 relative" @dragover="allowDrop" @drop="handleDrop"> 
-                <div class="relative">
-                  <div class="resp-logo flex absolute top-4 left-4 z-10">
-                    <img :src="LogoKLHK" alt="Logo" class="resp-img-logo h-10 rounded-md mr-2" />
-                    <img :src="LogoIndonesia" alt="Logo" class="resp-img-logo h-10 rounded-md mr-2" />
-                    <img :src="LogoCop28" alt="Logo" class="resp-img-logo h-10 rounded-md mr-2" />
-                  </div>
-  
-                  <img class="lg:w-[240px] md:w-[120px] lg:top-[110px] md:top-[50px] lg:left-[90px] md:left-[40px] absolute rounded-full" :src="profilePhoto" alt="Captured Photo" />
-                  <img :src="FramePostcard" class="absolute left-0 top-[-10px] lg:h-[52vh] md:h-[240px]"  />
-                  <img :src="BackgroundPrimary" class="h-[105%] w-[105%] object-cover" />
+              <div id="postcard_download" class="lg:w-[810px] lg:h-[460px] col-span-2 border-[1px] border-[#cccccc] rounded-md overflow-hidden bg-white bg-opacity-50 relative" @dragover="allowDrop" @drop="handleDrop"> 
+                <div class="resp-logo flex absolute top-4 left-4 z-10">
+                  <img :src="LogoKLHK" alt="Logo" class="resp-img-logo h-10 rounded-md mr-2" />
+                  <img :src="LogoIndonesia" alt="Logo" class="resp-img-logo h-10 rounded-md mr-2" />
+                  <img :src="LogoCop28" alt="Logo" class="resp-img-logo h-10 rounded-md mr-2" />
                 </div>
+  
+                <img class="lg:w-[240px] z-[2] lg:top-[110px] lg:left-[88px] absolute rounded-full" :src="profilePhoto" alt="Captured Photo" />
+                <img :src="FramePostcard" class="absolute z-[2] left-0 top-[-10px] lg:h-[480px]"  />
+                <img :src="BackgroundPrimary" class="absolute z-[0] w-full" />
 
                 <div class="resp-right absolute top-4 right-6 text-right">
                   <h1 class="resp-text-title2 text-3xl font-bold text-[greenyellow]">My Carbon Footprint</h1>

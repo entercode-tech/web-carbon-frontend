@@ -49,12 +49,6 @@
 } */
 
 @media (max-width: 567px) {
-  /* #postcard_download {
-    grid-column: span 3 / span 3;
-    width: 85vw !important;
-    height: 25vh !important;
-   } */
-
   .resp-full {
     width: 100% !important;
   }
