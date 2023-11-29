@@ -13,10 +13,14 @@
   background-color: rgba(255, 255, 255, 0.33);
 }
 
+
 @media (min-width: 1000px) {
+  #postcard_download {
+   width: 48vw !important;
+   height: 30vw !important;
+  }
   .resp-frame {
-    width: 68vh !important;
-    height: 40vh !important;
+    height: 60vh !important;
   }
   
   .resp-capture {
