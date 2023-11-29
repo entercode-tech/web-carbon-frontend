@@ -3,9 +3,9 @@
     <Carousel :items-to-show="1" :wrap-around="true">
       <Slide v-for="(item, index) in dataPostcard" :key="index">
         <div class="carousel__item px-4">
-          <div class="text-left">
+          <div class="text-left w-[330px]">
             <img class="rounded-lg" :src="item.file_carbon_path" alt="Carousel Image" />
-            <div v-for="data in guest" class="mt-20">
+            <div v-for="data in guest" class="mt-10">
               <div v-if="item.guest_id === data.id">
                 <h1 class="text-[yellow] text-4xl font-bold">{{ data.first_name }} {{ data.last_name }}</h1>
                 <div class="flex">
