@@ -1,6 +1,6 @@
 <template>
   <nav class="bg-black bg-opacity-80 backdrop-blur-3xl fixed z-50 top-0 w-full p-4 px-16 flex justify-between items-center">
-    <a href="/home" class="flex items-center">
+    <a href="/" class="flex items-center">
       <img :src="LogoKLHK" alt="Logo" class="h-10 rounded-md mr-4" />
       <img :src="LogoCop28" alt="Logo" class="h-10 rounded-md mr-4" />
       <img :src="LogoIndonesia" alt="Logo" class="h-10 rounded-md" />
