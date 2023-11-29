@@ -7,6 +7,8 @@ import VideosScreen from '@/assets/videos/welcome_screen.mp4'
 
 const router = useRouter()
 const skipVideo = () => {
+  localStorage.removeItem('dataUser')
+  localStorage.removeItem('dataPhoto')
   router.push('/carbon-calc')
 }
 </script>
