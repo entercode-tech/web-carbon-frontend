@@ -178,6 +178,7 @@ export default {
 
       htmlToImage.toJpeg(document.getElementById('postcard_download'), { quality: 0.95 })
       .then(function (dataUrl) {
+        console.log(dataUrl);
         const filename = "image.jpg";
         const file = self.convertJpg(dataUrl, filename);
 
@@ -416,28 +417,29 @@ export default {
                 </div>
               </div>
 
-              <div id="postcard_download" class="resp-col resp-h col-span-2 resp-full border-[1px] aspect-w-16 aspect-h-9 border-[#cccccc] rounded-md overflow-hidden bg-white bg-opacity-50 relative" @dragover="allowDrop" @drop="handleDrop">
-                
-                <div class="resp-logo flex absolute top-4 left-4 z-10">
-                  <img :src="LogoKLHK" alt="Logo" class="resp-img-logo h-10 rounded-md mr-2" />
-                  <img :src="LogoIndonesia" alt="Logo" class="resp-img-logo h-10 rounded-md mr-2" />
-                  <img :src="LogoCop28" alt="Logo" class="resp-img-logo h-10 rounded-md mr-2" />
+              <div id="postcard_download" class="w-[100%] aspect-h-9 col-span-2 border-[1px] border-[#cccccc] rounded-md overflow-hidden bg-white bg-opacity-50 relative" @dragover="allowDrop" @drop="handleDrop"> 
+                <div class="relative">
+                  <div class="resp-logo flex absolute top-4 left-4 z-10">
+                    <img :src="LogoKLHK" alt="Logo" class="resp-img-logo h-10 rounded-md mr-2" />
+                    <img :src="LogoIndonesia" alt="Logo" class="resp-img-logo h-10 rounded-md mr-2" />
+                    <img :src="LogoCop28" alt="Logo" class="resp-img-logo h-10 rounded-md mr-2" />
+                  </div>
+  
+                  <img class="resp-capture absolute rounded-full" :src="profilePhoto" alt="Captured Photo" />
+                  <img :src="FramePostcard" class="absolute left-0 top-0 h-[100%]"  />
+                  <img :src="BackgroundPrimary" class="h-full object-cover" />
                 </div>
 
-                <img class="resp-capture absolute top-[22%] left-[8.3%] rounded-full h-[268px] w-[268px]" :src="profilePhoto" alt="Captured Photo" />
-                <img :src="FramePostcard" class="absolute left-0 top-0 resp-frame"  />
-                <img :src="BackgroundPrimary" class="resp-h h-[500px] object-cover w-full" />
-
                 <div class="resp-right absolute top-4 right-6 text-right">
-                  <h1 class="resp-text-title2 text-5xl font-bold text-[greenyellow]">My Carbon Footprint</h1>
+                  <h1 class="resp-text-title2 text-3xl font-bold text-[greenyellow]">My Carbon Footprint</h1>
                   <h1 class="text-2xl font-normal text-[greenyellow]">{{fullName}}, {{getWordAfterComma(address)}}</h1>
                 </div>
                 
-                <div class="resp-box2 bg-white absolute top-[25%] right-6 w-[50%] p-4 bg-opacity-80 rounded-md">
+                <div class="resp-box2 bg-white absolute top-[20%] right-6 w-[35%] p-4 bg-opacity-80 rounded-md">
                   <h1 class="resp-text-title3 text-lg font-bold text-[#2e2e2e]">Your Carbon Footprint</h1>
                   
                   <div class="relative">
-                    <svg class="mx-auto mt-10 resp-svg" width="242" height="94" viewBox="0 0 242 94" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <svg class="mx-auto mt-10 resp-svg" width="100%" viewBox="0 0 242 94" fill="none" xmlns="http://www.w3.org/2000/svg">
                       <path d="M240.733 56.4533C240.452 56.4531 240.182 56.3582 239.976 56.1879C239.771 56.0175 239.646 55.7843 239.626 55.5352C238.9 46.7639 234.475 38.5599 227.235 32.5648C219.996 26.5697 210.476 23.2258 200.582 23.2021C199.398 23.2021 198.154 23.2556 196.885 23.3612C196.672 23.3789 196.459 23.3419 196.269 23.2546C196.08 23.1673 195.923 23.0335 195.817 22.869C191.272 15.7976 184.485 10.0726 176.303 6.40835C168.121 2.74413 158.905 1.30301 149.808 2.26484C140.71 3.22666 132.132 6.54883 125.145 11.8167C118.157 17.0847 113.07 24.065 110.518 31.8867C110.451 32.0963 110.307 32.28 110.109 32.409C109.911 32.5379 109.671 32.6048 109.426 32.599L109.13 32.5911C108.977 32.5865 108.823 32.5817 108.668 32.5817C101.164 32.6026 93.8927 34.9037 88.0616 39.1032C82.2306 43.3027 78.1902 49.1482 76.6109 55.6697C76.5583 55.8913 76.4216 56.0901 76.2237 56.2328C76.0259 56.3755 75.7788 56.4533 75.524 56.4533H1.11074C0.816151 56.4533 0.53363 56.3493 0.325327 56.1642C0.117023 55.979 0 55.7279 0 55.466C0 55.2042 0.117023 54.953 0.325327 54.7679C0.53363 54.5827 0.816151 54.4787 1.11074 54.4787H74.6351C76.486 47.6954 80.8397 41.6587 87.0014 37.3319C93.1631 33.005 100.778 30.6375 108.63 30.607C111.426 22.5693 116.787 15.4261 124.063 10.0454C131.339 4.66461 140.216 1.27785 149.616 0.296527C159.016 -0.684798 168.534 0.78155 177.015 4.51743C185.495 8.2533 192.572 14.0979 197.387 21.3412C198.48 21.2655 199.551 21.2274 200.582 21.2274C211.038 21.2526 221.098 24.7866 228.748 31.1222C236.398 37.4577 241.075 46.1276 241.842 55.3968C241.852 55.5262 241.834 55.6561 241.788 55.779C241.741 55.902 241.668 56.0157 241.573 56.1136C241.477 56.2115 241.361 56.2917 241.23 56.3495C241.099 56.4074 240.957 56.4419 240.812 56.4509C240.785 56.4526 240.759 56.4533 240.733 56.4533Z" fill="#9CA3AF"></path>
                       <path d="M227.517 69.1124H45.3563C45.0618 69.1124 44.7792 69.0084 44.5709 68.8233C44.3626 68.6381 44.2456 68.387 44.2456 68.1251C44.2456 67.8633 44.3626 67.6121 44.5709 67.427C44.7792 67.2418 45.0618 67.1378 45.3563 67.1378H227.517C227.812 67.1378 228.094 67.2418 228.303 67.427C228.511 67.6121 228.628 67.8633 228.628 68.1251C228.628 68.387 228.511 68.6381 228.303 68.8233C228.094 69.0084 227.812 69.1124 227.517 69.1124Z" fill="#9CA3AF"></path>
                       <path d="M89.7862 83.4289H28.6957C28.4011 83.4289 28.1186 83.3249 27.9103 83.1397C27.702 82.9546 27.585 82.7034 27.585 82.4416C27.585 82.1797 27.702 81.9286 27.9103 81.7434C28.1186 81.5583 28.4011 81.4543 28.6957 81.4543H89.7862C90.0808 81.4543 90.3633 81.5583 90.5716 81.7434C90.78 81.9286 90.897 82.1797 90.897 82.4416C90.897 82.7034 90.78 82.9546 90.5716 83.1397C90.3633 83.3249 90.0808 83.4289 89.7862 83.4289Z" fill="#9CA3AF"></path>
@@ -465,9 +467,6 @@ export default {
                   
                   <div v-for="(category, categoryIndex) in allMetric" :key="categoryIndex">
                     <b class="text-md font-bold mt-4 text-[#2e2e2e]">{{ getCategoryTitle(category.data[0].category) }}</b>
-                    <!-- <div class="flex justify-between" v-for="(logData, logIndex) in category.data" :key="logIndex">
-                      <h1 class="text-sm font-normal text-[#2e2e2e]">{{logData.title}}</h1>
-                    </div> -->
                   </div>
                   
                   <hr class="resp-my text-[#000] border-[1] border-[#000] my-4">
@@ -481,7 +480,8 @@ export default {
                     <h1 class="resp-text-md text-md font-bold text-[#2e2e2e]">$ {{totalCost}}</h1>
                   </div>
                 </div>
-                <h1 class="absolute bottom-5 right-6 resp-text-title2 text-5xl font-bold text-[greenyellow]">{{nameTemp}}</h1>
+
+                <h1 class="absolute bottom-5 right-6 resp-text-title2 text-3xl font-bold text-[greenyellow]">{{nameTemp}}</h1>
               </div>
             </div>
             

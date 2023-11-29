@@ -144,6 +144,8 @@ export default {
       this.totalFlightComponent = this.totalFlightComponent+1;
     },
     onSubmit() {
+      
+      localStorage.removeItem('dataPhoto');
       let load = document.querySelector('.in-load')
       load.innerHTML = 'Calculate <i class="ml-2 fa-solid fa-circle-notch load"></i>'
       this.isDoneCalc = false
