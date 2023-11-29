@@ -30,16 +30,11 @@ export default {
   data() {
     return {
       apiDomain: import.meta.env.VITE_API_URL,
-      backgroundImages: [
-        BackgroundTiger,
-        BackgroundElephant,
-        BackgroundBird,
-        BackgroundKomodo,
-      ],
+      backgroundImages: [],
       LogoKLHK: LogoKLHK,
       LogoIndonesia: LogoIndonesia,
       LogoCop28: LogoCop28,
-      BackgroundPrimary: BackgroundTiger,
+      BackgroundPrimary: '',
       BackgroundImage: BackgroundImage,
       FramePostcard: FramePostcard,
       sharePostcard: null,
@@ -51,6 +46,8 @@ export default {
       allIncludeFile: [],
       profilePhoto: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRO0oQFYvdeYbxXLZ2quUF56tCS-EofeHprWeiBQ0VgWw&s',
       uniqId: '',
+      nameTemp: '',
+      nameTemps: [],
       fullName: '-',
       address: '-',
       transportationType: '-',
@@ -71,6 +68,20 @@ export default {
     toSvg
   },
   mounted() {
+    axios.get(this.apiDomain + '/api/v1/postcard-templates')
+    .then(res => {
+      res.data.data.map(item => {
+        this.backgroundImages.push(item.image_path)
+        this.nameTemps.push({
+          url: item.image_path,
+          name: item.name
+        })
+      })
+      this.BackgroundPrimary = res.data.data[0].image_path
+      this.nameTemp = res.data.data[0].name
+      console.log(res.data.data)
+    })
+
     const dataUser = localStorage.getItem('dataUser');
     const dataCarbon = localStorage.getItem('dataCarbon');
     const dataAllCarbon = localStorage.getItem('dataAllCarbon');
@@ -101,34 +112,59 @@ export default {
     }
   },
   methods: {
-    startDrag(index) {
-      event.dataTransfer.setData('text', this.backgroundImages[index]);
+    getCategoryTitle(title) {
+      // Memisahkan string menjadi array kata-kata
+      const words = title.split(/\s+/);
+
+      // Mengambil kata pertama dari array
+      const firstWord = words[0];
+
+      return firstWord;
     },
-    allowDrop(event) {
-      event.preventDefault();
-    },
-    handleDrop(event) {
-      event.preventDefault();
-      const imageUrl = event.dataTransfer.getData('text');
-      this.BackgroundPrimary = imageUrl;
-    },
-    startDragProfile(index) {
-      event.dataTransfer.setData('text', this.allPhotos[index]);
-      this.profilePhoto = this.allPhotos[index];
-    },
-    allowDropProfile(event) {
-      event.preventDefault();
-    },
-    handleDropProfile(event) {
-      event.preventDefault();
-      const imageUrl = event.dataTransfer.getData('text');
-      this.profilePhoto = imageUrl;
-    },
+  startDrag(index) {
+    event.dataTransfer.setData('text', this.backgroundImages[index]);
+  },
+  allowDrop(event) {
+    event.preventDefault();
+  },
+  handleDrop(event) {
+    event.preventDefault();
+    const imageUrl = event.dataTransfer.getData('text');
+    this.BackgroundPrimary = imageUrl;
+    this.nameTemps.map(item => {
+      this.nameTemp = (item.url === imageUrl)? item.name : '';
+    })
+  },
+  startDragProfile(index) {
+    event.dataTransfer.setData('text', this.allPhotos[index]);
+    this.profilePhoto = this.allPhotos[index];
+  },
+  allowDropProfile(event) {
+    event.preventDefault();
+  },
+  handleDropProfile(event) {
+    event.preventDefault();
+    const imageUrl = event.dataTransfer.getData('text');
+    this.profilePhoto = imageUrl;
+  },
+
+  async fetchData() {
+    try {
+      const res = await axios.get(this.apiDomain + '/api/v1/postcard-templates');
+      this.allMetric = res.data.data;
+      this.backgroundImages = this.allMetric.map(item => item.image_path);
+      this.BackgroundPrimary = this.backgroundImages[0];
+      this.nameTemp = this.allMetric[0].name;
+      console.log(res.data.data);
+    } catch (error) {
+      console.error(error);
+    }
+  },
     onSave() {
       const self = this; 
       console.log(self);
       let load = document.querySelector('.in-load')
-      load.innerHTML += '<i class="ml-2 fa-solid fa-circle-notch load"></i>'
+      load.innerHTML = 'Save <i class="ml-2 fa-solid fa-circle-notch load"></i>'
 
       htmlToImage.toJpeg(document.getElementById('postcard_download'), { quality: 0.95 })
       .then(function (dataUrl) {
@@ -370,7 +406,7 @@ export default {
                 </div>
               </div>
 
-              <div id="postcard_download" class="resp-col resp-h col-span-2 resp-full border-[1px] w-[80%] h-[20.5vw] border-[#cccccc] rounded-md overflow-hidden bg-white bg-opacity-50 relative"
+              <div id="postcard_download" class="resp-col resp-h col-span-2 resp-full border-[1px] aspect-w-16 aspect-h-9 border-[#cccccc] rounded-md overflow-hidden bg-white bg-opacity-50 relative"
                 @dragover="allowDrop"
                 @drop="handleDrop">
                 
@@ -385,13 +421,13 @@ export default {
                 <img :src="BackgroundPrimary" class="resp-h h-[500px] object-cover w-full" />
 
                 <div class="resp-right absolute top-4 right-6 text-right">
-                  <h1 class="resp-text-title2 text-4xl font-bold text-[#2e2e2e]">My Carbon Footprint</h1>
-                  <h1 class="text-md font-normal text-[#2e2e2e]">{{fullName}}, {{address}}</h1>
+                  <h1 class="resp-text-title2 text-5xl font-bold text-[greenyellow]">My Carbon Footprint</h1>
+                  <h1 class="text-2xl font-normal text-[greenyellow]">{{fullName}}, {{address}}</h1>
                 </div>
-
-                <div class="resp-box2 bg-white absolute top-20 right-6 w-[50%] p-4 bg-opacity-80 rounded-md">
+                
+                <div class="resp-box2 bg-white absolute top-[25%] right-6 w-[50%] p-4 bg-opacity-80 rounded-md">
                   <h1 class="resp-text-title3 text-lg font-bold text-[#2e2e2e]">Your Carbon Footprint</h1>
-
+                  
                   <div class="relative">
                     <svg class="mx-auto mt-10 resp-svg" width="242" height="94" viewBox="0 0 242 94" fill="none" xmlns="http://www.w3.org/2000/svg">
                       <path d="M240.733 56.4533C240.452 56.4531 240.182 56.3582 239.976 56.1879C239.771 56.0175 239.646 55.7843 239.626 55.5352C238.9 46.7639 234.475 38.5599 227.235 32.5648C219.996 26.5697 210.476 23.2258 200.582 23.2021C199.398 23.2021 198.154 23.2556 196.885 23.3612C196.672 23.3789 196.459 23.3419 196.269 23.2546C196.08 23.1673 195.923 23.0335 195.817 22.869C191.272 15.7976 184.485 10.0726 176.303 6.40835C168.121 2.74413 158.905 1.30301 149.808 2.26484C140.71 3.22666 132.132 6.54883 125.145 11.8167C118.157 17.0847 113.07 24.065 110.518 31.8867C110.451 32.0963 110.307 32.28 110.109 32.409C109.911 32.5379 109.671 32.6048 109.426 32.599L109.13 32.5911C108.977 32.5865 108.823 32.5817 108.668 32.5817C101.164 32.6026 93.8927 34.9037 88.0616 39.1032C82.2306 43.3027 78.1902 49.1482 76.6109 55.6697C76.5583 55.8913 76.4216 56.0901 76.2237 56.2328C76.0259 56.3755 75.7788 56.4533 75.524 56.4533H1.11074C0.816151 56.4533 0.53363 56.3493 0.325327 56.1642C0.117023 55.979 0 55.7279 0 55.466C0 55.2042 0.117023 54.953 0.325327 54.7679C0.53363 54.5827 0.816151 54.4787 1.11074 54.4787H74.6351C76.486 47.6954 80.8397 41.6587 87.0014 37.3319C93.1631 33.005 100.778 30.6375 108.63 30.607C111.426 22.5693 116.787 15.4261 124.063 10.0454C131.339 4.66461 140.216 1.27785 149.616 0.296527C159.016 -0.684798 168.534 0.78155 177.015 4.51743C185.495 8.2533 192.572 14.0979 197.387 21.3412C198.48 21.2655 199.551 21.2274 200.582 21.2274C211.038 21.2526 221.098 24.7866 228.748 31.1222C236.398 37.4577 241.075 46.1276 241.842 55.3968C241.852 55.5262 241.834 55.6561 241.788 55.779C241.741 55.902 241.668 56.0157 241.573 56.1136C241.477 56.2115 241.361 56.2917 241.23 56.3495C241.099 56.4074 240.957 56.4419 240.812 56.4509C240.785 56.4526 240.759 56.4533 240.733 56.4533Z" fill="#9CA3AF"></path>
@@ -402,44 +438,45 @@ export default {
                       <path d="M89.7862 83.7292H28.6957C28.4011 83.7292 28.1186 83.6252 27.9103 83.44C27.702 83.2549 27.585 83.0037 27.585 82.7419C27.585 82.48 27.702 82.2289 27.9103 82.0437C28.1186 81.8586 28.4011 81.7545 28.6957 81.7545H89.7862C90.0808 81.7545 90.3633 81.8586 90.5716 82.0437C90.78 82.2289 90.897 82.48 90.897 82.7419C90.897 83.0037 90.78 83.2549 90.5716 83.44C90.3633 83.6252 90.0808 83.7292 89.7862 83.7292Z" fill="url(#paint2_linear_588:8903)"></path>
                       <path d="M130.785 87.5V78.162H129.119L126.221 85.358L123.309 78.162H121.643V87.5H122.805V79.646L125.983 87.5H126.459L129.623 79.646V87.5H130.785ZM135.988 87.668C137.08 87.668 137.99 87.29 138.676 86.618L138.172 85.932C137.626 86.492 136.856 86.8 136.072 86.8C134.616 86.8 133.734 85.736 133.65 84.462H139.11V84.196C139.11 82.166 137.906 80.57 135.862 80.57C133.93 80.57 132.53 82.152 132.53 84.112C132.53 86.226 133.972 87.668 135.988 87.668ZM138.074 83.678H133.636C133.692 82.656 134.406 81.438 135.848 81.438C137.388 81.438 138.06 82.684 138.074 83.678ZM142.532 87.668C143.134 87.668 143.512 87.486 143.778 87.234L143.47 86.436C143.33 86.59 143.064 86.73 142.756 86.73C142.308 86.73 142.084 86.366 142.084 85.862V81.662H143.456V80.738H142.084V78.89H141.02V80.738H139.9V81.662H141.02V86.086C141.02 87.094 141.524 87.668 142.532 87.668ZM145.975 87.5V82.712C146.283 82.166 147.165 81.634 147.823 81.634C147.977 81.634 148.103 81.648 148.229 81.662V80.584C147.305 80.584 146.521 81.116 145.975 81.816V80.738H144.925V87.5H145.975ZM150.079 79.772C150.471 79.772 150.779 79.464 150.779 79.072C150.779 78.68 150.471 78.358 150.079 78.358C149.687 78.358 149.365 78.68 149.365 79.072C149.365 79.464 149.687 79.772 150.079 79.772ZM150.597 87.5V80.738H149.547V87.5H150.597ZM155.673 87.668C156.905 87.668 157.633 87.164 158.151 86.492L157.451 85.848C157.003 86.45 156.429 86.73 155.729 86.73C154.301 86.73 153.391 85.61 153.391 84.112C153.391 82.614 154.301 81.508 155.729 81.508C156.429 81.508 157.003 81.76 157.451 82.376L158.151 81.746C157.633 81.074 156.905 80.57 155.673 80.57C153.657 80.57 152.299 82.11 152.299 84.112C152.299 86.114 153.657 87.668 155.673 87.668ZM164.981 87.668C165.583 87.668 165.961 87.486 166.227 87.234L165.919 86.436C165.779 86.59 165.513 86.73 165.205 86.73C164.757 86.73 164.533 86.366 164.533 85.862V81.662H165.905V80.738H164.533V78.89H163.469V80.738H162.349V81.662H163.469V86.086C163.469 87.094 163.973 87.668 164.981 87.668ZM170.329 87.668C172.387 87.668 173.675 86.072 173.675 84.112C173.675 82.152 172.387 80.57 170.329 80.57C168.271 80.57 166.983 82.152 166.983 84.112C166.983 86.072 168.271 87.668 170.329 87.668ZM170.329 86.73C168.887 86.73 168.089 85.498 168.089 84.112C168.089 82.74 168.887 81.508 170.329 81.508C171.771 81.508 172.569 82.74 172.569 84.112C172.569 85.498 171.771 86.73 170.329 86.73ZM181 87.5V82.754C181 81.284 180.258 80.57 178.858 80.57C177.836 80.57 176.912 81.144 176.436 81.718V80.738H175.386V87.5H176.436V82.558C176.842 82.012 177.612 81.508 178.438 81.508C179.348 81.508 179.964 81.872 179.964 83.076V87.5H181ZM185.267 87.668C187.003 87.668 187.913 86.758 187.913 85.624C187.913 82.992 183.727 83.958 183.727 82.488C183.727 81.886 184.301 81.424 185.225 81.424C186.107 81.424 186.835 81.788 187.241 82.278L187.731 81.55C187.199 81.004 186.387 80.57 185.225 80.57C183.615 80.57 182.719 81.452 182.719 82.516C182.719 85.022 186.905 84.014 186.905 85.652C186.905 86.324 186.331 86.814 185.295 86.814C184.371 86.814 183.517 86.366 183.069 85.848L182.537 86.604C183.223 87.318 184.147 87.668 185.267 87.668ZM196.196 87.668C198.254 87.668 199.542 86.072 199.542 84.112C199.542 82.152 198.254 80.57 196.196 80.57C194.138 80.57 192.85 82.152 192.85 84.112C192.85 86.072 194.138 87.668 196.196 87.668ZM196.196 86.73C194.754 86.73 193.956 85.498 193.956 84.112C193.956 82.74 194.754 81.508 196.196 81.508C197.638 81.508 198.436 82.74 198.436 84.112C198.436 85.498 197.638 86.73 196.196 86.73ZM202.598 87.5V81.662H203.97V80.738H202.598V80.22C202.598 79.352 202.976 78.89 203.676 78.89C204.012 78.89 204.278 79.016 204.502 79.212L204.936 78.54C204.516 78.148 204.054 78.022 203.508 78.022C202.318 78.022 201.548 78.834 201.548 80.22V80.738H200.428V81.662H201.548V87.5H202.598ZM213.321 87.668C214.973 87.668 216.093 86.884 216.877 85.806L215.897 85.274C215.365 86.058 214.385 86.632 213.321 86.632C211.277 86.632 209.723 85.05 209.723 82.838C209.723 80.598 211.277 79.044 213.321 79.044C214.385 79.044 215.365 79.604 215.897 80.402L216.863 79.856C216.121 78.792 214.973 78.008 213.321 78.008C210.633 78.008 208.519 79.968 208.519 82.838C208.519 85.708 210.633 87.668 213.321 87.668ZM222.614 87.668C225.372 87.668 227.262 85.596 227.262 82.838C227.262 80.08 225.372 78.008 222.614 78.008C219.856 78.008 217.98 80.08 217.98 82.838C217.98 85.596 219.856 87.668 222.614 87.668ZM222.614 86.632C220.514 86.632 219.184 85.008 219.184 82.838C219.184 80.654 220.514 79.044 222.614 79.044C224.7 79.044 226.058 80.654 226.058 82.838C226.058 85.008 224.7 86.632 222.614 86.632ZM232.745 89.544V88.858H229.903C231.555 87.654 232.717 86.632 232.717 85.512C232.717 84.364 231.737 83.86 230.715 83.86C229.931 83.86 229.119 84.154 228.657 84.742L229.119 85.274C229.413 84.882 230.001 84.546 230.687 84.546C231.289 84.546 231.877 84.854 231.877 85.568C231.877 86.478 230.813 87.374 228.671 88.914V89.544H232.745Z" fill="#333333"></path>
                       <defs>
-                      <linearGradient id="paint0_linear_588:8903" x1="120.922" y1="0.300293" x2="120.922" y2="56.7536" gradientUnits="userSpaceOnUse">
-                      <stop stop-color="#008370"></stop>
-                      <stop offset="1" stop-color="#97C93D"></stop>
-                      </linearGradient>
-                      <linearGradient id="paint1_linear_588:8903" x1="136.437" y1="67.4381" x2="136.437" y2="69.4127" gradientUnits="userSpaceOnUse">
-                      <stop stop-color="#008370"></stop>
-                      <stop offset="1" stop-color="#97C93D"></stop>
-                      </linearGradient>
-                      <linearGradient id="paint2_linear_588:8903" x1="59.241" y1="81.7545" x2="59.241" y2="83.7292" gradientUnits="userSpaceOnUse">
-                      <stop stop-color="#008370"></stop>
-                      <stop offset="1" stop-color="#97C93D"></stop>
-                      </linearGradient>
+                        <linearGradient id="paint0_linear_588:8903" x1="120.922" y1="0.300293" x2="120.922" y2="56.7536" gradientUnits="userSpaceOnUse">
+                          <stop stop-color="#008370"></stop>
+                          <stop offset="1" stop-color="#97C93D"></stop>
+                        </linearGradient>
+                        <linearGradient id="paint1_linear_588:8903" x1="136.437" y1="67.4381" x2="136.437" y2="69.4127" gradientUnits="userSpaceOnUse">
+                          <stop stop-color="#008370"></stop>
+                          <stop offset="1" stop-color="#97C93D"></stop>
+                        </linearGradient>
+                        <linearGradient id="paint2_linear_588:8903" x1="59.241" y1="81.7545" x2="59.241" y2="83.7292" gradientUnits="userSpaceOnUse">
+                          <stop stop-color="#008370"></stop>
+                          <stop offset="1" stop-color="#97C93D"></stop>
+                        </linearGradient>
                       </defs>
                     </svg>
                     <p class="resp-text-md text-md font-bold absolute top-[40%] right-[38%]">{{totalMetricTons}}</p>
                   </div>
-
+                  
                   <div v-for="(category, categoryIndex) in allMetric" :key="categoryIndex">
-                    <b class="text-md font-bold mt-4 text-[#2e2e2e]">{{category.data[categoryIndex].title}}</b>
+                    <b class="text-md font-bold mt-4 text-[#2e2e2e]">{{ getCategoryTitle(category.data[0].category) }}</b>
                     <!-- <div class="flex justify-between" v-for="(logData, logIndex) in category.data" :key="logIndex">
                       <h1 class="text-sm font-normal text-[#2e2e2e]">{{logData.title}}</h1>
                     </div> -->
                   </div>
-
+                  
                   <hr class="resp-my text-[#000] border-[1] border-[#000] my-4">
-
-                  <!-- <div class="flex justify-between mt-4">
+                  
+                  <div class="flex justify-between mt-4">
                     <h1 class="resp-text-md text-md font-normal text-[#2e2e2e]">Total Metric Tons</h1>
                     <h1 class="resp-text-md text-md font-normal text-[#2e2e2e]">{{totalMetricTons}} MT</h1>
-                  </div> -->
-                  <!-- <div class="flex justify-between">
+                  </div>
+                  <div class="flex justify-between">
                     <h1 class="resp-text-md text-md font-bold text-[#2e2e2e]">Cost to Offset</h1>
                     <h1 class="resp-text-md text-md font-bold text-[#2e2e2e]">$ {{totalCost}}</h1>
-                  </div> -->
+                  </div>
                 </div>
+                <h1 class="absolute bottom-5 right-6 resp-text-title2 text-5xl font-bold text-[greenyellow]">{{nameTemp}}</h1>
               </div>
             </div>
-
+            
             <button v-if="step === 2" class="bg-[#476b6b] mt-4 text-white px-8 py-2 rounded-md font-medium hover:bg-[#223d3d] transition duration-300 ease-in-out" @click="step = 3">
               Next Step
             </button>

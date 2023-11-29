@@ -1,3 +1,17 @@
+.mod-bg {
+  content: "";
+  display: block;
+  position: fixed;
+  top: 0;right: 0;left: 0;bottom: 0;
+  background-color: black;
+  z-index: 9;
+  opacity: .7;
+}
+
+.carousel__icon {
+  fill: white !important;
+  background-color: rgba(255, 255, 255, 0.33);
+}
 
 @media (min-width: 1000px) {
   .resp-frame {

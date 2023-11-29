@@ -36,7 +36,7 @@ export default {
     async onSubmit() {
       try {
         let load = document.querySelector('.in-load')
-        load.innerHTML += '<i class="ml-2 fa-solid fa-circle-notch load"></i>'
+        load.innerHTML = 'Submit <i class="ml-2 fa-solid fa-circle-notch load"></i>'
         const formData = new FormData();
         formData.append('name', this.title);
         formData.append('image', this.file);
