@@ -36,7 +36,7 @@
   width: 90% !important;
 }
 
-.resp-frame {
+/* .resp-frame {
   width: 35vw !important;
   height: 20vw !important;
 }
@@ -46,7 +46,7 @@
   height: 10vw;
   top: 5vw;
   left: 4.5vw;
-}
+} */
 
 @media (max-width: 567px) {
   /* #postcard_download {

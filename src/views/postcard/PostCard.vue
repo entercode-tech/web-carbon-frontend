@@ -417,7 +417,7 @@ export default {
                 </div>
               </div>
 
-              <div id="postcard_download" class="lg:w-[100%] lg:aspect-h-9 col-span-2 border-[1px] border-[#cccccc] rounded-md overflow-hidden bg-white bg-opacity-50 relative" @dragover="allowDrop" @drop="handleDrop"> 
+              <div id="postcard_download" class="lg:w-[100%] lg:h-[500px] col-span-2 border-[1px] border-[#cccccc] rounded-md overflow-hidden bg-white bg-opacity-50 relative" @dragover="allowDrop" @drop="handleDrop"> 
                 <div class="relative">
                   <div class="resp-logo flex absolute top-4 left-4 z-10">
                     <img :src="LogoKLHK" alt="Logo" class="resp-img-logo h-10 rounded-md mr-2" />
@@ -425,9 +425,9 @@ export default {
                     <img :src="LogoCop28" alt="Logo" class="resp-img-logo h-10 rounded-md mr-2" />
                   </div>
   
-                  <img class="resp-capture absolute rounded-full" :src="profilePhoto" alt="Captured Photo" />
-                  <img :src="FramePostcard" class="absolute left-0 top-0 h-[100%]"  />
-                  <img :src="BackgroundPrimary" class="h-full object-cover" />
+                  <img class="lg:w-[240px] md:w-[120px] lg:top-[110px] md:top-[50px] lg:left-[90px] md:left-[40px] absolute rounded-full" :src="profilePhoto" alt="Captured Photo" />
+                  <img :src="FramePostcard" class="absolute left-0 top-[-10px] lg:h-[52vh] md:h-[240px]"  />
+                  <img :src="BackgroundPrimary" class="h-[105%] w-[105%] object-cover" />
                 </div>
 
                 <div class="resp-right absolute top-4 right-6 text-right">
